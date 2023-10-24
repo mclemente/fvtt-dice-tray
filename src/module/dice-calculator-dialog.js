@@ -76,7 +76,7 @@ export class DiceCalculatorDialog extends Dialog {
 			// in certain cases.
 			if (opFormulas.includes(buttonFormula)
 			|| parenthesesFormulas.includes(buttonFormula)) {
-				if (last == buttonFormula) {
+				if (last === buttonFormula) {
 					skip = true;
 				}
 

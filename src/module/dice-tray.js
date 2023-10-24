@@ -1,6 +1,8 @@
+import * as diceCalculators from "./calculator-buttons/_module.js";
+import * as keymaps from "./maps/_module.js";
+
 import { DiceCalculatorDialog } from "./dice-calculator-dialog";
 import { KEYS } from "./maps/_keys.js";
-import * as keymaps from "./maps/_module.js";
 import { registerSettings } from "./settings.js";
 
 // Initialize module
@@ -9,17 +11,33 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("i18nInit", () => {
+	const keys = deepClone(KEYS);
+
 	const newMaps = deepClone(keymaps);
-	Hooks.callAll("dice-tray.keymaps", newMaps, newMaps.Template);
-	const supportedSystems = Object.keys(newMaps).join("|");
-	const systemsRegex = new RegExp(`^(${supportedSystems})$`);
+	Hooks.callAll("dice-tray.keymaps", newMaps, newMaps.Template, keys);
+	const supportedSystemMaps = Object.keys(newMaps).join("|");
+	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
 	let providerString = "Template";
-	if (game.system.id in KEYS) {
+	if (game.system.id in keys) {
 		providerString = KEYS[game.system.id];
-	} else if (systemsRegex.test(game.system.id)) {
+	} else if (systemMapsRegex.test(game.system.id)) {
 		providerString = game.system.id;
 	}
 	CONFIG.DICETRAY = new newMaps[providerString]();
+
+	const newCalculators = deepClone(diceCalculators);
+	Hooks.callAll("dice-tray.dice-calculator", newCalculators, keys);
+	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
+	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
+	providerString = "";
+	if (game.system.id in keys) {
+		providerString = KEYS[game.system.id];
+	} else if (systemCalculatorsRegex.test(game.system.id)) {
+		providerString = game.system.id;
+	}
+	if (providerString) {
+		CONFIG.DICETRAY.calculator = new newCalculators[providerString]();
+	}
 });
 
 Hooks.on("renderSidebarTab", async (app, html, data) => {
@@ -150,251 +168,14 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 
 			if ($dialog.length < 1) {
 				let controlledTokens = canvas.tokens.controlled;
-				let actor = controlledTokens.length > 0 ? controlledTokens[0].actor : false;
+				let actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
 
-				let abilities = false;
-				let attributes = false;
-				let customButtons = [];
-
-				let whitelist = {};
-				whitelist[game.system.id] = {
-					abilities: [],
-					attributes: []
-				};
-
-				if (game.system.id === "dnd5e" || game.system.id === "archmage") {
-					whitelist[game.system.id].flags = { adv: true };
-				}
-
-				if (actor !== false) {
-					whitelist.dnd5e = {
-						flags: {
-							adv: true
-						},
-						abilities: [
-							"str",
-							"dex",
-							"con",
-							"int",
-							"wis",
-							"cha"
-						],
-						attributes: [
-							"init",
-							"prof",
-						],
-						custom: {
-							attributes: {
-								profHalf: {
-									label: "prof_half",
-									name: "1/2 Prof",
-									formula: actor.system?.attributes?.prof !== undefined ? Math.floor(actor.system.attributes.prof / 2) : 0
-								},
-								levelHalf: {
-									label: "level_half",
-									name: "1/2 Level",
-									formula: actor.system?.details?.level !== undefined ? Math.floor(actor.system.details.level?.value ?? actor.system.details.level / 2) : 0
-								},
-								profDouble: {
-									label: "prof_double",
-									name: "2x Prof",
-									formula: actor.system?.attributes?.prof !== undefined ? "(2 * @attr.prof)" : 0
-								}
-							}
-						}
-					};
-					whitelist.pf2e = {
-						flags: {
-							adv: false
-						},
-						abilities: [
-							"str",
-							"dex",
-							"con",
-							"int",
-							"wis",
-							"cha"
-						],
-						attributes: [
-							"perception",
-						],
-						custom: {
-							attributes: {
-								profTrained: {
-									label: "prof_t",
-									name: "Trained",
-									formula: "(2 + @details.level.value)"
-								},
-								profExpert: {
-									label: "prof_e",
-									name: "Expert",
-									formula: "(4 + @details.level.value)"
-								},
-								profMaster: {
-									label: "prof_m",
-									name: "Master",
-									formula: "(6 + @details.level.value)"
-								},
-								profLegendary: {
-									label: "prof_l",
-									name: "Legendary",
-									formula: "(8 + @details.level.value)"
-								}
-							}
-						}
-					};
-					whitelist.dcc = {
-						flags: {
-							adv: false
-						},
-						abilities: [
-							"str",
-							"agl",
-							"sta",
-							"per",
-							"int",
-							"lck"
-						],
+				let { abilities, attributes, customButtons } = CONFIG.DICETRAY?.calculator?.getData(actor)
+					?? {
+						abilities: [],
 						attributes: [],
-						custom: {}
+						customButtons: []
 					};
-
-					// Let systems or other modules modify the buttons whitelist.
-					Hooks.call("dcCalcWhitelist", whitelist, actor);
-
-					// Build abilities.
-					abilities = [];
-					for (let prop in actor.system.abilities) {
-						if (whitelist[game.system.id].abilities.includes(prop)) {
-							let formula = "";
-							if (actor.system.abilities[prop].mod !== undefined) {
-								formula = `@abil.${prop}.mod`;
-							}
-							else if (actor.system.abilities[prop].value !== undefined) {
-								formula = `@abil.${prop}.value`;
-							}
-							else {
-								formula = `@abil.${prop}`;
-							}
-							abilities.push({
-								label: prop,
-								name: prop,
-								formula: formula
-							});
-						}
-					}
-
-					// Build attributes.
-					attributes = [];
-
-					// Add level for systems that place it in details.
-					if (actor.system.attributes !== undefined) {
-						if (actor.system.attributes.level === undefined && actor.system?.details?.level !== undefined) {
-							attributes.push({
-								label: "level",
-								name: "level",
-								formula: actor.system.details.level?.value ? "@details.level.value" : "@details.level"
-							});
-						}
-
-						for (let prop in actor.system.attributes) {
-							if (whitelist[game.system.id].attributes.includes(prop)) {
-								let formula = "";
-								if (actor.system.attributes[prop].mod !== undefined) {
-									formula = `@attr.${prop}.mod`;
-								}
-								else if (actor.system.attributes[prop].value !== undefined) {
-									formula = `@attr.${prop}.value`;
-								}
-								else {
-									formula = `@attr.${prop}`;
-								}
-								attributes.push({
-									label: prop,
-									name: prop,
-									formula: formula
-								});
-							}
-						}
-					}
-
-					// Add custom attributes.
-					customButtons = [];
-					if (whitelist[game.system.id].custom !== undefined) {
-						// Iterate through the kinds of properties, such as 'abilities' or
-						// 'attributes'.
-						for (let customProps in whitelist[game.system.id].custom) {
-							// Loop through the properties in that attribute.
-							for (let prop in whitelist[game.system.id].custom[customProps]) {
-								let customButton = {
-									label: prop,
-									name: whitelist[game.system.id].custom[customProps][prop].name,
-									formula: whitelist[game.system.id].custom[customProps][prop].formula
-								};
-
-								if (customProps === "abilities") {
-									const index = abilities.findIndex((element) => element.label === prop);
-									if (index !== -1) {
-										abilities[index] = customButton;
-									} else {
-										abilities.push(customButton);
-									}
-								} else if (customProps === "attributes") {
-									const index = abilities.findIndex((element) => element.label === prop);
-									if (index !== -1) {
-										attributes[index] = customButton;
-									} else {
-										attributes.push(customButton);
-									}
-								} else {
-									customButtons.push(customButton);
-								}
-							}
-						}
-					}
-				}
-
-				// Add funky dice buttons
-				if (game.system.id === "dcc") {
-					const funkyDice = [
-						{
-							label: "d3",
-							name: "d3",
-							formula: "d3"
-						},
-						{
-							label: "d5",
-							name: "d5",
-							formula: "d5"
-						},
-						{
-							label: "d7",
-							name: "d7",
-							formula: "d7"
-						},
-						{
-							label: "d14",
-							name: "d14",
-							formula: "d14"
-						},
-						{
-							label: "d16",
-							name: "d16",
-							formula: "d16"
-						},
-						{
-							label: "d24",
-							name: "d24",
-							formula: "d24"
-						},
-						{
-							label: "d30",
-							name: "d30",
-							formula: "d30"
-						}
-					];
-					customButtons = funkyDice.concat(customButtons);
-				}
 
 				// Build the template.
 				let rolls = Cookies.get("diceTray.diceFormula");
@@ -404,7 +185,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					abilities: abilities,
 					attributes: attributes,
 					customButtons: customButtons,
-					adv: whitelist[game.system.id].flags !== undefined ? whitelist[game.system.id].flags.adv : false
+					adv: CONFIG.DICETRAY?.calculator.adv || false
 				};
 
 				// Render the modal.
@@ -431,7 +212,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
  * Helper function to roll dice formula and output to chat.
  * @param {object} actor The actor to use for rolls, if any.
  */
-function dcRollDice(actor = false) {
+function dcRollDice(actor = null) {
 	// Retrieve the formula.
 	let formula = $(".dice-calculator textarea").val();
 	// Replace shorthand.
