@@ -3,7 +3,6 @@
 ## Installation
 
 1. Go to the setup page and choose **Add-on Modules**.
-
 2. Click the **Install Module** button:
 3. a) Search for Dice Tray 2.
 	b) Paste the following on the **Manifest Link**: https://github.com/mclemente/fvtt-dice-tray/releases/latest/download/module.json
