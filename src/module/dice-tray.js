@@ -12,33 +12,34 @@ Hooks.once("init", () => {
 
 Hooks.once("i18nInit", () => {
 	const keys = deepClone(KEYS);
-
 	const newMaps = deepClone(keymaps);
+	const newCalculators = deepClone(diceCalculators);
+
 	Hooks.callAll("dice-tray.keymaps", newMaps, newMaps.Template, keys);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
-	let providerString = "Template";
-	if (game.system.id in keys) {
-		providerString = KEYS[game.system.id];
-	} else if (systemMapsRegex.test(game.system.id)) {
-		providerString = game.system.id;
-	}
-	CONFIG.DICETRAY = new newMaps[providerString]();
+	const providerStringMaps = getProviderString(systemMapsRegex, keys);
+	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
-	const newCalculators = deepClone(diceCalculators);
 	Hooks.callAll("dice-tray.dice-calculator", newCalculators, keys);
 	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
 	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
-	providerString = "";
-	if (game.system.id in keys) {
-		providerString = KEYS[game.system.id];
-	} else if (systemCalculatorsRegex.test(game.system.id)) {
-		providerString = game.system.id;
-	}
-	if (providerString) {
-		CONFIG.DICETRAY.calculator = new newCalculators[providerString]();
+	const providerStringCalculators = getProviderString(systemCalculatorsRegex, keys);
+
+	if (providerStringCalculators) {
+		CONFIG.DICETRAY.calculator = new newCalculators[providerStringCalculators]();
 	}
 });
+
+function getProviderString(regex, keys) {
+	const id = game.system.id;
+	if (id in keys) {
+		return keys[id];
+	} else if (regex.test(id)) {
+		return id;
+	}
+	return "";
+}
 
 Hooks.on("renderSidebarTab", async (app, html, data) => {
 	// Exit early if necessary;
