@@ -25,7 +25,7 @@ export class DiceCalculatorDialog extends Dialog {
 
 		// Replace with the selected die formula.
 		html.find(".dice-calculator__roll").on("click", (event) => {
-			let formula = event.text();
+			let formula = event.target.textContent;
 			$(".dice-calculator__text-input").val(formula);
 		});
 
