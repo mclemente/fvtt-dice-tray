@@ -193,17 +193,17 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 								profHalf: {
 									label: "prof_half",
 									name: "1/2 Prof",
-									formula: actor.data.data?.attributes?.prof !== undefined ? Math.floor(actor.data.data.attributes.prof / 2) : 0
+									formula: actor.system?.attributes?.prof !== undefined ? Math.floor(actor.system.attributes.prof / 2) : 0
 								},
 								levelHalf: {
 									label: "level_half",
 									name: "1/2 Level",
-									formula: actor.data.data?.details?.level !== undefined ? Math.floor(actor.data.data.details.level?.value ?? actor.data.data.details.level / 2) : 0
+									formula: actor.system?.details?.level !== undefined ? Math.floor(actor.system.details.level?.value ?? actor.system.details.level / 2) : 0
 								},
 								profDouble: {
 									label: "prof_double",
 									name: "2x Prof",
-									formula: actor.data.data?.attributes?.prof !== undefined ? "(2 * @attr.prof)" : 0
+									formula: actor.system?.attributes?.prof !== undefined ? "(2 * @attr.prof)" : 0
 								}
 							}
 						}
@@ -269,13 +269,13 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 
 					// Build abilities.
 					abilities = [];
-					for (let prop in actor.data.data.abilities) {
+					for (let prop in actor.system.abilities) {
 						if (whitelist[game.system.id].abilities.includes(prop)) {
 							let formula = "";
-							if (actor.data.data.abilities[prop].mod !== undefined) {
+							if (actor.system.abilities[prop].mod !== undefined) {
 								formula = `@abil.${prop}.mod`;
 							}
-							else if (actor.data.data.abilities[prop].value !== undefined) {
+							else if (actor.system.abilities[prop].value !== undefined) {
 								formula = `@abil.${prop}.value`;
 							}
 							else {
@@ -293,22 +293,22 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					attributes = [];
 
 					// Add level for systems that place it in details.
-					if (actor.data.data.attributes !== undefined) {
-						if (actor.data.data.attributes.level === undefined && actor.data.data?.details?.level !== undefined) {
+					if (actor.system.attributes !== undefined) {
+						if (actor.system.attributes.level === undefined && actor.system?.details?.level !== undefined) {
 							attributes.push({
 								label: "level",
 								name: "level",
-								formula: actor.data.data.details.level?.value ? "@details.level.value" : "@details.level"
+								formula: actor.system.details.level?.value ? "@details.level.value" : "@details.level"
 							});
 						}
 
-						for (let prop in actor.data.data.attributes) {
+						for (let prop in actor.system.attributes) {
 							if (whitelist[game.system.id].attributes.includes(prop)) {
 								let formula = "";
-								if (actor.data.data.attributes[prop].mod !== undefined) {
+								if (actor.system.attributes[prop].mod !== undefined) {
 									formula = `@attr.${prop}.mod`;
 								}
-								else if (actor.data.data.attributes[prop].value !== undefined) {
+								else if (actor.system.attributes[prop].value !== undefined) {
 									formula = `@attr.${prop}.value`;
 								}
 								else {
