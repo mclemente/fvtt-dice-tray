@@ -84,4 +84,4 @@ instructions given there.
 
 This project is licensed under the MIT license.
 
-This project is a fork of [Dice Tray, by Asacolips](https://gitlab.com/asacolips-projects/foundry-mods/foundry-vtt-dice-calculator), licensed under the MIT.
+This project is a fork of [Dice Tray, by Asacolips](https://gitlab.com/asacolips-projects/foundry-mods/foundry-vtt-dice-calculator), licensed under the MIT license.
