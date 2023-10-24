@@ -1,6 +1,6 @@
 /* Global styles */
 /* Dice icon */
-#chat-controls .dice-calculator-toggle:hover {
+#chat-controls .chat-control-icon i.dice-calculator-toggle:hover {
   color: #ff9898;
 }
 
@@ -136,7 +136,7 @@
 }
 
 .dice-calculator__input-wrapper > textarea {
-  font-size: 14px;
+  font-size: 18px;
   width: auto;
   min-height: 80px;
   -webkit-box-flex: 1;

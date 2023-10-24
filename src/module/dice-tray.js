@@ -28,12 +28,11 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 	if (game.settings.get("dice-tray", "enableDiceTray")) {
 		// Prepare the dice tray for rendering.
 		let $chat_form = html.find("#chat-form");
-		const template = "modules/dice-tray/templates/tray.html";
 		const options = {
 			dicerows: CONFIG.DICETRAY.dice
 		};
 
-		const content = await renderTemplate(template, options);
+		const content = await renderTemplate("modules/dice-tray/templates/tray.html", options);
 
 		if (content.length > 0) {
 			let $content = $(content);
@@ -68,8 +67,6 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 						dragData.formula = "2d20kl";
 					}
 
-					dragData.icon = dragData.formula;
-
 					// Grab the count, if any.
 					const qty = $(event.currentTarget).find(".dice-tray__flag").text();
 					if (qty.length > 0 && !dragData.formula.includes("k")) {
@@ -86,7 +83,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			});
 
 			// Handle drop for dice.
-			html.find("#chat-message").on("drop", async (event) => {
+			$("html").on("drop", async (event) => {
 				let data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
 				// If there's a formula, trigger the roll.
 				if (data?.origin === "dice-tray" && data?.formula) {
@@ -143,13 +140,11 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 		}
 	}
 	if (game.settings.get("dice-tray", "enableDiceCalculator")) {
-		const templatePath = "modules/dice-calculator/templates/calculator.html";
-		const diceIconSelector = "#chat-controls .chat-control-icon .fa-dice-d20";
-		$(diceIconSelector).addClass("dice-calculator-toggle");
-
 		// Render a modal on click.
-		$(document).on("click", diceIconSelector, (ev) => {
-			ev.preventDefault();
+		const diceIconSelector = html.find("#chat-controls .chat-control-icon i");
+		diceIconSelector.addClass("dice-calculator-toggle");
+		diceIconSelector.on("click", async (event) => {
+			event.preventDefault();
 
 			let $dialog = $(".dialog--dice-calculator");
 
@@ -167,7 +162,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					attributes: []
 				};
 
-				if (game.system.id == "dnd5e" || game.system.id == "archmage") {
+				if (game.system.id === "dnd5e" || game.system.id === "archmage") {
 					whitelist[game.system.id].flags = { adv: true };
 				}
 
@@ -338,34 +333,20 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 								};
 
 								if (customProps === "abilities") {
-									// Replace existing.
-									let updated = false;
-									abilities.find((element, index) => {
-										if (element.label !== undefined && element.label === prop) {
-											abilities[index] = customButton;
-											updated = true;
-										}
-									});
-									// Otherwise, append.
-									if (!updated) {
+									const index = abilities.findIndex((element) => element.label === prop);
+									if (index !== -1) {
+										abilities[index] = customButton;
+									} else {
 										abilities.push(customButton);
 									}
-								}
-								else if (customProps === "attributes") {
-									// Replace existing.
-									let updated = false;
-									attributes.find((element, index) => {
-										if (element.label !== undefined && element.label === prop) {
-											attributes[index] = customButton;
-											updated = true;
-										}
-									});
-									// Otherwise, append.
-									if (!updated) {
+								} else if (customProps === "attributes") {
+									const index = abilities.findIndex((element) => element.label === prop);
+									if (index !== -1) {
+										attributes[index] = customButton;
+									} else {
 										attributes.push(customButton);
 									}
-								}
-								else {
+								} else {
 									customButtons.push(customButton);
 								}
 							}
@@ -416,8 +397,10 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				}
 
 				// Build the template.
+				let rolls = Cookies.get("diceTray.diceFormula");
+				rolls = !rolls ? [] : rolls.split(";");
 				let templateData = {
-					rolls: Cookies.get("diceTray.diceFormula"),
+					rolls,
 					abilities: abilities,
 					attributes: attributes,
 					customButtons: customButtons,
@@ -425,18 +408,17 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				};
 
 				// Render the modal.
-				renderTemplate(templatePath, templateData).then((dlg) => {
-					new DiceCalculatorDialog({
-						title: game.i18n.localize("DICE_TRAY.RollDice"),
-						content: dlg,
-						buttons: {
-							roll: {
-								label: game.i18n.localize("DICE_TRAY.Roll"),
-								callback: () => dcRollDice(actor)
-							}
+				const content = await renderTemplate("modules/dice-calculator/templates/calculator.html", templateData);
+				new DiceCalculatorDialog({
+					title: game.i18n.localize("DICE_TRAY.RollDice"),
+					content,
+					buttons: {
+						roll: {
+							label: game.i18n.localize("DICE_TRAY.Roll"),
+							callback: () => dcRollDice(actor)
 						}
-					}, { top: ev.clientY - 80 }).render(true);
-				});
+					}
+				}, { top: event.clientY - 80 }).render(true);
 			}
 			else {
 				$dialog.remove();
@@ -454,22 +436,25 @@ function dcRollDice(actor = false) {
 	let formula = $(".dice-calculator textarea").val();
 	// Replace shorthand.
 	formula = formula.replace(/@abil\./g, "@abilities.").replace(/@attr\./g, "@attributes.");
+
 	// Roll the dice!
 	let data = actor ? actor.getRollData() : {};
-	let r = new Roll(formula, data);
-	r.toMessage();
+	let roll = new Roll(formula, data);
+	roll.toMessage();
+
 	// Throw a warning to the user if they tried to use a stat without a token.
 	// If there's no actor and the user tried to use a stat, warn them.
 	if (!actor && formula.includes("@")) {
 		ui.notifications.warn("A token attribute was specified in your roll, but no token was selected.");
 	}
+
 	// Store it for later.
 	let formulaArray = Cookies.get("diceTray.diceFormula");
-	formulaArray = !formulaArray ? [] : formulaArray;
+	formulaArray = !formulaArray ? [] : formulaArray.split(";");
 	// Only update if this is a new formula.
 	if ($.inArray(formula, formulaArray) === -1) {
 		formulaArray.unshift(formula);
 		formulaArray = formulaArray.slice(0, 10);
-		Cookies.set("diceTray.diceFormula", formulaArray, { expires: 7 });
+		Cookies.set("diceTray.diceFormula", formulaArray.join(";"));
 	}
 }
