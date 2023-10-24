@@ -1,16 +1,13 @@
-<!--
-SPDX-FileCopyrightText: 2022 Johannes Loher
-
-SPDX-License-Identifier: MIT
--->
-
-# dice-tray
-
-Please add your description here.
+# Dice Tray 2
 
 ## Installation
 
-Please add your installation instructions here.
+1. Go to the setup page and choose **Add-on Modules**.
+
+2. Click the **Install Module** button:
+3. a) Search for Dice Tray 2.
+	b) Paste the following on the **Manifest Link**: https://github.com/mclemente/fvtt-dice-tray/releases/latest/download/module.json
+4. In your world, enable the module on the module settings.
 
 ## Development
 
@@ -85,13 +82,6 @@ instructions given there.
 
 ## Licensing
 
-This project is being developed under the terms of the
-[LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT] for Foundry Virtual Tabletop.
+This project is licensed under the MIT license.
 
-Please add your licensing information here. Add your chosen license as
-`LICENSE` file to the project root and mention it here.  If you don't know which
-license to choose, take a look at [Choose an open source license].
-
-[League Basic JS Module Template]: https://github.com/League-of-Foundry-Developers/FoundryVTT-Module-Template
-[LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT]: https://foundryvtt.com/article/license/
-[Choose an open source license]: https://choosealicense.com/
+This project is a fork of [Dice Tray, by Asacolips](https://gitlab.com/asacolips-projects/foundry-mods/foundry-vtt-dice-calculator), licensed under the MIT.
