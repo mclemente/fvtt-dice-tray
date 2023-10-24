@@ -1,0 +1,33 @@
+<section class="dice-tray">
+    {{#each dicerows as |dice|}}
+    <div class="dice-tray__buttons flexrow">
+		{{#each dice as |data key|}}
+		<button class="dice-tray__button" data-formula="{{key}}" data-tooltip="{{key}}" data-tooltip-direction="UP">
+			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
+			{{#if data.img}}
+			<div
+				class="dice"
+				style="
+					mask: url({{data.img}}) no-repeat;
+					mask-size: contain;
+					mask-position: center 2px;
+					-webkit-mask: url({{data.img}}) no-repeat;
+					-webkit-mask-size: contain;
+					-webkit-mask-position: center 2px;
+					">
+			</div>
+			{{else}}
+			<span>{{data.label}}</span>
+			{{/if}}
+		</button>
+		{{/each}}
+    </div>
+    {{/each}}
+    <div class="dice-tray__math flexrow">
+		<button class="dice-tray__math dice-tray__math--sub" data-formula="-1">-</button>
+		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
+		<button class="dice-tray__math dice-tray__math--add" data-formula="+1">+</button>
+		<div id="dice-tray-math" hidden></div>
+		<button class="dice-tray__roll">{{localize "TABLE.Roll"}}</button>
+    </div>
+</section>

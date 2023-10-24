@@ -1,0 +1,68 @@
+<div class="dice-calculator">
+    <div class="dice-calculator__input">
+      <label for="dice-calculator">/roll</label>
+      <div class="dice-calculator__input-wrapper">
+        <textarea class="dice-calculator__text-input" type="text" name="dice-calculator"></textarea>
+        {{#if rolls}}
+          <div class="dice-calculator__rolls--hidden">
+            {{#each rolls as |roll key|}}
+              <div class="dice-calculator__roll">{{roll}}</div>
+            {{/each}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d2" data-formula="d2">d2</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d3" data-formula="d3">d3</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d4" data-formula="d4">d4</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d6" data-formula="d6">d6</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d8" data-formula="d8">d8</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d10" data-formula="d10">d10</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d12" data-formula="d12">d12</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d20" data-formula="d20">d20</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__d100" data-formula="d100">d100</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__dx" data-formula="d">dx</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__0" data-formula="0">0</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__1" data-formula="1">1</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__2" data-formula="2">2</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__3" data-formula="3">3</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__4" data-formula="4">4</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__5" data-formula="5">5</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__6" data-formula="6">6</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__7" data-formula="7">7</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__8" data-formula="8">8</button>
+    <button class="dice-calculator--button dice-calculator--light dice-calculator__9" data-formula="9">9</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__p-left" data-formula="(">(</button>
+    <button class="dice-calculator--button dice-calculator--dark dice-calculator__p-right" data-formula=")">)</button>
+    <button class="dice-calculator--button dice-calculator--math dice-calculator__div" data-formula="/">&divide;</button>
+    <button class="dice-calculator--button dice-calculator--math dice-calculator__mul" data-formula="*">&times;</button>
+    <button class="dice-calculator--button dice-calculator--math dice-calculator__min" data-formula="-">-</button>
+    <button class="dice-calculator--button dice-calculator--math dice-calculator__plu" data-formula="+">+</button>
+    <button class="dice-calculator--button dice-calculator--op dice-calculator__del" data-formula="DELETE">{{localize "DICE_TRAY.del"}}</button>
+    <button class="dice-calculator--button dice-calculator--op dice-calculator__ac" data-formula="CLEAR">{{localize "DICE_TRAY.clear"}}</button>
+    <button class="dice-calculator--button dice-calculator--confirm dice-calculator__kh" data-formula="kh">{{#if adv}}{{localize "DICE_TRAY.Adv"}}{{else}}kh{{/if}}</button>
+    <button class="dice-calculator--button dice-calculator--confirm dice-calculator__kl" data-formula="kl">{{#if adv}}{{localize "DICE_TRAY.Dis"}}{{else}}kl{{/if}}</button>
+    <div class="dice-calculator__actor">
+      {{#if abilities }}
+      <div class="dice-calculator__btn-group dice-calculator__abil">
+        {{#each abilities as |ability key|}}
+        <button class="dice-calculator--button dice-calculator--stat dice-calculator__{{ability.label}}" data-formula="{{ability.formula}}">{{ability.name}}</button>
+        {{/each}}
+      </div>
+      {{/if}}
+      {{#if attributes }}
+      <div class="dice-calculator__btn-group dice-calculator__attr">
+        {{#each attributes as |attribute key|}}
+        <button class="dice-calculator--button dice-calculator--attr dice-calculator__{{attribute.label}}" data-formula="{{attribute.formula}}">{{attribute.name}}</button>
+        {{/each}}
+      </div>
+      {{/if}}
+      {{#if customButtons }}
+      <div class="dice-calculator__btn-group dice-calculator__custom">
+        {{#each customButtons as |customButton key|}}
+        <button class="dice-calculator--button dice-calculator--custom dice-calculator__{{customButton.label}}" data-formula="{{customButton.formula}}">{{customButton.name}}</button>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+  </div>

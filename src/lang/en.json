@@ -1,0 +1,50 @@
+{
+  "DICE_TRAY": {
+    "Adv": "Adv",
+    "Advantage": "Advantage",
+    "Dis": "Dis",
+    "Disadvantage": "Disadvantage",
+    "FateDice": "Fate Dice",
+    "For": "For",
+    "Fortune": "Fortune (kh)",
+    "Misfortune": "Misfortune (kl)",
+    "Mis": "Mis",
+    "Roll": "Roll",
+    "RollDice": "Roll Dice",
+    "Wild": "Wild",
+    "Ace": "Ace",
+    "WildDie": "Wild Die",
+    "ExplodingDie": "Exploding Die",
+    "PlusOneDie": "+1d",
+    "MinusOneDie": "-1d",
+    "PlusOneDieLong": "Increase Dice Size",
+    "MinusOneDieLong": "Decrease Dice Size",
+    "KeepHighest": "Keep Highest",
+    "KeepLowest": "Keep Lowest",
+    "del": "del",
+    "clear": "clear",
+    "SETTINGS": {
+      "enableDiceTray.name": "Enable Dice Tray",
+      "enableDiceTray.hint": "Enable showing a dice tray below the chat message area (requires reload).",
+      "enableDiceCalculator.name": "Enable Dice Calculator",
+      "enableDiceCalculator.hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload).",
+      "enableExtraDiceInSwade.name": "Include d20 and d100 in SWADE",
+      "enableExtraDiceInSwade.hint": "Enable showing d20 and d100 dice buttons in SWADE (requires 'Enable Dice Tray' reload).",
+      "enableD6Pips.name": "Enable d6 Pips",
+      "enableD6Pips.hint": "Enables using an alternate d6 icon that includes pips on the die (requires reload).",
+      "systemOverride": {
+        "name": "Override system",
+        "hint": "Override the system used by the dice tray, such as using the dnd5e dice tray which includes advantage and disadvantage buttons.",
+        "none": "- Automatic -",
+        "generic": "Generic",
+        "swade": "SWADE",
+        "fatex": "FateX",
+        "ModularFate": "Modular Fate Core",
+        "fate-core-official": "Fate Core Official",
+        "dnd5e": "DnD5e",
+        "pf2e": "Pathfinder 2e",
+        "dcc": "Dungeon Crawl Classics"
+      }
+    }
+  }
+}

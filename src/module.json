@@ -1,0 +1,50 @@
+{
+  "id": "dice-tray",
+  "title": "Dice Tray 2",
+  "description": "<description of the package>",
+  "authors": [
+    {
+      "name": "Matheus Clemente",
+      "discord": "mclemente#5524"
+    }
+  ],
+  "url": "This is auto replaced",
+  "version": "This is auto replaced",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "scripts": ["./module/js.cookie.min.js"],
+  "esmodules": ["module/dice-tray.js"],
+  "styles": ["styles/dice-tray.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "English",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    }
+  ],
+  "manifest": "This is auto replaced",
+  "download": "This is auto replaced"
+}

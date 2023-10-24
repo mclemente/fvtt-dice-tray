@@ -1,0 +1,319 @@
+export default class TemplateDiceMap {
+	get dice() {
+		return [
+			{
+				d4: { img: "icons/dice/d4black.svg" },
+				d6: { img: "icons/dice/d6black.svg" },
+				d8: { img: "icons/dice/d8black.svg" },
+				d10: { img: "icons/dice/d10black.svg" },
+				d12: { img: "icons/dice/d12black.svg" },
+				d20: { img: "icons/dice/d20black.svg" },
+				d100: { img: "modules/dice-tray/assets/icons/d100black.svg" },
+			}
+		];
+	}
+
+	get labels() {
+		return {
+			advantage: "DICE_TRAY.KeepHighest",
+			adv: "KH",
+			disadvantage: "DICE_TRAY.KeepLowest",
+			dis: "KL"
+		};
+	}
+
+	applyLayout(html) {
+		html.find("#dice-tray-math").show();
+		html.find("#dice-tray-math").append(
+			`<div class="dice-tray__stacked flexcol">
+                <button class="dice-tray__ad dice-tray__advantage" data-formula="kh" data-tooltip="${game.i18n.localize(this.labels.advantage)}" data-tooltip-direction="UP">
+                    ${game.i18n.localize(this.labels.adv)}
+                </button>
+                <button class="dice-tray__ad dice-tray__disadvantage" data-formula="kl" data-tooltip="${game.i18n.localize(this.labels.disadvantage)}" data-tooltip-direction="UP">
+                    ${game.i18n.localize(this.labels.dis)}
+                </button>
+            </div>`
+		);
+		html.find(".dice-tray__ad").attr("draggable", true).on("click", (event) => {
+			event.preventDefault();
+			let dataset = event.currentTarget.dataset;
+			let $chat = html.find("#chat-form textarea");
+			let chat_val = String($chat.val());
+			let match_string = /\d*d\d+[khl]*/;
+
+			// If there's a d20, toggle the current if needed.
+			if (match_string.test(chat_val)) {
+				// If there was previously a kh or kl, update it.
+				if (/d\d+k[hl]/g.test(chat_val)) {
+					chat_val = chat_val.replace(/(\d*)(d\d+)(k[hl]\d*)/g, (match, p1, p2, p3, offset, string) => {
+						let diceKeep = this.updateDiceKeep(p1, p2, p3, -1, dataset.formula);
+						html.find(`.dice-tray__flag--${p2}`).text(diceKeep.count);
+						return diceKeep.content;
+					});
+				}
+				// Otherwise, add it.
+				else {
+					chat_val = chat_val.replace(/(\d*)(d\d+)/g, (match, p1, p2, offset, string) => {
+						let diceKeep = this.updateDiceKeep(p1, p2, "", 1, dataset.formula);
+						html.find(`.dice-tray__flag--${p2}`).text(diceKeep.count);
+						return diceKeep.content;
+					});
+				}
+			}
+			// else {
+			// 	let diceKeep = this.updateDiceKeep("1", "d20", "", 1, dataset.formula);
+			// 	html.find(".dice-tray__flag--d20").text(diceKeep.count);
+			// 	chat_val += diceKeep.content;
+			// }
+
+			// Handle toggle classes.
+			if (chat_val.includes("kh")) {
+				html.find(".dice-tray__advantage").addClass("active");
+			}
+			else {
+				html.find(".dice-tray__advantage").removeClass("active");
+			}
+			if (chat_val.includes("kl")) {
+				html.find(".dice-tray__disadvantage").addClass("active");
+			}
+			else {
+				html.find(".dice-tray__disadvantage").removeClass("active");
+			}
+			// Update the value.
+			$chat.val(chat_val);
+		});
+		html.find(".dice-tray__roll").on("click", (event) => {
+			event.preventDefault();
+			let spoofed = this.triggerRollClick();
+			html.find("#chat-message").trigger(spoofed);
+			html.find(".dice-tray__input").val(0);
+			html.find(".dice-tray__flag").text("");
+			html.find(".dice-tray__flag").addClass("hide");
+			html.find(".dice-tray__ad").removeClass("active");
+		});
+		html.find("#chat-message").keydown((e) => {
+			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
+				html.find(".dice-tray__flag").text("");
+				html.find(".dice-tray__flag").addClass("hide");
+			}
+		});
+	}
+
+	applyModifier(html) {
+		const $mod_input = html.find(".dice-tray__input");
+		const mod_val = Number($mod_input.val());
+
+		if ($mod_input.length === 0 || isNaN(mod_val)) return;
+
+		let mod_string = "";
+		if (mod_val > 0) {
+			mod_string = `+${mod_val}`;
+		} else if (mod_val < 0) {
+			mod_string = `${mod_val}`;
+		}
+
+		const $chat = html.find("#chat-form textarea");
+		const chat_val = String($chat.val());
+
+		const match_string = /(\\+|\\-)(\d+)$/;
+		if (match_string.test(chat_val)) {
+			$chat.val(chat_val.replace(match_string, mod_string));
+		} else if (chat_val !== "") {
+			$chat.val(chat_val + mod_string);
+		}
+		// TODO readd but trigger _dtUpdateChatDice instead
+		// else {
+		// 	chat_val = `/r ${mod_string}`;
+		// 	$chat.val(chat_val);
+		// }
+	}
+
+	rawFormula(qty, dice, html) {
+		return `${qty === "" ? 1 : qty}${dice}`;
+	}
+
+	triggerRollClick() {
+		// Set up the keypress event properties.
+		let spoofedProperties = {
+			which: 13,
+			keycode: 13,
+			code: "Enter",
+			key: "Enter",
+		};
+		// Create an event for the keypress.
+		let spoofed = $.Event("keydown", spoofedProperties);
+		// Create a second event for the originalEvent property.
+		let spoofedOriginal = $.Event("keydown", spoofedProperties);
+		spoofedOriginal.isComposing = false;
+		// Assign the original event.
+		spoofed.originalEvent = spoofedOriginal;
+
+		return spoofed;
+	}
+
+	updateChatDice(dataset, direction, html) {
+		const $chat = html.find("#chat-form textarea");
+		let currFormula = String($chat.val());
+		if (direction === "sub" && currFormula === "") return;
+		let newFormula = null;
+		let rollPrefix = "/r";
+		const $roll_mode_selector = html.find('select[name="rollMode"]');
+		let qty = 0;
+		let dice = "";
+
+		if ($roll_mode_selector.length > 0) {
+			const rollMode = $roll_mode_selector.val();
+			if (rollMode === "gmroll") {
+				rollPrefix = "/gmr";
+			} else if (rollMode === "blindroll") {
+				rollPrefix = "/br";
+			} else if (rollMode === "selfroll") {
+				rollPrefix = "/sr";
+			}
+		}
+
+		let match_dice = dataset.formula;
+		if (/^(\d+)(d.+)/.test(dataset.formula)) {
+			const match = dataset.formula.match(/^(\d+)(d.+)/);
+			qty = Number(match[1]);
+			match_dice = match[2];
+			dice = match[2];
+		}
+
+		if (dataset.formula === "d10") {
+			match_dice = "d10(?!0)";
+		} else if (dataset.formula === "d20") {
+			match_dice = "d20[khl]*";
+		}
+		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
+		if (match_string.test(currFormula)) {
+			const match = currFormula.match(match_string);
+			const parts = {
+				txt: match[0] || "",
+				qty: match[1] || "1",
+				die: match[2] || "",
+			};
+
+			if (parts.die === "" && match[3]) {
+				parts.die = match[3];
+			}
+
+			qty = direction === "add" ? Number(parts.qty) + (qty || 1) : Number(parts.qty) - (qty || 1);
+
+			// Update the dice quantity.
+			qty = qty < 1 ? "" : qty;
+
+			if (qty === "" && direction === "sub") {
+				newFormula = "";
+				const new_match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
+				currFormula = currFormula.replace(new_match_string, newFormula);
+				if (new RegExp(`${rollPrefix}\\s+(?!.*d\\d+.*)`).test(currFormula)) {
+					currFormula = "";
+				}
+			} else {
+				newFormula = this.rawFormula(qty, parts.die, html);
+				currFormula = currFormula.replace(match_string, newFormula);
+			}
+			$chat.val(currFormula);
+		} else {
+			if (!qty) {
+				qty = 1;
+			}
+			if (currFormula === "") {
+				$chat.val(`${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`);
+			} else {
+				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}+`);
+				$chat.val(currFormula);
+			}
+		}
+
+		// TODO consider separate this into another method to make overriding simpler
+		// TODO e.g. cases where a button adds 2+ dice
+
+		// Add a flag indicator on the dice.
+		qty = Number(qty);
+		const $flag_button = html.find(`.dice-tray__flag--${dataset.formula}`);
+		if (!qty) {
+			qty = direction === "add" ? 1 : 0;
+		}
+
+		if (qty > 0) {
+			$flag_button.text(qty);
+			$flag_button.removeClass("hide");
+		} else if (qty < 0) {
+			$flag_button.text(qty);
+		} else {
+			$flag_button.text("");
+			$flag_button.addClass("hide");
+		}
+
+		currFormula = $chat.val();
+		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
+		$chat.val(currFormula);
+		this.applyModifier(html);
+	}
+
+	/**
+     * Process a formula to apply advantage or disadvantage. Should be used
+     * within a regex replacer function's callback.
+     *
+     * @param {string} count | String match for the current dice count.
+     * @param {string} dice | String match for the dice type (d20).
+     * @param {string} khl | String match for kh|l (includes kh|l count).
+     * @param {number} countDiff | Integer to adjust the dice count by.
+     * @param {string} newKhl | Formula on the button (kh or kl).
+     * @returns {object} Object with content and count keys.
+     */
+	updateDiceKeep(count, dice, khl, countDiff, newKhl) {
+		// Start by getting the current number of dice (minimum 1).
+		let keep = Number.isNumeric(count) ? Number(count) : 1;
+		if (keep === 0) keep = 1;
+
+		// Apply the count diff to adjust how many dice we need for adv/dis.
+		let newCount = keep + countDiff;
+		let newKeep = newCount - 1;
+
+		// Handling toggling on/off advantage.
+		if (khl) {
+			// If switching from adv to dis or vice versa, adjust the formula to
+			// simply replace the kh and kl while leaving the rest as it was prior
+			// to applying the count diff.
+			if (!khl.includes(newKhl)) {
+				newCount = keep;
+				newKeep = newCount - 1;
+				khl = newKhl;
+			}
+			// If the adv/dis buttons were clicked after they were previously
+			// applied, we need to remove them. If it's currently 2d20kh or kl,
+			// change it to 1d20. Otherwise, only strip the kh or kl.
+			else {
+				newCount = keep > 2 ? keep : newCount;
+				newKeep = 0;
+			}
+		}
+		// If adv/dis weren't enabled, then that means we need to enable them.
+		else {
+			khl = newKhl;
+		}
+
+		// Limit the count to 2 when adding adv/dis to avoid accidental super advantage.
+		if (newCount > 2 && newKeep > 0) {
+			newCount = 2;
+			newKeep = newCount - 1;
+		}
+
+		// Create the updated text string.
+		let result = `${newCount > 0 ? newCount : 1}${dice}`;
+		// Append kh or kl if needed.
+		if (newCount > 1 && newKeep > 0) result = `${result}${newKhl.includes("kh") ? "kh" : "kl"}`;
+
+		// TODO: This allows for keeping multiple dice, but in this case, we only need to keep one.
+		// if (newCount > 1 && newKeep > 1) result = `${result}${newKeep}`;
+
+		// Return an object with the updated text and the new count.
+		return {
+			content: result,
+			count: newCount
+		};
+	}
+}
