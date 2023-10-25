@@ -22,7 +22,6 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 				d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
 			},
 		];
-
 	}
 
 	applyLayout(html) {
@@ -84,5 +83,4 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 			$chat.val(chat_val);
 		});
 	}
-
 }
