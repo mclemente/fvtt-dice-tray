@@ -7,7 +7,8 @@ This module adds a dice tray below chat turns the d20 icon near the chat prompt 
 1. Go to the setup page and choose **Add-on Modules**.
 2. Click the **Install Module** button:
 3.
-   a) Search for Dice Tray.  
+   a) Search for Dice Tray.
+
 	 b) Paste the following on the **Manifest Link**: https://github.com/mclemente/fvtt-dice-tray/releases/latest/download/module.json
 5. In your world, enable the module on the module settings.
 
@@ -76,11 +77,6 @@ it to work.
 
 You can also link to multiple data folders by specifying multiple paths in the
 `dataPath` array.
-
-### Creating a release
-
-The workflow works basically the same as the workflow of the [League Basic JS Module Template], please follow the
-instructions given there.
 
 ## Licensing
 
