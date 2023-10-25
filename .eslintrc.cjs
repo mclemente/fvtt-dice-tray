@@ -136,6 +136,7 @@ module.exports = {
 			"warn",
 			{
 				code: 120,
+				ignoreComments: true,
 				ignoreTrailingComments: true,
 				ignoreUrls: true,
 				ignoreStrings: true,
