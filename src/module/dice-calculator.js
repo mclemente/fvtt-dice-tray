@@ -21,7 +21,7 @@ Hooks.once("i18nInit", () => {
 	const providerStringMaps = getProviderString(systemMapsRegex, keys);
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
-	Hooks.callAll("dice-calculator.dice-calculator", newCalculators, keys);
+	Hooks.callAll("dice-calculator.calculator", newCalculators, keys);
 	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
 	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
 	const providerStringCalculators = getProviderString(systemCalculatorsRegex, keys);
