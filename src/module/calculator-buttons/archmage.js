@@ -1,4 +1,4 @@
-import { DiceCalculator } from "./templates/dice-calculator";
+import { DiceCalculator } from "./templates/calculator";
 
 export default class archmageDiceCalculator extends DiceCalculator {
 	adv = true;

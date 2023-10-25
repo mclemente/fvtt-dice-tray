@@ -1,4 +1,4 @@
-import { DiceCalculator } from "./templates/dice-calculator";
+import { DiceCalculator } from "./templates/calculator";
 
 export default class dccDiceCalculator extends DiceCalculator {
 	abilities = ["str", "agl", "sta", "per", "int", "lck"];
