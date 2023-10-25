@@ -33,10 +33,10 @@ export function registerSettings() {
 		requiresReload: true
 	});
 
-	game.settings.register("dice-calculator", "formulaArray", {
+	game.settings.register("dice-calculator", "rolls", {
 		scope: "world",
 		config: false,
-		default: false,
+		default: [],
 		type: Array,
 	});
 }

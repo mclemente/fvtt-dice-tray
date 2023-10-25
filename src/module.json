@@ -18,7 +18,6 @@
     "minimum": "11",
     "verified": "11"
   },
-  "scripts": ["./module/js.cookie.min.js"],
   "esmodules": ["module/dice-calculator.js"],
   "styles": ["styles/dice-calculator.css"],
   "packs": [],

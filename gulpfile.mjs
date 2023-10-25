@@ -67,15 +67,10 @@ async function copyFiles() {
 	}
 }
 
-function jsCookie() {
-	return gulp.src(["node_modules/js-cookie/dist/js.cookie.min.js"]).pipe(gulp.dest("dist/module"));
-}
-
 /**
  * Watch for changes for each build step
  */
 export function watch() {
-	jsCookie();
 	gulp.watch(`${sourceDirectory}/**/*.${sourceFileExtension}`, { ignoreInitial: false }, buildCode);
 	gulp.watch(`${stylesDirectory}/**/*.${stylesExtension}`, { ignoreInitial: false }, buildStyles);
 	gulp.watch(
@@ -85,7 +80,7 @@ export function watch() {
 	);
 }
 
-export const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, jsCookie, copyFiles));
+export const build = gulp.series(clean, gulp.parallel(buildCode, buildStyles, copyFiles));
 
 /** ******************/
 /*      CLEAN       */

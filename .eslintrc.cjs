@@ -18,7 +18,6 @@ module.exports = {
 
 	globals: {
 		CONFIG: false,
-		Cookies: false
 	},
 
 	extends: ["eslint:recommended", "@typhonjs-fvtt/eslint-config-foundry.js/0.8.0"],

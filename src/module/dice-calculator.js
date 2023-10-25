@@ -179,8 +179,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					};
 
 				// Build the template.
-				let rolls = Cookies.get("diceTray.diceFormula");
-				rolls = !rolls ? [] : rolls.split(";");
+				const rolls = game.settings.get("dice-calculator", "rolls");
 				let templateData = {
 					rolls,
 					abilities: abilities,
@@ -231,12 +230,11 @@ function dcRollDice(actor = null) {
 	}
 
 	// Store it for later.
-	let formulaArray = Cookies.get("diceTray.diceFormula");
-	formulaArray = !formulaArray ? [] : formulaArray.split(";");
+	let formulaArray = game.settings.get("dice-calculator", "rolls");
 	// Only update if this is a new formula.
 	if ($.inArray(formula, formulaArray) === -1) {
 		formulaArray.unshift(formula);
 		formulaArray = formulaArray.slice(0, 10);
-		Cookies.set("diceTray.diceFormula", formulaArray.join(";"));
+		game.settings.set("dice-calculator", "rolls", formulaArray);
 	}
 }

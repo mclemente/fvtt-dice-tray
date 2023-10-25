@@ -19,7 +19,6 @@
     "gulp": "^4.0.2",
     "gulp-sourcemaps": "^3.0.0",
     "husky": "^8.0.3",
-    "js-cookie": "^3.0.5",
     "lint-staged": "^15.0.2",
     "rollup": "^2.79.1",
     "vinyl-buffer": "^1.0.1",
