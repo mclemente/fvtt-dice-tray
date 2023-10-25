@@ -1,7 +1,7 @@
 import * as diceCalculators from "./calculator-buttons/_module.js";
 import * as keymaps from "./maps/_module.js";
 
-import { DiceCalculatorDialog } from "./dice-calculator-dialog";
+import { DiceCalculatorDialog } from "./dice-calculator-dialog.js";
 import { KEYS } from "./maps/_keys.js";
 import { registerSettings } from "./settings.js";
 
@@ -15,13 +15,13 @@ Hooks.once("i18nInit", () => {
 	const newMaps = deepClone(keymaps);
 	const newCalculators = deepClone(diceCalculators);
 
-	Hooks.callAll("dice-tray.keymaps", newMaps, newMaps.Template, keys);
+	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template, keys);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
 	const providerStringMaps = getProviderString(systemMapsRegex, keys);
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
-	Hooks.callAll("dice-tray.dice-calculator", newCalculators, keys);
+	Hooks.callAll("dice-calculator.dice-calculator", newCalculators, keys);
 	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
 	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
 	const providerStringCalculators = getProviderString(systemCalculatorsRegex, keys);
@@ -44,14 +44,14 @@ function getProviderString(regex, keys) {
 Hooks.on("renderSidebarTab", async (app, html, data) => {
 	// Exit early if necessary;
 	if (app.tabName !== "chat") return;
-	if (game.settings.get("dice-tray", "enableDiceTray")) {
+	if (game.settings.get("dice-calculator", "enableDiceTray")) {
 		// Prepare the dice tray for rendering.
 		let $chat_form = html.find("#chat-form");
 		const options = {
 			dicerows: CONFIG.DICETRAY.dice
 		};
 
-		const content = await renderTemplate("modules/dice-tray/templates/tray.html", options);
+		const content = await renderTemplate("modules/dice-calculator/templates/tray.html", options);
 
 		if (content.length > 0) {
 			let $content = $(content);
@@ -96,7 +96,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					if (mod && mod !== "0") {
 						dragData.formula += ` + ${mod}`;
 					}
-					dragData.origin = "dice-tray";
+					dragData.origin = "dice-calculator";
 					event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dragData));
 				}
 			});
@@ -105,7 +105,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			$("html").on("drop", async (event) => {
 				let data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
 				// If there's a formula, trigger the roll.
-				if (data?.origin === "dice-tray" && data?.formula) {
+				if (data?.origin === "dice-calculator" && data?.formula) {
 					new Roll(data.formula).toMessage();
 				}
 			});
@@ -158,7 +158,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			CONFIG.DICETRAY.applyLayout(html);
 		}
 	}
-	if (game.settings.get("dice-tray", "enableDiceCalculator")) {
+	if (game.settings.get("dice-calculator", "enableDiceCalculator")) {
 		// Render a modal on click.
 		const diceIconSelector = html.find("#chat-controls .chat-control-icon i");
 		diceIconSelector.addClass("dice-calculator-toggle");

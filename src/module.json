@@ -1,8 +1,12 @@
 {
-  "id": "dice-tray",
-  "title": "Dice Tray 2",
-  "description": "<description of the package>",
+  "id": "dice-calculator",
+  "title": "Dice Tray",
+  "description": "Adds a dice tray below chat, and turns the d20 near chat into a dice calculator.",
   "authors": [
+    {
+      "name": "Asacolips",
+      "discord": "Asacolips#1867"
+    },
     {
       "name": "Matheus Clemente",
       "discord": "mclemente#5524"
@@ -15,8 +19,8 @@
     "verified": "11"
   },
   "scripts": ["./module/js.cookie.min.js"],
-  "esmodules": ["module/dice-tray.js"],
-  "styles": ["styles/dice-tray.css"],
+  "esmodules": ["module/dice-calculator.js"],
+  "styles": ["styles/dice-calculator.css"],
   "packs": [],
   "languages": [
     {

@@ -4,22 +4,22 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 	get dice() {
 		return [
 			{
-				d3: { img: "modules/dice-tray/assets/icons/d3black.svg" },
+				d3: { img: "modules/dice-calculator/assets/icons/d3black.svg" },
 				d4: { img: "icons/dice/d4black.svg" },
-				d5: { img: "modules/dice-tray/assets/icons/d5black.svg" },
+				d5: { img: "modules/dice-calculator/assets/icons/d5black.svg" },
 				d6: { img: "icons/dice/d6black.svg" },
-				d7: { img: "modules/dice-tray/assets/icons/d7black.svg" },
+				d7: { img: "modules/dice-calculator/assets/icons/d7black.svg" },
 				d8: { img: "icons/dice/d8black.svg" },
 				d10: { img: "icons/dice/d10black.svg" },
 			},
 			{
 				d12: { img: "icons/dice/d10black.svg" },
-				d14: { img: "modules/dice-tray/assets/icons/d14black.svg" },
-				d16: { img: "modules/dice-tray/assets/icons/d16black.svg" },
+				d14: { img: "modules/dice-calculator/assets/icons/d14black.svg" },
+				d16: { img: "modules/dice-calculator/assets/icons/d16black.svg" },
 				d20: { img: "icons/dice/d20black.svg" },
-				d24: { img: "modules/dice-tray/assets/icons/d24black.svg" },
-				d30: { img: "modules/dice-tray/assets/icons/d30black.svg" },
-				d100: { img: "modules/dice-tray/assets/icons/d100black.svg" },
+				d24: { img: "modules/dice-calculator/assets/icons/d24black.svg" },
+				d30: { img: "modules/dice-calculator/assets/icons/d30black.svg" },
+				d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
 			},
 		];
 

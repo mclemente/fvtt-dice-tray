@@ -6,7 +6,7 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default () => ({
-	input: "src/module/dice-tray.js",
+	input: "src/module/dice-calculator.js",
 	output: {
 		dir: "dist/module",
 		format: "es",

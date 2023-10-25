@@ -8,7 +8,7 @@ export default class TemplateDiceMap {
 				d10: { img: "icons/dice/d10black.svg" },
 				d12: { img: "icons/dice/d12black.svg" },
 				d20: { img: "icons/dice/d20black.svg" },
-				d100: { img: "modules/dice-tray/assets/icons/d100black.svg" },
+				d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
 			}
 		];
 	}

@@ -20,7 +20,7 @@ import rollupConfig from "./rollup.config.mjs";
 /*  CONFIGURATION   */
 /** ******************/
 
-const packageId = "dice-tray";
+const packageId = "dice-calculator";
 const sourceDirectory = "./src";
 const distDirectory = "./dist";
 const stylesDirectory = `${sourceDirectory}/styles`;

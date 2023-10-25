@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 export function registerSettings() {
-	game.settings.register("dice-tray", "enableDiceCalculator", {
+	game.settings.register("dice-calculator", "enableDiceCalculator", {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceCalculator.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceCalculator.hint"),
 		scope: "world",
@@ -13,7 +13,7 @@ export function registerSettings() {
 		requiresReload: true
 	});
 
-	game.settings.register("dice-tray", "enableDiceTray", {
+	game.settings.register("dice-calculator", "enableDiceTray", {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.hint"),
 		scope: "world",
@@ -23,7 +23,7 @@ export function registerSettings() {
 		requiresReload: true
 	});
 
-	game.settings.register("dice-tray", "enableExtraDiceInSwade", {
+	game.settings.register("dice-calculator", "enableExtraDiceInSwade", {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.hint"),
 		scope: "world",
@@ -31,5 +31,12 @@ export function registerSettings() {
 		default: false,
 		type: Boolean,
 		requiresReload: true
+	});
+
+	game.settings.register("dice-calculator", "formulaArray", {
+		scope: "world",
+		config: false,
+		default: false,
+		type: Array,
 	});
 }
