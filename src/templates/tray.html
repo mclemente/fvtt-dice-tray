@@ -5,17 +5,10 @@
 		<button class="dice-tray__button" data-formula="{{key}}" data-tooltip="{{key}}" data-tooltip-direction="UP">
 			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
 			{{#if data.img}}
-			<div
-				class="dice"
-				style="
-					mask: url({{data.img}}) no-repeat;
-					mask-size: contain;
-					mask-position: center 2px;
-					-webkit-mask: url({{data.img}}) no-repeat;
-					-webkit-mask-size: contain;
-					-webkit-mask-position: center 2px;
-					">
-			</div>
+			<div class="dice" style="
+				mask: url({{data.img}}) center 2px/contain no-repeat;
+				-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
+			"></div>
 			{{else}}
 			<span>{{data.label}}</span>
 			{{/if}}
