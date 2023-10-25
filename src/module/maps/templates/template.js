@@ -1,4 +1,18 @@
 export default class TemplateDiceMap {
+	/**
+	 * The dice rows that will be shown on the dice tray.
+	 * @property {String} img	The path to an image that will be shown on the button. If none is present, the label will be used instead.
+	 * @property {String} label A string meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
+	 * @returns {[Object]}
+	 *
+	 * @example
+	 * ```js
+	 * return [{
+	 * 	d6: { img: "icons/dice/d6black.svg" },
+	 *  "4df": { label: "Fate Dice" }
+	 * }]
+	 * ```
+	 */
 	get dice() {
 		return [
 			{
@@ -13,6 +27,9 @@ export default class TemplateDiceMap {
 		];
 	}
 
+	/**
+	 * Labels that will be shown on the Keep Highest/Lowest button if they are shown.
+	 */
 	get labels() {
 		return {
 			advantage: "DICE_TRAY.KeepHighest",
@@ -22,7 +39,12 @@ export default class TemplateDiceMap {
 		};
 	}
 
+	/**
+	 * Logic to set display the additiona KH/KL buttons and event listeners.
+	 * @param {HTMLElement} html
+	 */
 	applyLayout(html) {
+		/** This shows the KH/KL buttons. Remove them if you don't need. */
 		html.find("#dice-tray-math").show();
 		html.find("#dice-tray-math").append(
 			`<div class="dice-tray__stacked flexcol">
@@ -34,6 +56,8 @@ export default class TemplateDiceMap {
                 </button>
             </div>`
 		);
+
+		/** This sets the logic for using the KH/KL buttons */
 		html.find(".dice-tray__ad").attr("draggable", true).on("click", (event) => {
 			event.preventDefault();
 			let dataset = event.currentTarget.dataset;
@@ -82,6 +106,8 @@ export default class TemplateDiceMap {
 			// Update the value.
 			$chat.val(chat_val);
 		});
+
+		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.find(".dice-tray__roll").on("click", (event) => {
 			event.preventDefault();
 			let spoofed = this.triggerRollClick();
@@ -91,6 +117,8 @@ export default class TemplateDiceMap {
 			html.find(".dice-tray__flag").addClass("hide");
 			html.find(".dice-tray__ad").removeClass("active");
 		});
+
+		/** Sending a message on the chat form clears the text and hides the orange numbers */
 		html.find("#chat-message").keydown((e) => {
 			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
 				html.find(".dice-tray__flag").text("");
@@ -99,6 +127,10 @@ export default class TemplateDiceMap {
 		});
 	}
 
+	/**
+	 * Logic to apply the number on the -/+ selector.
+	 * @param {HTMLElement} html
+	 */
 	applyModifier(html) {
 		const $mod_input = html.find(".dice-tray__input");
 		const mod_val = Number($mod_input.val());
@@ -128,6 +160,15 @@ export default class TemplateDiceMap {
 		// }
 	}
 
+	/**
+	 * Returns a string with the number of dice to be rolled.
+	 * Generally simple, unless the system demands some complex use.
+	 * Consider checking SWADE's implementation.
+	 * @param {String} qty
+	 * @param {String} dice
+	 * @param {HTMLElement} html
+	 * @returns {String}
+	 */
 	rawFormula(qty, dice, html) {
 		return `${qty === "" ? 1 : qty}${dice}`;
 	}
@@ -151,6 +192,13 @@ export default class TemplateDiceMap {
 		return spoofed;
 	}
 
+	/**
+	 * Handles clicks on the -/+ buttons.
+	 * @param {Object} dataset
+	 * @param {String} direction
+	 * @param {HTMLElement} html
+	 * @returns
+	 */
 	updateChatDice(dataset, direction, html) {
 		const $chat = html.find("#chat-form textarea");
 		let currFormula = String($chat.val());
