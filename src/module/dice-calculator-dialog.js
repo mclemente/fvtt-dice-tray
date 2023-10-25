@@ -5,7 +5,6 @@ export class DiceCalculatorDialog extends Dialog {
 			focus: true,
 			classes: ["dialog", "dialog--dice-calculator"],
 			width: 400,
-			// top: event.clientY - 80, TODO has to be set during render
 			left: window.innerWidth - 710,
 			jQuery: true
 		});
