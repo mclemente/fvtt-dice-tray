@@ -156,7 +156,7 @@ export default class TemplateDiceMap {
 		const $chat = html.find("#chat-form textarea");
 		const chat_val = String($chat.val());
 
-		const match_string = /(\\+|\\-)(\d+)$/;
+		const match_string = /(\+|-)(\d+)$/;
 		if (match_string.test(chat_val)) {
 			$chat.val(chat_val.replace(match_string, mod_string));
 		} else if (chat_val !== "") {
