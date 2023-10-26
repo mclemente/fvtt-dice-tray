@@ -102,14 +102,13 @@ export default class TemplateDiceMap {
 			// Handle toggle classes.
 			if (chat_val.includes("kh")) {
 				html.find(".dice-tray__advantage").addClass("active");
-			}
-			else {
+			} else {
 				html.find(".dice-tray__advantage").removeClass("active");
 			}
+
 			if (chat_val.includes("kl")) {
 				html.find(".dice-tray__disadvantage").addClass("active");
-			}
-			else {
+			} else {
 				html.find(".dice-tray__disadvantage").removeClass("active");
 			}
 			// Update the value.
