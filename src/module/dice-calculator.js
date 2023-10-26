@@ -168,7 +168,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			let $dialog = $(".dialog--dice-calculator");
 
 			if ($dialog.length < 1) {
-				let controlledTokens = canvas.tokens.controlled;
+				let controlledTokens = canvas?.tokens?.controlled ?? [];
 				let actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
 
 				let { abilities, attributes, customButtons } = CONFIG.DICETRAY?.calculator?.getData(actor)
