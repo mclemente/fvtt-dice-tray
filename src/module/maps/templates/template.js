@@ -6,10 +6,19 @@ export default class TemplateDiceMap {
 	 * @returns {[Object]}
 	 *
 	 * @example
-	 * ```js
+	 * ```js Dice buttons with mixed image/label
 	 * return [{
 	 * 	d6: { img: "icons/dice/d6black.svg" },
 	 *  "4df": { label: "Fate Dice" }
+	 * }]
+	 * ```
+	 *
+	 * @example Dice buttons with just labels
+	 * ```js
+	 * return [{
+	 * 	d6: { label: "1d6" },
+	 *  "2d6": { label: "2d6" }
+	 *  "3d6": { label: "3d6" }
 	 * }]
 	 * ```
 	 */
