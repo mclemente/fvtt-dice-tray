@@ -2,12 +2,16 @@
     {{#each dicerows as |dice|}}
     <div class="dice-tray__buttons flexrow">
 		{{#each dice as |data key|}}
-		<button class="dice-tray__button" data-formula="{{key}}" data-tooltip="{{key}}" data-tooltip-direction="UP">
+		<button class="dice-tray__button"
+			data-formula="{{key}}"
+			data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
+			data-tooltip-direction="UP">
 			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
 			{{#if data.img}}
 			<div class="dice" style="
 				mask: url({{data.img}}) center 2px/contain no-repeat;
 				-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
+				{{#if data.color}}background-color: {{data.color}};{{/if}}
 			"></div>
 			{{else}}
 			<span>{{data.label}}</span>
