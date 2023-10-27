@@ -1,6 +1,8 @@
 import GenericDiceMap from "./templates/template.js";
 
 export default class SWADEDiceMap extends GenericDiceMap {
+	removeAdvOnRoll = false;
+
 	get dice() {
 		const dice = [
 			{
@@ -18,18 +20,16 @@ export default class SWADEDiceMap extends GenericDiceMap {
 		return dice;
 	}
 
-	applyLayout(html) {
-		html.find("#dice-tray-math").show();
-		html.find("#dice-tray-math").append(
-			`<div class="dice-tray__stacked flexcol">
-                <button class="dice-tray__ad dice-tray__advantage" data-formula="kh" data-tooltip="${game.i18n.localize("DICE_TRAY.WildDie")}" data-tooltip-direction="UP">
-                    ${game.i18n.localize("DICE_TRAY.Wild")}
-                </button>
-                <button class="dice-tray__ad dice-tray__disadvantage" data-formula="kl" data-tooltip="${game.i18n.localize("DICE_TRAY.ExplodingDie")}" data-tooltip-direction="UP">
-                    ${game.i18n.localize("DICE_TRAY.Ace")}
-                </button>
-            </div>`
-		);
+	get labels() {
+		return {
+			advantage: game.i18n.localize("DICE_TRAY.WildDie"),
+			adv: game.i18n.localize("DICE_TRAY.Wild"),
+			disadvantage: game.i18n.localize("DICE_TRAY.ExplodingDie"),
+			dis: game.i18n.localize("DICE_TRAY.Ace")
+		};
+	}
+
+	_extraButtonsLogic(html) {
 		html.find(".dice-tray__advantage").on("click", (event) => {
 			event.preventDefault();
 			if (!html.find(".dice-tray__advantage").hasClass("active")) {
@@ -48,21 +48,6 @@ export default class SWADEDiceMap extends GenericDiceMap {
 			else {
 				html.find(".dice-tray__disadvantage").removeClass("active");
 				html.find(".dice-tray__advantage").removeClass("active");
-			}
-		});
-		html.find(".dice-tray__roll").on("click", (event) => {
-			event.preventDefault();
-			let spoofed = this.triggerRollClick();
-			// Trigger the event.
-			html.find("#chat-message").trigger(spoofed);
-			html.find(".dice-tray__input").val(0);
-			html.find(".dice-tray__flag").text("");
-			html.find(".dice-tray__flag").addClass("hide");
-		});
-		html.find("#chat-message").keydown((e) => {
-			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				html.find(".dice-tray__flag").text("");
-				html.find(".dice-tray__flag").addClass("hide");
 			}
 		});
 	}

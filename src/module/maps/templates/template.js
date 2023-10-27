@@ -1,4 +1,26 @@
 export default class TemplateDiceMap {
+	showExtraButtons = true;
+
+	removeAdvOnRoll = true;
+
+	/**
+	 * The formula that will be rendered on the KH/KL buttons
+	 * @returns {{}}
+	 *
+	 * @example Making the buttons be +1/-1 for additional logic
+	 * ```js
+	 * return {
+	 *	kh: "+1",
+	 *	kl: "-1"
+	 * };
+	 */
+	get buttonFormulas() {
+		return {
+			kh: "kh",
+			kl: "kl"
+		};
+	}
+
 	/**
 	 * The dice rows that will be shown on the dice tray.
 	 * @property {String} img	The path to an image that will be shown on the button. If none is present, the label will be used instead.
@@ -10,7 +32,7 @@ export default class TemplateDiceMap {
 	 * return [{
 	 * 	d6: { img: "icons/dice/d6black.svg" },
 	 *  "4df": { label: "Fate Dice" }
-	 * }]
+	 * }];
 	 * ```
 	 *
 	 * @example Dice buttons with just labels
@@ -19,7 +41,7 @@ export default class TemplateDiceMap {
 	 * 	d6: { label: "1d6" },
 	 *  "2d6": { label: "2d6" }
 	 *  "3d6": { label: "3d6" }
-	 * }]
+	 * }];
 	 * ```
 	 */
 	get dice() {
@@ -53,20 +75,62 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	applyLayout(html) {
-		/** This shows the KH/KL buttons. Remove them if you don't need. */
+		if (this.showExtraButtons) {
+			this._createExtraButtons(html);
+			this._extraButtonsLogic(html);
+		}
+
+		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
+		html.find(".dice-tray__roll").on("click", (event) => {
+			event.preventDefault();
+			let spoofed = this.triggerRollClick();
+			html.find("#chat-message").trigger(spoofed);
+			html.find(".dice-tray__input").val(0);
+			html.find(".dice-tray__flag").text("");
+			html.find(".dice-tray__flag").addClass("hide");
+			if (this.removeAdvOnRoll) html.find(".dice-tray__ad").removeClass("active");
+		});
+
+		/** Sending a message on the chat form clears the text and hides the orange numbers */
+		html.find("#chat-message").keydown((e) => {
+			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
+				html.find(".dice-tray__flag").text("");
+				html.find(".dice-tray__flag").addClass("hide");
+			}
+		});
+	}
+
+	/**
+	 * Creates the KH/KL buttons
+	 * @param {HTMLElement} html
+	 */
+	_createExtraButtons(html) {
+		const { kh, kl } = this.buttonFormulas;
 		html.find("#dice-tray-math").show();
 		html.find("#dice-tray-math").append(
 			`<div class="dice-tray__stacked flexcol">
-                <button class="dice-tray__ad dice-tray__advantage" data-formula="kh" data-tooltip="${game.i18n.localize(this.labels.advantage)}" data-tooltip-direction="UP">
+                <button class="dice-tray__ad dice-tray__advantage"
+					data-formula="${kh}"
+					data-tooltip="${game.i18n.localize(this.labels.advantage)}"
+					data-tooltip-direction="UP">
                     ${game.i18n.localize(this.labels.adv)}
                 </button>
-                <button class="dice-tray__ad dice-tray__disadvantage" data-formula="kl" data-tooltip="${game.i18n.localize(this.labels.disadvantage)}" data-tooltip-direction="UP">
+                <button class="dice-tray__ad dice-tray__disadvantage"
+					data-formula="${kl}"
+					data-tooltip="${game.i18n.localize(this.labels.disadvantage)}"
+					data-tooltip-direction="UP">
                     ${game.i18n.localize(this.labels.dis)}
                 </button>
             </div>`
 		);
+	}
 
-		/** This sets the logic for using the KH/KL buttons */
+	/**
+	 * Sets the logic for using the KH/KL buttons.
+	 * This version appends KH/KL to rolls. Check DCC or SWADE for other uses.
+	 * @param {HTMLElement} html
+	 */
+	_extraButtonsLogic(html) {
 		html.find(".dice-tray__ad").attr("draggable", true).on("click", (event) => {
 			event.preventDefault();
 			let dataset = event.currentTarget.dataset;
@@ -113,25 +177,6 @@ export default class TemplateDiceMap {
 			}
 			// Update the value.
 			$chat.val(chat_val);
-		});
-
-		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
-		html.find(".dice-tray__roll").on("click", (event) => {
-			event.preventDefault();
-			let spoofed = this.triggerRollClick();
-			html.find("#chat-message").trigger(spoofed);
-			html.find(".dice-tray__input").val(0);
-			html.find(".dice-tray__flag").text("");
-			html.find(".dice-tray__flag").addClass("hide");
-			html.find(".dice-tray__ad").removeClass("active");
-		});
-
-		/** Sending a message on the chat form clears the text and hides the orange numbers */
-		html.find("#chat-message").keydown((e) => {
-			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				html.find(".dice-tray__flag").text("");
-				html.find(".dice-tray__flag").addClass("hide");
-			}
 		});
 	}
 

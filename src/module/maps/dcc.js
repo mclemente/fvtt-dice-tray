@@ -1,6 +1,16 @@
 import GenericDiceMap from "./templates/template.js";
 
 export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
+	// Redundant, buttons don't keep lit up on use
+	removeAdvOnRoll = false;
+
+	get buttonFormulas() {
+		return {
+			kh: "+1",
+			kl: "-1"
+		};
+	}
+
 	get dice() {
 		return [
 			{
@@ -33,33 +43,7 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 		};
 	}
 
-	applyLayout(html) {
-		html.find(".dice-tray__roll").on("click", (event) => {
-			event.preventDefault();
-			let spoofed = this.triggerRollClick();
-			// Trigger the event.
-			html.find("#chat-message").trigger(spoofed);
-			html.find(".dice-tray__input").val(0);
-			html.find(".dice-tray__flag").text("");
-			html.find(".dice-tray__flag").addClass("hide");
-		});
-		html.find("#chat-message").keydown((e) => {
-			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				html.find(".dice-tray__flag").text("");
-				html.find(".dice-tray__flag").addClass("hide");
-			}
-		});
-		html.find("#dice-tray-math").show();
-		html.find("#dice-tray-math").append(
-			`<div class="dice-tray__stacked flexcol">
-                <button class="dice-tray__ad" data-mod="+1" data-tooltip="${game.i18n.localize(this.labels.advantage)}" data-tooltip-direction="UP">
-					${game.i18n.localize(this.labels.adv)}
-				</button>
-                <button class="dice-tray__ad" data-mod="-1" data-tooltip="${game.i18n.localize(this.labels.disadvantage)}" data-tooltip-direction="UP">
-					${game.i18n.localize(this.labels.dis)}
-				</button>
-            </div>`
-		);
+	_extraButtonsLogic(html) {
 		html.find(".dice-tray__ad").on("click", (event) => {
 			event.preventDefault();
 			// Get the chat box
@@ -74,7 +58,7 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 				// Locate this die in the dice chain
 				const chain_index = dice_chain.indexOf(parseInt(match[2]));
 				if (chain_index >= 0) {
-					const new_index = chain_index + parseInt(event.currentTarget.dataset.mod);
+					const new_index = chain_index + parseInt(event.currentTarget.dataset.formula);
 					// Is the new index still in range?
 					if (new_index >= 0 && new_index < dice_chain.length) {
 						chat_val = chat_val.replace(match_string, `${match[1]}d${dice_chain[new_index]}`);
