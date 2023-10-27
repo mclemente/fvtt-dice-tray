@@ -1,7 +1,9 @@
 export default class TemplateDiceMap {
-	showExtraButtons = true;
-
+	/** Unmark the KH/KL buttons if a roll is made */
 	removeAdvOnRoll = true;
+
+	/** Shows the KH/KL buttons */
+	showExtraButtons = true;
 
 	/**
 	 * The formula that will be rendered on the KH/KL buttons
@@ -23,8 +25,10 @@ export default class TemplateDiceMap {
 
 	/**
 	 * The dice rows that will be shown on the dice tray.
-	 * @property {String} img	The path to an image that will be shown on the button. If none is present, the label will be used instead.
-	 * @property {String} label A string meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
+	 * @property {String} color		Optional RGB or Hex value that colors a dice's background image. If none is preset, it will be white.
+	 * @property {String} img		The path to an image that will be shown on the button. If none is present, the label will be used instead.
+	 * @property {String} label		The label meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
+	 * @property {String} tooltip	Optional tooltip that will be shown instead of the key. Useful for special dice like Genesys system's.
 	 * @returns {[Object]}
 	 *
 	 * @example
@@ -41,6 +45,15 @@ export default class TemplateDiceMap {
 	 * 	d6: { label: "1d6" },
 	 *  "2d6": { label: "2d6" }
 	 *  "3d6": { label: "3d6" }
+	 * }];
+	 * ```
+	 *
+	 * @example Dice buttons with tooltips
+	 * ```js
+	 * return [{
+	 * 	da: { tooltip: "Proficiency" },
+	 *  ds: { tooltip: "Setback" }
+	 *  df: { tooltip: "Force" }
 	 * }];
 	 * ```
 	 */
