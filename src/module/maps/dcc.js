@@ -24,14 +24,16 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 		];
 	}
 
-	applyLayout(html) {
-		let dice_chain = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30];
-		let labels = {
-			plusdie: "DICE_TRAY.PlusOneDieLong",
-			plusd: "DICE_TRAY.PlusOneDie",
-			minusdie: "DICE_TRAY.MinusOneDieLong",
-			minusd: "DICE_TRAY.MinusOneDie",
+	get labels() {
+		return {
+			advantage: "DICE_TRAY.PlusOneDieLong",
+			adv: "DICE_TRAY.PlusOneDie",
+			disadvantage: "DICE_TRAY.MinusOneDieLong",
+			dis: "DICE_TRAY.MinusOneDie"
 		};
+	}
+
+	applyLayout(html) {
 		html.find(".dice-tray__roll").on("click", (event) => {
 			event.preventDefault();
 			let spoofed = this.triggerRollClick();
@@ -50,15 +52,15 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 		html.find("#dice-tray-math").show();
 		html.find("#dice-tray-math").append(
 			`<div class="dice-tray__stacked flexcol">
-                <button class="dice-tray__dicechain" data-mod="+1" data-tooltip="${game.i18n.localize(labels.plusdie)}" data-tooltip-direction="UP">
-					${game.i18n.localize(labels.plusd)}
+                <button class="dice-tray__ad" data-mod="+1" data-tooltip="${game.i18n.localize(this.labels.advantage)}" data-tooltip-direction="UP">
+					${game.i18n.localize(this.labels.adv)}
 				</button>
-                <button class="dice-tray__dicechain" data-mod="-1" data-tooltip="${game.i18n.localize(labels.minusdie)}" data-tooltip-direction="UP">
-					${game.i18n.localize(labels.minusd)}
+                <button class="dice-tray__ad" data-mod="-1" data-tooltip="${game.i18n.localize(this.labels.disadvantage)}" data-tooltip-direction="UP">
+					${game.i18n.localize(this.labels.dis)}
 				</button>
             </div>`
 		);
-		html.find(".dice-tray__dicechain").on("click", (event) => {
+		html.find(".dice-tray__ad").on("click", (event) => {
 			event.preventDefault();
 			// Get the chat box
 			let $chat = html.find("#chat-form textarea");
@@ -68,6 +70,7 @@ export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
 			// Find the first dice on the line to update
 			const match = chat_val.match(match_string);
 			if (match) {
+				const dice_chain = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30];
 				// Locate this die in the dice chain
 				const chain_index = dice_chain.indexOf(parseInt(match[2]));
 				if (chain_index >= 0) {

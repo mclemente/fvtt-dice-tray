@@ -514,16 +514,6 @@
   border-color: #fff;
 }
 
-.dice-tray button.dice-tray__dicechain {
-  font-size: 10px;
-  height: 17px;
-  -webkit-box-flex: 17px;
-  -ms-flex: 17px;
-  flex: 17px;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .dice-tray button svg {
   width: 100%;
   height: auto;
