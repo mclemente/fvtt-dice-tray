@@ -1,5 +1,7 @@
 <form autocomplete="off" onsubmit="event.preventDefault()">
-	<nav class="sheet-tabs tabs">
+	<nav class="sheet-tabs tabs"
+		{{#if (lte numOfTabs 1)}}style="display: none"{{/if}}
+		>
 		{{#each tabs}}
 			<a class="item" data-tab="{{@key}}">
 				<i class="{{icon}}"></i>

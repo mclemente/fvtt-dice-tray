@@ -92,6 +92,8 @@ export class DiceTrayGeneralSettings extends FormApplication {
 			);
 		}
 
+		data.numOfTabs = Object.keys(data.tabs).length;
+
 		return data;
 	}
 
