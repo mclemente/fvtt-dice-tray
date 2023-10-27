@@ -9,8 +9,6 @@
     "Fortune": "Fortune (kh)",
     "Misfortune": "Misfortune (kl)",
     "Mis": "Mis",
-    "Roll": "Roll",
-    "RollDice": "Roll Dice",
     "Wild": "Wild",
     "Ace": "Ace",
     "WildDie": "Wild Die",
@@ -24,6 +22,8 @@
     "del": "del",
     "clear": "clear",
     "SETTINGS": {
+      "GeneralSettings": "General Settings",
+      "General": "General",
       "enableDiceTray.name": "Enable Dice Tray",
       "enableDiceTray.hint": "Enable showing a dice tray below the chat message area (requires reload).",
       "enableDiceCalculator.name": "Enable Dice Calculator",

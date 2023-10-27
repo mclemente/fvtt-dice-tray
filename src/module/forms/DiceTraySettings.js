@@ -63,7 +63,7 @@ export class DiceTrayGeneralSettings extends FormApplication {
 			tabs: {
 				general: {
 					icon: "fas fa-cogs",
-					name: "DICE_TRAY.General",
+					name: "DICE_TRAY.SETTINGS.General",
 				}
 			},
 		};
