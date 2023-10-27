@@ -283,9 +283,9 @@ export default class TemplateDiceMap {
 
 		if (dataset.formula === "d10") {
 			match_dice = "d10(?!0)";
-		} else if (dataset.formula === "d20") {
-			match_dice = "d20[khl]*";
 		}
+		match_dice = `${match_dice}[khl]*`;
+
 		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
 		if (match_string.test(currFormula)) {
 			const match = currFormula.match(match_string);
