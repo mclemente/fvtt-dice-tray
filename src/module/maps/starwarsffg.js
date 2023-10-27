@@ -1,6 +1,8 @@
 import GenericDiceMap from "./templates/template.js";
 
 export default class starwarsffgDiceMap extends GenericDiceMap {
+	showExtraButtons = false;
+
 	get dice() {
 		return [
 			{
