@@ -1,6 +1,6 @@
 import GenericDiceMap from "./templates/template.js";
 
-export default class DungeonCrawlClassicsDiceMap extends GenericDiceMap {
+export default class dccDiceMap extends GenericDiceMap {
 	// Redundant, buttons don't keep lit up on use
 	removeAdvOnRoll = false;
 
