@@ -70,7 +70,6 @@ export class DiceTrayGeneralSettings extends FormApplication {
 		if (isGM) {
 			data.settings = {
 				general: {
-					// Font Settings
 					enableDiceCalculator: this._prepSetting("enableDiceCalculator"),
 					enableDiceTray: this._prepSetting("enableDiceTray"),
 					enableExtraDiceInSwade: this._prepSetting("enableExtraDiceInSwade"),
@@ -146,17 +145,25 @@ export class DiceTrayGeneralSettings extends FormApplication {
 	static renderHealthEstimateStyleSettingsHandler(settingsConfig, html) {
 		const enableDiceTray = game.settings.get("dice-calculator", "enableDiceTray");
 		const enableDiceTrayCheckbox = html.find('input[name="enableDiceTray"]');
-		const enableExtraDiceInSwade = html.find('input[name="enableExtraDiceInSwade"]').parent()[0];
+		const enableExtraDiceInSwadeCheckbox = html.find('input[name="enableExtraDiceInSwade"]');
 		const gameIsSwade = game.system.id === "swade";
 
 		function hideForm(form, boolean) {
-			form.style.display = !boolean ? "none" : "flex";
+			form.style.display = boolean ? "none" : "";
+		}
+		function disableCheckbox(checkbox, boolean) {
+			checkbox.prop("disabled", boolean);
 		}
 
-		hideForm(enableExtraDiceInSwade, enableDiceTray && gameIsSwade);
+		if (gameIsSwade) {
+			disableCheckbox(enableExtraDiceInSwadeCheckbox, !enableDiceTray);
 
-		enableDiceTrayCheckbox.on("change", (event) => {
-			hideForm(enableExtraDiceInSwade, event.target.checked && gameIsSwade);
-		});
+			enableDiceTrayCheckbox.on("change", (event) => {
+				disableCheckbox(enableExtraDiceInSwadeCheckbox, !event.target.checked);
+			});
+		} else {
+			const swadeCheckboxGroup = enableExtraDiceInSwadeCheckbox.parent()[0];
+			hideForm(swadeCheckboxGroup, true);
+		}
 	}
 }
