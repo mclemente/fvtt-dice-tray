@@ -20,7 +20,7 @@ Hooks.once("i18nInit", () => {
 	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template, keys);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
-	const providerStringMaps = getProviderString(systemMapsRegex, keys);
+	const providerStringMaps = getProviderString(systemMapsRegex, keys) || "Template";
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
 	Hooks.callAll("dice-calculator.calculator", newCalculators, keys);
@@ -189,7 +189,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					abilities: abilities,
 					attributes: attributes,
 					customButtons: customButtons,
-					adv: CONFIG.DICETRAY?.calculator.adv || false
+					adv: CONFIG.DICETRAY?.calculator?.adv || false
 				};
 
 				// Render the modal.
