@@ -1,13 +1,18 @@
-// SPDX-FileCopyrightText: 2022 Johannes Loher
-//
-// SPDX-License-Identifier: MIT
+import { DiceTrayGeneralSettings } from "./forms/DiceTraySettings";
 
 export function registerSettings() {
+	game.settings.registerMenu("dice-calculator", "GeneralSettings", {
+		name: "DICE_TRAY.GeneralSettings",
+		label: game.i18n.localize("DICE_TRAY.GeneralSettings"),
+		icon: "fas fa-cogs",
+		type: DiceTrayGeneralSettings,
+	});
+
 	game.settings.register("dice-calculator", "enableDiceCalculator", {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceCalculator.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceCalculator.hint"),
 		scope: "world",
-		config: true,
+		config: false,
 		default: true,
 		type: Boolean,
 		requiresReload: true
@@ -17,7 +22,7 @@ export function registerSettings() {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.hint"),
 		scope: "world",
-		config: true,
+		config: false,
 		default: true,
 		type: Boolean,
 		requiresReload: true
@@ -27,7 +32,8 @@ export function registerSettings() {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.hint"),
 		scope: "world",
-		config: game.system.id === "swade",
+		config: false,
+		condition: game.system.id === "swade",
 		default: false,
 		type: Boolean,
 		requiresReload: true

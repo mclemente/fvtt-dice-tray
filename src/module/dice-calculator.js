@@ -3,11 +3,13 @@ import * as keymaps from "./maps/_module.js";
 
 import { DiceCalculatorDialog } from "./dice-calculator-dialog.js";
 import { KEYS } from "./maps/_keys.js";
+import { preloadTemplates } from "./preloadTemplates.js";
 import { registerSettings } from "./settings.js";
 
 // Initialize module
 Hooks.once("init", () => {
 	registerSettings();
+	preloadTemplates();
 });
 
 Hooks.once("i18nInit", () => {
@@ -44,7 +46,8 @@ function getProviderString(regex, keys) {
 Hooks.on("renderSidebarTab", async (app, html, data) => {
 	// Exit early if necessary;
 	if (app.tabName !== "chat") return;
-	if (game.settings.get("dice-calculator", "enableDiceTray")) {
+	const enableTray = game.user.getFlag("dice-calculator", "enableDiceTray") ?? game.settings.get("dice-calculator", "enableDiceTray");
+	if (enableTray) {
 		// Prepare the dice tray for rendering.
 		let $chat_form = html.find("#chat-form");
 		const options = {
@@ -158,7 +161,8 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			CONFIG.DICETRAY.applyLayout(html);
 		}
 	}
-	if (game.settings.get("dice-calculator", "enableDiceCalculator")) {
+	const enableCalculator = game.user.getFlag("dice-calculator", "enableDiceCalculator") ?? game.settings.get("dice-calculator", "enableDiceCalculator");
+	if (enableCalculator) {
 		// Render a modal on click.
 		const diceIconSelector = html.find("#chat-controls .chat-control-icon i");
 		diceIconSelector.addClass("dice-calculator-toggle");
