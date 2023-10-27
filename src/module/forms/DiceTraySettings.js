@@ -1,9 +1,4 @@
 export class DiceTrayGeneralSettings extends FormApplication {
-	constructor() {
-		super();
-		Hooks.on("renderDiceTrayGeneralSettings", DiceTrayGeneralSettings.renderHealthEstimateStyleSettingsHandler);
-	}
-
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			id: "dice-tray-form",
