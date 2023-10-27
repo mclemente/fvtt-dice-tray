@@ -144,7 +144,7 @@ export class DiceTrayGeneralSettings extends FormApplication {
 		}
 	}
 
-	static renderHealthEstimateStyleSettingsHandler(settingsConfig, html) {
+	static renderDiceTrayGeneralSettings(settingsConfig, html) {
 		const enableDiceTray = game.settings.get("dice-calculator", "enableDiceTray");
 		const enableDiceTrayCheckbox = html.find('input[name="enableDiceTray"]');
 		const enableExtraDiceInSwadeCheckbox = html.find('input[name="enableExtraDiceInSwade"]');

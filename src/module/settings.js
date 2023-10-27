@@ -47,4 +47,4 @@ export function registerSettings() {
 	});
 }
 
-Hooks.on("renderDiceTrayGeneralSettings", DiceTrayGeneralSettings.renderHealthEstimateStyleSettingsHandler);
+Hooks.on("renderDiceTrayGeneralSettings", DiceTrayGeneralSettings.renderDiceTrayGeneralSettings);
