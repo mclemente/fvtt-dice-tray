@@ -287,16 +287,16 @@ export default class TemplateDiceMap {
 		}
 
 		let match_dice = dataset.formula;
-		if (/^(\d+)(d.+)/.test(dataset.formula)) {
+		if (dataset.formula === "d10") {
+			// Filter out d100s
+			match_dice = "d10(?!0)";
+		} else if (/^(\d+)(d.+)/.test(dataset.formula)) {
 			const match = dataset.formula.match(/^(\d+)(d.+)/);
 			qty = Number(match[1]);
 			match_dice = match[2];
 			dice = match[2];
 		}
-
-		if (dataset.formula === "d10") {
-			match_dice = "d10(?!0)";
-		}
+		// Catch KH/KL
 		match_dice = `${match_dice}[khl]*`;
 
 		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
