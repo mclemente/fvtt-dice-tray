@@ -28,7 +28,6 @@ module.exports = {
 		"array-bracket-spacing": ["warn", "never"],
 		"array-callback-return": "warn",
 		"arrow-spacing": "warn",
-		"brace-style": "warn",
 		"comma-dangle": ["warn", "only-multiline"],
 		"comma-style": "warn",
 		"computed-property-spacing": "warn",
