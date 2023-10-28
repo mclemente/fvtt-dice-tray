@@ -202,17 +202,16 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				// Render the modal.
 				const content = await renderTemplate("modules/dice-calculator/templates/calculator.html", templateData);
 				new DiceCalculatorDialog({
-					title: game.i18n.localize("DICE_TRAY.RollDice"),
+					title: `Dice Tray: ${game.i18n.localize("DICE_TRAY.Calculator")}`,
 					content,
 					buttons: {
 						roll: {
-							label: game.i18n.localize("DICE_TRAY.Roll"),
+							label: game.i18n.localize("TABLE.Roll"),
 							callback: () => dcRollDice(actor)
 						}
 					}
 				}, { top: event.clientY - 80 }).render(true);
-			}
-			else {
+			} else {
 				$dialog.remove();
 			}
 		});
