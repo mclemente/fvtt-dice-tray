@@ -35,8 +35,7 @@ export default class SWADEDiceMap extends GenericDiceMap {
 			if (!html.find(".dice-tray__advantage").hasClass("active")) {
 				html.find(".dice-tray__advantage").addClass("active");
 				html.find(".dice-tray__disadvantage").addClass("active");
-			}
-			else {
+			} else {
 				html.find(".dice-tray__advantage").removeClass("active");
 			}
 		});
@@ -44,8 +43,7 @@ export default class SWADEDiceMap extends GenericDiceMap {
 			event.preventDefault();
 			if (!html.find(".dice-tray__disadvantage").hasClass("active")) {
 				html.find(".dice-tray__disadvantage").addClass("active");
-			}
-			else {
+			} else {
 				html.find(".dice-tray__disadvantage").removeClass("active");
 				html.find(".dice-tray__advantage").removeClass("active");
 			}

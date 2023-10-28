@@ -19,11 +19,9 @@ export default class archmageDiceCalculator extends DiceCalculator {
 						let formula = "";
 						if (actor.system.abilities[prop].mod !== undefined) {
 							formula = `@abil.${prop}.mod`;
-						}
-						else if (actor.system.abilities[prop].value !== undefined) {
+						} else if (actor.system.abilities[prop].value !== undefined) {
 							formula = `@abil.${prop}.value`;
-						}
-						else {
+						} else {
 							formula = `@abil.${prop}`;
 						}
 						abilities.push({

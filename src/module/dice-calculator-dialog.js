@@ -128,8 +128,7 @@ export class DiceCalculatorDialog extends Dialog {
 					let result = last.split("d");
 					if (result[0] && (result[0].length !== 0 || !isNaN(result[0]))) {
 						count = parseInt(result[0]);
-					}
-					else {
+					} else {
 						count = 1;
 					}
 					updated = true;
@@ -144,8 +143,7 @@ export class DiceCalculatorDialog extends Dialog {
 					let joiner = " ";
 					if (last.includes("d")) {
 						joiner = " + ";
-					}
-					else if (!isNaN(last)) {
+					} else if (!isNaN(last)) {
 						joiner = "";
 					}
 					currentFormula = currentFormula + joiner + buttonFormula;
@@ -194,8 +192,7 @@ export class DiceCalculatorDialog extends Dialog {
 							currentFormula = currentFormula + count;
 						}
 					}
-				}
-				else {
+				} else {
 					skip = true;
 				}
 			}
@@ -228,12 +225,10 @@ export class DiceCalculatorDialog extends Dialog {
 					// a number, append directly.
 					else if (!isNaN(last) || !isNaN(parseInt(buttonFormula))) {
 						joiner = "";
-					}
-					else {
+					} else {
 						joiner = " ";
 					}
-				}
-				else if (isNaN(parseInt(last))) {
+				} else if (isNaN(parseInt(last))) {
 					joiner = " ";
 				}
 				currentFormula = currentFormula + joiner + buttonFormula;
