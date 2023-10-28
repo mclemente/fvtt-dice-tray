@@ -124,15 +124,18 @@ export class DiceCalculatorDialog extends Dialog {
 
 				// Update the number of dice in the last item if it's the same as the
 				// button formula.
-				if (last.includes(buttonFormula)) {
+				const matchString = new RegExp(`${buttonFormula}(?!0)`, "i");
+				if (matchString.test(last)) {
+					const match = last.match(/\d+d(\d+)(k[hl]*)*/);
 					let result = last.split("d");
 					if (result[0] && (result[0].length !== 0 || !isNaN(result[0]))) {
 						count = parseInt(result[0]);
 					} else {
 						count = 1;
 					}
+					const adv = result[1].split(/\d+/)[1];
 					updated = true;
-					currentFormulaArray[currentFormulaArray.length - 1] = (count + 1) + buttonFormula;
+					currentFormulaArray[currentFormulaArray.length - 1] = (count + 1) + buttonFormula + adv;
 				}
 				// If we updated an item, create a new text version of the formula.
 				if (updated) {
@@ -155,12 +158,13 @@ export class DiceCalculatorDialog extends Dialog {
 				// If the last item isn't kh or kl, append.
 					let lastArray = last.split("k");
 					if (!last.includes("k")) {
-						if (last === "d20") {
-							last = "2d20";
+						if (/^(1|)(d\d+)/.test(last)) {
+							const match = last.match(/^(1|)(d\d+)/);
+							last = `2${match[2]}`;
 						}
 
 						currentFormula = currentFormula.slice(0, -1 * last.length);
-						currentFormula = `${currentFormula} ${last}${buttonFormula}`;
+						currentFormula = `${currentFormula} ${last}${buttonFormula}`.trim();
 					}
 					// Otherwise check to see if we should either replace (such as going
 					// from kh to kl) or increase the count.
@@ -186,7 +190,7 @@ export class DiceCalculatorDialog extends Dialog {
 
 						// Build the new string.
 						currentFormulaArray.pop();
-						currentFormula = `${currentFormulaArray.join(" ") + lastArray[0]}k${buttonType}`;
+						currentFormula = `${currentFormulaArray.join(" ")} ${lastArray[0]}k${buttonType}`.trim();
 
 						if (buttonType === lastType) {
 							currentFormula = currentFormula + count;
