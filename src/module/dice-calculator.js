@@ -176,26 +176,26 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 		diceIconSelector.on("click", async (event) => {
 			event.preventDefault();
 
-			let $dialog = $(".dialog--dice-calculator");
+			const $dialog = $(".dialog--dice-calculator");
 
 			if ($dialog.length < 1) {
-				let controlledTokens = canvas?.tokens?.controlled ?? [];
-				let actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
+				const controlledTokens = canvas?.tokens?.controlled ?? [];
+				const actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
 
-				let { abilities, attributes, customButtons } = CONFIG.DICETRAY?.calculator?.getData(actor)
-					?? {
-						abilities: [],
-						attributes: [],
-						customButtons: []
-					};
+				const calculatorConfig = CONFIG.DICETRAY?.calculator?.getData(actor);
+				const { abilities, attributes, customButtons } = calculatorConfig ?? {
+					abilities: [],
+					attributes: [],
+					customButtons: []
+				};
 
 				// Build the template.
 				const rolls = game.settings.get("dice-calculator", "rolls");
-				let templateData = {
+				const templateData = {
 					rolls,
-					abilities: abilities,
-					attributes: attributes,
-					customButtons: customButtons,
+					abilities,
+					attributes,
+					customButtons,
 					adv: CONFIG.DICETRAY?.calculator?.adv || false
 				};
 
@@ -227,6 +227,7 @@ function dcRollDice(actor = null) {
 	let formula = $(".dice-calculator textarea").val();
 	// Replace shorthand.
 	formula = formula.replace(/@abil\./g, "@abilities.").replace(/@attr\./g, "@attributes.");
+	if (!formula) return;
 
 	// Roll the dice!
 	let data = actor ? actor.getRollData() : {};
