@@ -32,8 +32,7 @@ export function registerSettings() {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.hint"),
 		scope: "world",
-		config: false,
-		condition: game.system.id === "swade",
+		config: game.system.id === "swade",
 		default: false,
 		type: Boolean,
 		requiresReload: true
