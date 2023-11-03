@@ -126,7 +126,6 @@ export class DiceCalculatorDialog extends Dialog {
 				// button formula.
 				const matchString = new RegExp(`${buttonFormula}(?!0)`, "i");
 				if (matchString.test(last)) {
-					const match = last.match(/\d+d(\d+)(k[hl]*)*/);
 					let result = last.split("d");
 					if (result[0] && (result[0].length !== 0 || !isNaN(result[0]))) {
 						count = parseInt(result[0]);
