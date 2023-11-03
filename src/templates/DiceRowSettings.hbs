@@ -1,0 +1,28 @@
+<form>
+    <div class="sidebar-preview">
+        <div>
+            <p>{{localize "DICE_TRAY.DiceRows.Instruction1"}}</p>
+            <p>{{localize "DICE_TRAY.DiceRows.Instruction2"}}</p>
+        </div>
+        <h2>Preview</h2>
+        <section class="flexcol">
+            {{>"modules/dice-calculator/templates/tray.html" dicerows=diceRows }}
+        </section>
+    </div>
+    <div class="form-group">
+        <button type="button" name="add">
+			<i class="fas fa-plus"></i> {{localize "DICE_TRAY.DiceRows.CreateDice"}}
+		</button>
+        <button type="submit" name="save">
+			<i class="fas fa-save"></i> {{localize "SETTINGS.Save"}}
+		</button>
+    </div>
+    <div class="form-group">
+		<button type="button" name="reset">
+			<i class="fas fa-undo"></i> {{localize "SETTINGS.Reset"}}
+		</button>
+		<button type="button" name="cancel">
+			<i class="fas fa-ban"></i> {{localize "Cancel"}}
+		</button>
+    </div>
+</form>

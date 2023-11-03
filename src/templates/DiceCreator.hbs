@@ -1,0 +1,58 @@
+<form>
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Formula.name"}}</label>
+		<input type="text" name="dice.key" value="{{dice.key}}" />
+		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
+	</div>
+
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Row.name"}}</label>
+		<input
+			type="number"
+			name="row"
+			value="{{#if dice.row includeZero=true}}{{dice.row}}{{else}}{{nextRow}}{{/if}}"
+			min="0"
+			max="{{numOfRows}}"
+			steps="1"
+		/>
+		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
+	</div>
+
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Image.name"}}</label>
+		{{filePicker type="image" target="image"}}
+		<input class="image" type="text" name="dice.image" value="{{dice.img}}">
+	</div>
+
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Label.name"}}</label>
+		<input type="text" name="dice.label" value="{{dice.label}}" placeholder="{{dice.key}}" />
+		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Label.hint"}}</p>
+	</div>
+
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Tooltip.name"}}</label>
+		<input type="text" name="dice.tooltip" value="{{dice.tooltip}}" placeholder="{{dice.key}}"/>
+		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Tooltip.hint"}}</p>
+	</div>
+
+	<div class="form-group">
+		<label>{{localize "DICE_TRAY.DiceCreator.Color.name"}}</label>
+		{{colorPicker name="dice.color" value=dice.color default="#ffffff"}}
+		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Color.hint"}}</p>
+	</div>
+
+	<div class="form-group">
+		<button type="submit" name="create">
+			<i class="fas fa-save"></i>
+			{{#if dice.key}}
+			{{localize "SETTINGS.Save"}}
+			{{else}}
+			{{localize "DICE_TRAY.DiceCreator.CreateDice"}}
+			{{/if}}
+		</button>
+		<button type="button" name="cancel">
+			<i class="fas fa-ban"></i> {{localize "Cancel"}}
+		</button>
+	</div>
+</form>

@@ -8,7 +8,6 @@ import { registerSettings } from "./settings.js";
 
 // Initialize module
 Hooks.once("init", () => {
-	registerSettings();
 	preloadTemplates();
 });
 
@@ -31,6 +30,8 @@ Hooks.once("i18nInit", () => {
 	if (providerStringCalculators) {
 		CONFIG.DICETRAY.calculator = new newCalculators[providerStringCalculators]();
 	}
+
+	registerSettings();
 });
 
 function getProviderString(regex, keys) {
@@ -51,7 +52,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 		// Prepare the dice tray for rendering.
 		let $chat_form = html.find("#chat-form");
 		const options = {
-			dicerows: CONFIG.DICETRAY.dice
+			dicerows: game.settings.get("dice-calculator", "diceRows")
 		};
 
 		const content = await renderTemplate("modules/dice-calculator/templates/tray.html", options);

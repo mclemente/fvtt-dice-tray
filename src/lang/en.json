@@ -23,17 +23,57 @@
     "clear": "clear",
 
     "Calculator": "Calculator",
+
+    "DiceCreator": {
+      "CreateDice": "Create Dice",
+      "Formula": {
+        "name": "Formula",
+        "hint": "The formula that will be added to the chat."
+      },
+      "Row": {
+        "name": "Row",
+        "hint": "The row the button will be placed on."
+      },
+      "Image": {
+        "name": "Image"
+      },
+      "Label": {
+        "name": "Label",
+        "hint": "(Optional) The label shown in case the dice has no image."
+      },
+      "Tooltip": {
+        "name": "Tooltip",
+        "hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
+      },
+      "Color": {
+        "name": "Color",
+        "hint": "(Optional) The color that fills the image. Defaults to white."
+      }
+    },
+
+    "DiceRows": {
+      "Instruction1": "Click any dice button to edit it.",
+      "Instruction2": "Right-Click any dice button to delete it.",
+      "CreateDice": "Create Dice"
+    },
+
     "SETTINGS": {
+      "DiceCreator": "Dice Creator",
+      "DiceRowSettings": "Dice Rows Setting",
       "GeneralSettings": "General Settings",
       "General": "General",
-      "enableDiceTray.name": "Enable Dice Tray",
-      "enableDiceTray.hint": "Enable showing a dice tray below the chat message area (requires reload).",
-      "enableDiceCalculator.name": "Enable Dice Calculator",
-      "enableDiceCalculator.hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload).",
-      "enableExtraDiceInSwade.name": "Include d20 and d100 in SWADE",
-      "enableExtraDiceInSwade.hint": "Enable showing d20 and d100 dice buttons in SWADE (requires 'Enable Dice Tray' reload).",
-      "enableD6Pips.name": "Enable d6 Pips",
-      "enableD6Pips.hint": "Enables using an alternate d6 icon that includes pips on the die (requires reload).",
+      "enableDiceTray.name": {
+        "name": "Enable Dice Tray",
+        "hint": "Enable showing a dice tray below the chat message area (requires reload)."
+      },
+      "enableDiceCalculator": {
+        "name": "Enable Dice Calculator",
+        "hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
+      },
+      "enableExtraDiceInSwade": {
+        "name": "Include d20 and d100 in SWADE",
+        "hint": "Enable showing d20 and d100 dice buttons in SWADE (requires 'Enable Dice Tray' reload)."
+      },
       "systemOverride": {
         "name": "Override system",
         "hint": "Override the system used by the dice tray, such as using the dnd5e dice tray which includes advantage and disadvantage buttons.",
