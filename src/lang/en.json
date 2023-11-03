@@ -53,8 +53,7 @@
 
     "DiceRows": {
       "Instruction1": "Click any dice button to edit it.",
-      "Instruction2": "Right-Click any dice button to delete it.",
-      "CreateDice": "Create Dice"
+      "Instruction2": "Right-Click any dice button to delete it."
     },
 
     "SETTINGS": {
