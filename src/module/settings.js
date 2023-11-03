@@ -46,16 +46,6 @@ export function registerSettings() {
 		requiresReload: true
 	});
 
-	game.settings.register("dice-calculator", "enableExtraDiceInSwade", {
-		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.name"),
-		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableExtraDiceInSwade.hint"),
-		scope: "world",
-		config: game.system.id === "swade",
-		default: false,
-		type: Boolean,
-		requiresReload: true
-	});
-
 	// Menu Settings
 
 	game.settings.register("dice-calculator", "diceRows", {
