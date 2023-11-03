@@ -13,6 +13,10 @@ export default class SWADEDiceMap extends GenericDiceMap {
 				d12: { img: "icons/dice/d12black.svg" }
 			}
 		];
+		if (game.settings.get("dice-calculator", "enableExtraDiceInSwade")) {
+			dice[0].d20 = { img: "icons/dice/d20black.svg" };
+			dice[0].d100 = { img: "icons/dice/d100black.svg" };
+		}
 		return dice;
 	}
 

@@ -72,6 +72,7 @@ export class DiceTrayGeneralSettings extends FormApplication {
 				general: {
 					enableDiceCalculator: this._prepSetting("enableDiceCalculator"),
 					enableDiceTray: this._prepSetting("enableDiceTray"),
+					enableExtraDiceInSwade: this._prepSetting("enableExtraDiceInSwade"),
 				}
 			};
 		} else {
@@ -79,6 +80,7 @@ export class DiceTrayGeneralSettings extends FormApplication {
 				general: {
 					enableDiceCalculator: this._prepFlag("enableDiceCalculator"),
 					enableDiceTray: this._prepFlag("enableDiceTray"),
+					enableExtraDiceInSwade: this._prepFlag("enableExtraDiceInSwade"),
 				},
 			};
 		}
@@ -102,6 +104,7 @@ export class DiceTrayGeneralSettings extends FormApplication {
 				const keys = [
 					"enableDiceCalculator",
 					"enableDiceTray",
+					"enableExtraDiceInSwade",
 				];
 				if (game.user.isGM) {
 					await Promise.all(
@@ -138,6 +141,31 @@ export class DiceTrayGeneralSettings extends FormApplication {
 		}
 		if (requiresClientReload || requiresWorldReload) {
 			SettingsConfig.reloadConfirm({ world: requiresWorldReload });
+		}
+	}
+
+	static renderDiceTrayGeneralSettings(settingsConfig, html) {
+		const enableDiceTray = game.settings.get("dice-calculator", "enableDiceTray");
+		const enableDiceTrayCheckbox = html.find('input[name="enableDiceTray"]');
+		const enableExtraDiceInSwadeCheckbox = html.find('input[name="enableExtraDiceInSwade"]');
+		const gameIsSwade = game.system.id === "swade";
+
+		function hideForm(form, boolean) {
+			form.style.display = boolean ? "none" : "";
+		}
+		function disableCheckbox(checkbox, boolean) {
+			checkbox.prop("disabled", boolean);
+		}
+
+		if (gameIsSwade) {
+			disableCheckbox(enableExtraDiceInSwadeCheckbox, !enableDiceTray);
+
+			enableDiceTrayCheckbox.on("change", (event) => {
+				disableCheckbox(enableExtraDiceInSwadeCheckbox, !event.target.checked);
+			});
+		} else {
+			const swadeCheckboxGroup = enableExtraDiceInSwadeCheckbox.parent()[0];
+			hideForm(swadeCheckboxGroup, true);
 		}
 	}
 }

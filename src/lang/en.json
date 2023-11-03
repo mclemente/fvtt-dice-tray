@@ -69,6 +69,10 @@
         "name": "Enable Dice Calculator",
         "hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
       },
+      "enableExtraDiceInSwade": {
+        "name": "Include d20 and d100 in SWADE",
+        "hint": "Enable showing d20 and d100 dice buttons in SWADE (requires 'Enable Dice Tray' reload)."
+      },
       "systemOverride": {
         "name": "Override system",
         "hint": "Override the system used by the dice tray, such as using the dnd5e dice tray which includes advantage and disadvantage buttons.",
