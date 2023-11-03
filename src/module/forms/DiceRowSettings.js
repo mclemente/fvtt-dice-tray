@@ -13,10 +13,8 @@ export class DiceRowSettings extends FormApplication {
 			template: "./modules/dice-calculator/templates/DiceRowSettings.hbs",
 			classes: ["sheet", "dice-tray-row-settings"],
 			width: 320,
-			// height: "fit-content",
 			height: "auto",
 			closeOnSubmit: true,
-			// resizable: true
 		});
 	}
 
