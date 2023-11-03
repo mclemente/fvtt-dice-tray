@@ -14,7 +14,9 @@
 				{{#if data.color}}background-color: {{data.color}};{{/if}}
 			"></div>
 			{{else}}
-			<span>{{data.label}}</span>
+			<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
+				{{data.label}}
+			</span>
 			{{/if}}
 		</button>
 		{{/each}}
