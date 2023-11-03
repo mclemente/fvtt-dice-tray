@@ -42,6 +42,7 @@ export class DiceRowSettings extends FormApplication {
 				diceRows: this.diceRows,
 				dice: {
 					key,
+					originalKey: key, // In case the key is changed later.
 					color,
 					img,
 					label,

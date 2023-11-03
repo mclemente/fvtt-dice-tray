@@ -35,7 +35,8 @@ export class DiceCreator extends FormApplication {
 	async _updateObject(event, formData) {
 		const { dice, row } = expandObject(formData);
 		if (this.object.dice && dice.row !== row) {
-			delete this.object.form.diceRows[row][dice.key];
+			const key = this.object.dice.originalKey;
+			delete this.object.form.diceRows[row][key];
 		}
 		if ((row + 1) > this.object.form.diceRows.length) {
 			this.object.form.diceRows.push({});
