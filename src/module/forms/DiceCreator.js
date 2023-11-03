@@ -11,9 +11,7 @@ export class DiceCreator extends FormApplication {
 			template: "./modules/dice-calculator/templates/DiceCreator.hbs",
 			classes: ["sheet", "dice-tray-dice-creator"],
 			width: 400,
-			height: "fit-content",
 			closeOnSubmit: true,
-			resizable: true
 		});
 	}
 
