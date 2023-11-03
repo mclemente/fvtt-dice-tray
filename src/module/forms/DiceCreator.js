@@ -10,7 +10,7 @@ export class DiceCreator extends FormApplication {
 			title: "DICE_TRAY.SETTINGS.DiceCreator",
 			template: "./modules/dice-calculator/templates/DiceCreator.hbs",
 			classes: ["sheet", "dice-tray-dice-creator"],
-			width: 600,
+			width: 400,
 			height: "fit-content",
 			closeOnSubmit: true,
 			resizable: true
