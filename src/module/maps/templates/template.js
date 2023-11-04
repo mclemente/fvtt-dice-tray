@@ -390,14 +390,17 @@ export default class TemplateDiceMap {
 				}
 			}
 		}
-		if (rollMode === "gmroll") {
-			return "/gmr";
-		} else if (rollMode === "blindroll") {
-			return "/br";
-		} else if (rollMode === "selfroll") {
-			return "/sr";
+		switch (rollMode) {
+			case "gmroll":
+				return "/gmr";
+			case "blindroll":
+				return "/br";
+			case "selfroll":
+				return "/sr";
+			case "publicroll":
+			default:
+				return "/r";
 		}
-		return "/r";
 	}
 
 	/**
