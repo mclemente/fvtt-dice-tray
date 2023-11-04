@@ -223,7 +223,11 @@ export default class TemplateDiceMap {
 		} else if (chat_val !== "") {
 			$chat.val(chat_val + mod_string);
 		} else {
-			$chat.val(`/r ${mod_string}`);
+			const rollPrefix = this._getRollMode(html);
+			$chat.val(`${rollPrefix} ${mod_string}`);
+		}
+		if (/(\/r|\/gmr|\/br|\/sr) $/g.test($chat.val())) {
+			$chat.val("");
 		}
 	}
 
