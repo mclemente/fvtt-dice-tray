@@ -222,12 +222,9 @@ export default class TemplateDiceMap {
 			$chat.val(chat_val.replace(match_string, mod_string));
 		} else if (chat_val !== "") {
 			$chat.val(chat_val + mod_string);
+		} else {
+			$chat.val(`/r ${mod_string}`);
 		}
-		// TODO readd but trigger _dtUpdateChatDice instead
-		// else {
-		// 	chat_val = `/r ${mod_string}`;
-		// 	$chat.val(chat_val);
-		// }
 	}
 
 	/**
