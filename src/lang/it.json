@@ -1,0 +1,32 @@
+{
+  "DICE_TRAY": {
+    "Adv": "Van",
+    "Advantage": "Vantaggio (kh)",
+    "Disadvantage": "Svantaggio (kl)",
+    "Dis": "Sva",
+    "For": "For",
+    "Fortune": "Fortuna (kh)",
+    "Misfortune": "Sfortuna (kl)",
+    "Mis": "Sfo",
+    "Roll": "Tira",
+    "RollDice": "Tira Dado",
+    "Wild": "Wild",
+    "Ace": "Ace",
+    "WildDie": "Wild Die",
+    "ExplodingDie": "Exploding Die",
+    "del": "canc",
+    "clear": "pulisci",
+    "SETTINGS": {
+      "enableDiceTray.name": "Abilita Set di Dadi",
+      "enableDiceTray.hint": "Abilita la visualizzazione di un set di dadi sotto l'area dei messaggi di chat (richiede il ricaricamento).",
+      "enableDiceCalculator.name": "Abilita Calcolatore Dadi",
+      "enableDiceCalculator.hint": "Abilita la visualizzazione di una finestra di dialogo per il calcolo dei dadi facendo clic sull'icona d20 vicino alla finestra della chat (richiede il ricaricamento).",
+      "enableExtraDiceInSwade.name": "Include d20 and d100 in SWADE",
+      "enableExtraDiceInSwade.hint": "Abilita bottoni d20 e d100 in SWADE (richiede di ricaricare 'Abilita set di dadi').",
+      "enableInlineRolls.name": "Abilita Lanci in linea",
+      "enableInlineRolls.hint": "Abilita elaborazione di Lanci in linea come [[4d6kh3]] nei messaggi in chat. NOTA: Non abilitare se si usa un altro modulo con la syntassi [[ ]] per le macro. Questa opzione è stata aggiunta alla versione di Foundry VTT 0.5.2 e sarà disabilitata dopo l'aggiornamento a questa versione.",
+      "enableD6Pips.name": "Abilita d6 con pip",
+      "enableD6Pips.hint": "Abilitaicona alternativadel d6 con pip (richiede ricaricamento)."
+    }
+  }
+}
