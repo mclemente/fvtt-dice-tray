@@ -372,17 +372,32 @@ export default class TemplateDiceMap {
 	 */
 	_getRollMode(html) {
 		const $roll_mode_selector = html.find('select[name="rollMode"]');
+		let rollMode;
 		if ($roll_mode_selector.length > 0) {
-			const rollMode = $roll_mode_selector.val();
-			if (rollMode === "gmroll") {
-				return "/gmr";
-			} else if (rollMode === "blindroll") {
-				return "/br";
-			} else if (rollMode === "selfroll") {
-				return "/sr";
+			rollMode = $roll_mode_selector.val();
+		} else {
+			// There are some UI modules that remove the rollMode selector
+			const uiSections = [
+				html.find('section[id="dfcp-rt-buttons"]'),
+				html.find('section[id="dorako-rt-buttons"]'),
+				html.find('section[id="rpg-ui-buttons"]'),
+			];
+			for (const section of uiSections) {
+				const activeButton = section.find("button.active")[0];
+				if (activeButton) {
+					rollMode = activeButton.dataset.id;
+					break;
+				}
 			}
-			return "/r";
 		}
+		if (rollMode === "gmroll") {
+			return "/gmr";
+		} else if (rollMode === "blindroll") {
+			return "/br";
+		} else if (rollMode === "selfroll") {
+			return "/sr";
+		}
+		return "/r";
 	}
 
 	/**
