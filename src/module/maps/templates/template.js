@@ -98,17 +98,13 @@ export default class TemplateDiceMap {
 			event.preventDefault();
 			let spoofed = this.triggerRollClick();
 			html.find("#chat-message").trigger(spoofed);
-			html.find(".dice-tray__input").val(0);
-			html.find(".dice-tray__flag").text("");
-			html.find(".dice-tray__flag").addClass("hide");
-			if (this.removeAdvOnRoll) html.find(".dice-tray__ad").removeClass("active");
+			this._resetTray(html);
 		});
 
 		/** Sending a message on the chat form clears the text and hides the orange numbers */
 		html.find("#chat-message").keydown((e) => {
 			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				html.find(".dice-tray__flag").text("");
-				html.find(".dice-tray__flag").addClass("hide");
+				this._resetTray(html);
 			}
 		});
 	}
@@ -193,6 +189,14 @@ export default class TemplateDiceMap {
 		});
 	}
 
+	_resetTray(html) {
+		html.find(".dice-tray__input").val(0);
+		html.find(".dice-tray__flag").text("").addClass("hide");
+		if (this.removeAdvOnRoll) {
+			html.find(".dice-tray__ad").removeClass("active");
+		}
+	}
+
 	/**
 	 * Logic to apply the number on the -/+ selector.
 	 * @param {HTMLElement} html
@@ -239,6 +243,10 @@ export default class TemplateDiceMap {
 		return `${qty === "" ? 1 : qty}${dice}`;
 	}
 
+	/**
+	 * Creates a fake Enter keypress to trigger the chat message box.
+	 * @returns {{}}
+	 */
 	triggerRollClick() {
 		// Set up the keypress event properties.
 		let spoofedProperties = {
@@ -259,7 +267,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Handles clicks on the -/+ buttons.
+	 * Handles clicks on the dice buttons.
 	 * @param {Object} dataset
 	 * @param {String} direction
 	 * @param {HTMLElement} html
@@ -270,21 +278,9 @@ export default class TemplateDiceMap {
 		let currFormula = String($chat.val());
 		if (direction === "sub" && currFormula === "") return;
 		let newFormula = null;
-		let rollPrefix = "/r";
-		const $roll_mode_selector = html.find('select[name="rollMode"]');
+		let rollPrefix = this._getRollMode(html);
 		let qty = 0;
 		let dice = "";
-
-		if ($roll_mode_selector.length > 0) {
-			const rollMode = $roll_mode_selector.val();
-			if (rollMode === "gmroll") {
-				rollPrefix = "/gmr";
-			} else if (rollMode === "blindroll") {
-				rollPrefix = "/br";
-			} else if (rollMode === "selfroll") {
-				rollPrefix = "/sr";
-			}
-		}
 
 		let match_dice = dataset.formula;
 		if (dataset.formula === "d10") {
@@ -365,6 +361,26 @@ export default class TemplateDiceMap {
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
 		$chat.val(currFormula);
 		this.applyModifier(html);
+	}
+
+	/**
+	 * Gets the selected roll mode
+	 * @param {HTMLElement} html
+	 * @returns {String}
+	 */
+	_getRollMode(html) {
+		const $roll_mode_selector = html.find('select[name="rollMode"]');
+		if ($roll_mode_selector.length > 0) {
+			const rollMode = $roll_mode_selector.val();
+			if (rollMode === "gmroll") {
+				return "/gmr";
+			} else if (rollMode === "blindroll") {
+				return "/br";
+			} else if (rollMode === "selfroll") {
+				return "/sr";
+			}
+			return "/r";
+		}
 	}
 
 	/**
