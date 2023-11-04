@@ -61,7 +61,7 @@
       "DiceRowSettings": "Dice Rows Setting",
       "GeneralSettings": "General Settings",
       "General": "General",
-      "enableDiceTray.name": {
+      "enableDiceTray": {
         "name": "Enable Dice Tray",
         "hint": "Enable showing a dice tray below the chat message area (requires reload)."
       },
