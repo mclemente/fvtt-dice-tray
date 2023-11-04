@@ -15,18 +15,11 @@
 
 .dice-calculator > button,
 .dice-calculator .dice-calculator--button {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border-radius: 2px;
   font-weight: bold;
@@ -37,7 +30,6 @@
 
 .dice-calculator > button:hover,
 .dice-calculator .dice-calculator--button:hover {
-  -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, 0.35);
   box-shadow: 0 0 5px rgba(255, 0, 0, 0.35);
 }
 
@@ -96,35 +88,17 @@
   grid-column-end: span 4;
   grid-row-start: 1;
   grid-row-end: span 2;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
 
 .dice-calculator__input-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
   flex-grow: 1;
   position: relative;
   text-align: right;
@@ -139,8 +113,6 @@
   font-size: 18px;
   width: auto;
   min-height: 80px;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
   flex-grow: 1;
   resize: none;
 }
@@ -329,14 +301,8 @@
 
 /* Row 9 */
 .dice-calculator__btn-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding: 4px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.5);
@@ -352,8 +318,6 @@
 
 .dice-calculator__actor .dice-calculator--button {
   width: auto;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
   flex-grow: 1;
   height: 32px;
   padding: 4px 8px;
@@ -381,8 +345,6 @@
 
 /* Dice Tray */
 .dice-tray {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
   flex: 0;
 }
 
@@ -400,33 +362,20 @@
 }
 
 .dice-tray .flexrow {
-  -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
 }
 
 .dice-tray button {
   background: transparent;
   border: 1px solid #000;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   color: #fff;
   font-weight: bold;
   font-size: 18px;
-  -webkit-box-shadow: 0 0 6px inset #8d9ea7;
   box-shadow: 0 0 6px inset #8d9ea7;
-  -webkit-transition: all ease-in-out 0.25s;
-  -o-transition: all ease-in-out 0.25s;
   transition: all ease-in-out 0.25s;
   position: relative;
 }
@@ -434,7 +383,6 @@
 .dice-tray button:hover {
   color: #ff6400;
   border-color: #ff6400;
-  -webkit-box-shadow: 0 0 6px inset #ff6400;
   box-shadow: 0 0 6px inset #ff6400;
 }
 
@@ -444,21 +392,18 @@
 
 .dice-tray button.dice-tray__roll:hover {
   background: #ff6400;
-  -webkit-box-shadow: none;
   box-shadow: none;
   color: #fff;
 }
 
 .dice-tray button.dice-tray__math--sub:hover {
   background: #ff6400;
-  -webkit-box-shadow: 0 0 6px inset #ff6400;
   box-shadow: 0 0 6px inset #ff6400;
   color: #fff;
 }
 
 .dice-tray button.dice-tray__math--add:hover {
   background: #0a9843;
-  -webkit-box-shadow: 0 0 6px inset #0a9843;
   box-shadow: 0 0 6px inset #0a9843;
   border-color: #0a9843;
   color: #fff;
@@ -467,8 +412,6 @@
 .dice-tray button.dice-tray__ad {
   font-size: 10px;
   height: 17px;
-  -webkit-box-flex: 17px;
-  -ms-flex: 17px;
   flex: 17px;
   line-height: 1;
   text-transform: uppercase;
@@ -477,20 +420,17 @@
 .dice-tray button.dice-tray__advantage:hover {
   color: #0a9843;
   border-color: #0a9843;
-  -webkit-box-shadow: 0 0 6px inset #0a9843;
   box-shadow: 0 0 6px inset #0a9843;
 }
 
 .dice-tray button.dice-tray__advantage.active {
   background: #0a9843;
-  -webkit-box-shadow: 0 0 6px inset #0a9843;
   box-shadow: 0 0 6px inset #0a9843;
   border-color: #0a9843;
   color: #fff;
 }
 
 .dice-tray button.dice-tray__advantage.active:hover {
-  -webkit-box-shadow: 0 0 6px inset #fff;
   box-shadow: 0 0 6px inset #fff;
   border-color: #fff;
 }
@@ -498,19 +438,16 @@
 .dice-tray button.dice-tray__disadvantage:hover {
   color: #ff6400;
   border-color: #ff6400;
-  -webkit-box-shadow: 0 0 6px inset #ff6400;
   box-shadow: 0 0 6px inset #ff6400;
 }
 
 .dice-tray button.dice-tray__disadvantage.active {
   background: #ff6400;
-  -webkit-box-shadow: 0 0 6px inset #ff6400;
   box-shadow: 0 0 6px inset #ff6400;
   color: #fff;
 }
 
 .dice-tray button.dice-tray__disadvantage.active:hover {
-  -webkit-box-shadow: 0 0 6px inset #fff;
   box-shadow: 0 0 6px inset #fff;
   border-color: #fff;
 }
@@ -518,8 +455,6 @@
 .dice-tray button svg {
   width: 100%;
   height: auto;
-  -webkit-transition: all ease-in-out 0.25s;
-  -o-transition: all ease-in-out 0.25s;
   transition: all ease-in-out 0.25s;
 }
 
@@ -547,19 +482,11 @@
   line-height: 1;
   background-color: #ff6400;
   color: #fff;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   border-radius: 4px 4px 0 0;
   max-height: 18px;
-  -webkit-transition: all ease-in-out 0.15s;
-  -o-transition: all ease-in-out 0.15s;
   transition: all ease-in-out 0.15s;
 }
 
@@ -583,14 +510,12 @@
   text-align: center;
   background-color: rgba(250, 250, 250, 0.15);
   border: 1px solid #000;
-  -webkit-box-shadow: 0 0 6px inset #fff;
   box-shadow: 0 0 6px inset #fff;
 }
 
 .dice-tray input[type='text']:hover,
 .dice-tray input[type='text']:focus {
   border: 1px solid #ff6400;
-  -webkit-box-shadow: 0 0 6px inset #ff6400;
   box-shadow: 0 0 6px inset #ff6400;
 }
 
