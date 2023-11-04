@@ -1,7 +1,7 @@
 <form>
 	<div class="form-group">
 		<label>{{localize "DICE_TRAY.DiceCreator.Formula.name"}}</label>
-		<input type="text" name="dice.key" value="{{dice.key}}" />
+		<input type="text" name="dice.key" value="{{dice.key}}" required />
 		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
 	</div>
 
@@ -14,6 +14,7 @@
 			min="0"
 			max="{{numOfRows}}"
 			steps="1"
+			required
 		/>
 		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
 	</div>
