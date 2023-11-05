@@ -152,16 +152,14 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				mod_val = Number.isNaN(mod_val) ? 0 : mod_val;
 
 				switch (dataset.formula) {
-				case "+1":
-					mod_val = mod_val + 1;
-					break;
-
-				case "-1":
-					mod_val = mod_val - 1;
-					break;
-
-				default:
-					break;
+					case "+1":
+						mod_val = mod_val + 1;
+						break;
+					case "-1":
+						mod_val = mod_val - 1;
+						break;
+					default:
+						break;
 				}
 				$('input[name="dice.tray.modifier"]').val(mod_val);
 				CONFIG.DICETRAY.applyModifier(html);
