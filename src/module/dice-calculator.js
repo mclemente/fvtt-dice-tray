@@ -12,20 +12,19 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("i18nInit", () => {
-	const keys = deepClone(KEYS);
 	const newMaps = deepClone(keymaps);
 	const newCalculators = deepClone(diceCalculators);
 
 	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
-	const providerStringMaps = getProviderString(systemMapsRegex, keys) || "Template";
+	const providerStringMaps = getProviderString(systemMapsRegex) || "Template";
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
 	Hooks.callAll("dice-calculator.calculator", newCalculators);
 	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
 	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
-	const providerStringCalculators = getProviderString(systemCalculatorsRegex, keys);
+	const providerStringCalculators = getProviderString(systemCalculatorsRegex);
 
 	if (providerStringCalculators) {
 		CONFIG.DICETRAY.calculator = new newCalculators[providerStringCalculators]();
@@ -34,10 +33,10 @@ Hooks.once("i18nInit", () => {
 	registerSettings();
 });
 
-function getProviderString(regex, keys) {
+function getProviderString(regex) {
 	const id = game.system.id;
-	if (id in keys) {
-		return keys[id];
+	if (id in KEYS) {
+		return KEYS[id];
 	} else if (regex.test(id)) {
 		return id;
 	}
