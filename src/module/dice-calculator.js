@@ -16,13 +16,13 @@ Hooks.once("i18nInit", () => {
 	const newMaps = deepClone(keymaps);
 	const newCalculators = deepClone(diceCalculators);
 
-	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template, keys);
+	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
 	const providerStringMaps = getProviderString(systemMapsRegex, keys) || "Template";
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
 
-	Hooks.callAll("dice-calculator.calculator", newCalculators, keys);
+	Hooks.callAll("dice-calculator.calculator", newCalculators);
 	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
 	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
 	const providerStringCalculators = getProviderString(systemCalculatorsRegex, keys);
