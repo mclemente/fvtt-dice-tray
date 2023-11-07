@@ -1,6 +1,6 @@
 # Dice Tray
 
-This module adds a dice tray below chat turns the d20 icon near the chat prompt into a clickable button that opens up a new dice calculator dialog. The dice calculator includes buttons for dice, numbers, and simple math.
+This module adds a dice tray below chat and turns the d20 icon near the chat prompt into a clickable button that opens up a dice calculator, which includes buttons for dice, numbers, and simple math.
 
 ## Installation
 
