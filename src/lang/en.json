@@ -68,20 +68,6 @@
       "enableDiceCalculator": {
         "name": "Enable Dice Calculator",
         "hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
-      },
-      "systemOverride": {
-        "name": "Override system",
-        "hint": "Override the system used by the dice tray, such as using the dnd5e dice tray which includes advantage and disadvantage buttons.",
-        "none": "- Automatic -",
-        "generic": "Generic",
-        "swade": "SWADE",
-        "fatex": "FateX",
-        "ModularFate": "Modular Fate Core",
-        "fate-core-official": "Fate Core Official",
-        "dnd5e": "DnD5e",
-        "pf2e": "Pathfinder 2e",
-        "dcc": "Dungeon Crawl Classics",
-        "demonlord": "Shadow of the Demon Lord"
       }
     }
   }
