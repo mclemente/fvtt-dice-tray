@@ -1,0 +1,34 @@
+{
+  "DICE_TRAY": {
+    "Adv": "Ava",
+    "Dis": "Dés",
+    "For": "For",
+    "Mis": "Mal",
+    "PlusOneDie": "+1d",
+    "MinusOneDie": "-1d",
+    "clear": "effacer",
+    "DiceCreator": {
+      "Formula": {
+      },
+      "Row": {
+      },
+      "Image": {
+      },
+      "Label": {
+        "hint": "(Facultatif) Le nom affichée au cas où le dé n'aurait pas d'image."
+      },
+      "Tooltip": {
+      },
+      "Color": {
+      }
+    },
+    "DiceRows": {
+    },
+    "SETTINGS": {
+      "enableDiceTray": {
+      },
+      "enableDiceCalculator": {
+      }
+    }
+  }
+}
