@@ -1,0 +1,70 @@
+{
+  "DICE_TRAY": {
+    "Adv": "Ava",
+    "Advantage": "Avantage",
+    "Dis": "Dés",
+    "Disadvantage": "Désavantage",
+    "FateDice": "Dés du destin",
+    "For": "For",
+    "Fortune": "Fortune (kh)",
+    "Misfortune": "Malheur (kl)",
+    "Mis": "Mal",
+    "Wild": "Sauvage",
+    "Ace": "As",
+    "WildDie": "Dé sauvage",
+    "ExplodingDie": "Dé Explosif",
+    "PlusOneDie": "+1d",
+    "MinusOneDie": "-1d",
+    "PlusOneDieLong": "Augmenter la taille des dés",
+    "MinusOneDieLong": "Diminuer la taille des dés",
+    "KeepHighest": "Garder le plus haut",
+    "KeepLowest": "Garder le plus bas",
+    "del": "del",
+    "clear": "effacer",
+    "Calculator": "Calculatrice",
+    "DiceCreator": {
+      "CreateDice": "Créer des dés",
+      "Formula": {
+        "name": "Formule",
+        "hint": "La formule qui sera ajoutée au chat."
+      },
+      "Row": {
+        "name": "Rangée",
+        "hint": "La ligne sur laquelle le bouton sera placé."
+      },
+      "Image": {
+        "name": "Image"
+      },
+      "Label": {
+        "name": "Étiquette",
+        "hint": "(Facultatif) Le nom affichée au cas où le dé n'aurait pas d'image."
+      },
+      "Tooltip": {
+        "name": "Info-bulle",
+        "hint": "(Facultatif) L'info-bulle affichée lorsque vous survolez le bouton. La valeur par défaut est la formule."
+      },
+      "Color": {
+        "name": "Couleur",
+        "hint": "(Facultatif) La couleur qui remplit l'image. La valeur par défaut est le blanc."
+      }
+    },
+    "DiceRows": {
+      "Instruction1": "Cliquez sur n’importe quel bouton de dé pour le modifier.",
+      "Instruction2": "Cliquez avec le bouton droit sur n’importe quel bouton de dé pour le supprimer."
+    },
+    "SETTINGS": {
+      "DiceCreator": "Créateur de dés",
+      "DiceRowSettings": "Réglage des rangées de dés",
+      "GeneralSettings": "réglages généraux",
+      "General": "Général",
+      "enableDiceTray": {
+        "name": "Activer le plateau de dés",
+        "hint": "Activer l'affichage d'un plateau de dés sous la zone de message de discussion (nécessite un rechargement)."
+      },
+      "enableDiceCalculator": {
+        "name": "Activer le calculateur de dés",
+        "hint": "Activer l'affichage d'une boîte de dialogue de calcul de dés lorsque vous cliquez sur l'icône d20 près de la boîte de discussion (nécessite un rechargement)."
+      }
+    }
+  }
+}
