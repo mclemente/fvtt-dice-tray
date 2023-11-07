@@ -2,8 +2,9 @@
   "DICE_TRAY": {
     "Adv": "Van",
     "Advantage": "Vantagem (kh)",
-    "Disadvantage": "Desvantagem (kl)",
     "Dis": "Des",
+    "Disadvantage": "Desvantagem (kl)",
+    "FateDice": "Dado Fate",
     "For": "For",
     "Fortune": "Fortuna (kh)",
     "Misfortune": "Infortúnio (kl)",
@@ -16,9 +17,44 @@
     "MinusOneDie": "-1d",
     "PlusOneDieLong": "Aumentar Tipo de Dado",
     "MinusOneDieLong": "Diminuir Tipo de Dado",
+    "KeepHighest": "Manter Maior",
+    "KeepLowest": "Manter Menor",
     "del": "Apagar",
     "clear": "Limpar",
+    "Calculator": "Calculadora",
+    "DiceCreator": {
+      "CreateDice": "Criar Dado",
+      "Formula": {
+        "name": "Fórmula",
+        "hint": "A fórmula que será adicionada ao chat."
+      },
+      "Row": {
+        "name": "Linha",
+        "hint": "A linha em que o botão será colocado."
+      },
+      "Image": {
+        "name": "Imagem"
+      },
+      "Label": {
+        "name": "Nome",
+        "hint": "(Opcional) O nome mostrado caso o dado não tenha imagem."
+      },
+      "Tooltip": {
+        "name": "Dica",
+        "hint": "(Opcional) A dica de ferramenta mostrada ao passar o mouse sobre o botão. O padrão é a Fórmula."
+      },
+      "Color": {
+        "name": "Cor",
+        "hint": "(Opcional) A cor que preenche a imagem. O padrão é branco."
+      }
+    },
+    "DiceRows": {
+      "Instruction1": "Clique em qualquer botão de dados para editá-lo.",
+      "Instruction2": "Clique com o botão direito em qualquer botão de dado para excluí-lo."
+    },
     "SETTINGS": {
+      "DiceCreator": "Criador de Dados",
+      "DiceRowSettings": "Configuração de Linhas de Dados",
       "GeneralSettings": "Configurações Gerais",
       "General": "Geral",
       "enableDiceTray": {
