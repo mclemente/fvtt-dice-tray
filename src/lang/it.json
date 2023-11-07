@@ -17,10 +17,14 @@
     "del": "canc",
     "clear": "pulisci",
     "SETTINGS": {
-      "enableDiceTray.name": "Abilita Set di Dadi",
-      "enableDiceTray.hint": "Abilita la visualizzazione di un set di dadi sotto l'area dei messaggi di chat (richiede il ricaricamento).",
-      "enableDiceCalculator.name": "Abilita Calcolatore Dadi",
-      "enableDiceCalculator.hint": "Abilita la visualizzazione di una finestra di dialogo per il calcolo dei dadi facendo clic sull'icona d20 vicino alla finestra della chat (richiede il ricaricamento)."
+      "enableDiceTray": {
+        "name": "Abilita Set di Dadi",
+        "hint": "Abilita la visualizzazione di un set di dadi sotto l'area dei messaggi di chat (richiede il ricaricamento)."
+      },
+      "enableDiceCalculator": {
+        "name": "Abilita Calcolatore Dadi",
+        "hint": "Abilita la visualizzazione di una finestra di dialogo per il calcolo dei dadi facendo clic sull'icona d20 vicino alla finestra della chat (richiede il ricaricamento)."
+      }
     }
   }
 }

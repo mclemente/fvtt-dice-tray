@@ -1,31 +1,33 @@
 {
   "Localization Provided By": "Brother Sharp",
-  "DICE_TRAY.Adv": "有利",
-  "DICE_TRAY.Advantage": "有利 (kh)",
-  "DICE_TRAY.Disadvantage": "不利 (kl)",
-  "DICE_TRAY.Dis": "不利",
-  "DICE_TRAY.For": "幸運",
-  "DICE_TRAY.Fortune": "幸運 (kh)",
-  "DICE_TRAY.Misfortune": "不運 (kl)",
-  "DICE_TRAY.Mis": "不運",
-  "DICE_TRAY.Wild": "Wild",
-  "DICE_TRAY.Ace": "Ace",
-  "DICE_TRAY.WildDie": "ワイルドダイス",
-  "DICE_TRAY.ExplodingDie": "降り足しダイス",
-  "DICE_TRAY.PlusOneDie": "+1d",
-  "DICE_TRAY.MinusOneDie": "-1d",
-  "DICE_TRAY.PlusOneDieLong": "ダイス面数を増やす",
-  "DICE_TRAY.MinusOneDieLong": "ダイス面数を減らす",
-  "DICE_TRAY.del": "削除",
-  "DICE_TRAY.clear": "クリア",
-  "DICE_TRAY.settings.enableDiceTray.name": "Dice Tray有効化",
-  "DICE_TRAY.settings.enableDiceTray.hint": "チャットメッセージの下にダイス･トレイを表示します (再読み込みが必要です)｡",
-  "DICE_TRAY.settings.enableDiceCalculator.name": "ダイス電卓有効化",
-  "DICE_TRAY.settings.enableDiceCalculator.hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）",
-  "DICE_TRAY.settings.enableExtraDiceInSwade.name": "SWADE使用時d20とd100も表示",
-  "DICE_TRAY.settings.enableExtraDiceInSwade.hint": "SWADEのシステムを使用している時、追加でd20とd100のダイスロールボタンを表示します（Dice Trayの有効化と再読み込みが必要です）。",
-  "DICE_TRAY.settings.enableInlineRolls.name": "-",
-  "DICE_TRAY.settings.enableInlineRolls.hint": "-",
-  "DICE_TRAY.settings.enableD6Pips.name": "d6ピン有効化",
-  "DICE_TRAY.settings.enableD6Pips.hint": "d6のダイスに出目のピンを表示する別のアイコンを使用します（要再読み込み）"
+  "DICE_TRAY": {
+    "Adv": "有利",
+    "Advantage": "有利 (kh)",
+    "Disadvantage": "不利 (kl)",
+    "Dis": "不利",
+    "For": "幸運",
+    "Fortune": "幸運 (kh)",
+    "Misfortune": "不運 (kl)",
+    "Mis": "不運",
+    "Wild": "Wild",
+    "Ace": "Ace",
+    "WildDie": "ワイルドダイス",
+    "ExplodingDie": "降り足しダイス",
+    "PlusOneDie": "+1d",
+    "MinusOneDie": "-1d",
+    "PlusOneDieLong": "ダイス面数を増やす",
+    "MinusOneDieLong": "ダイス面数を減らす",
+    "del": "削除",
+    "clear": "クリア",
+    "SETTINGS": {
+      "enableDiceTray": {
+        "name": "Dice Tray有効化",
+        "hint": "チャットメッセージの下にダイス･トレイを表示します (再読み込みが必要です)｡"
+      },
+      "enableDiceCalculator": {
+        "name": "ダイス電卓有効化",
+        "hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）"
+      }
+    }
+  }
 }

@@ -21,26 +21,13 @@
     "SETTINGS": {
       "GeneralSettings": "Configurações Gerais",
       "General": "Geral",
-      "enableDiceTray.name": "Habilitar Bandeja de Dados",
-      "enableDiceTray.hint": "Habilite a exibição de uma bandeja de dados abaixo da área de mensagem de bate-papo (requer recarregar).",
-      "enableDiceCalculator.name": "Habilitar Calculadora de Dados",
-      "enableDiceCalculator.hint": "Habilite a exibição de uma caixa de diálogo de calculadora de dados ao clicar no ícone d20 perto da caixa de bate-papo (requer recarregar).",
-      "enableExtraDiceInSwade.name": "Incluir d20 e d100 no SWADE",
-      "enableExtraDiceInSwade.hint": "Habilite a exibição dos botões de dados d20 e d100 no SWADE (requer 'Habilitar Bandeja de Dados' e recarregar).",
-      "enableD6Pips.name": "Habilitar Pontos no d6",
-      "enableD6Pips.hint": "Habilite o uso de um ícone d6 alternativo que inclui pontos no dado (requer recarregar).",
-      "systemOverride": {
-        "name": "Substituir sistema",
-        "hint": "Substitua o sistema usado pela bandeja de dados, como usar a bandeja de dados dnd5e, que inclui botões de vantagem e desvantagem.",
-        "none": "- Automático -",
-        "generic": "Genérico",
-        "swade": "SWADE",
-        "fatex": "FateX",
-        "ModularFate": "Modular Fate Core",
-        "fate-core-official": "Fate Core Official",
-        "dnd5e": "DnD5e",
-        "pf2e": "Pathfinder 2e",
-        "dcc": "Dungeon Crawl Classics"
+      "enableDiceTray": {
+        "name": "Habilitar Bandeja de Dados",
+        "hint": "Habilite a exibição de uma bandeja de dados abaixo da área de mensagem de bate-papo (requer recarregar)."
+      },
+      "enableDiceCalculator": {
+        "name": "Habilitar Calculadora de Dados",
+        "hint": "Habilite a exibição de uma caixa de diálogo de calculadora de dados ao clicar no ícone d20 perto da caixa de bate-papo (requer recarregar)."
       }
     }
   }
