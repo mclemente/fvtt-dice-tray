@@ -399,7 +399,9 @@ export default class TemplateDiceMap {
 	updateDiceKeep(count, dice, khl, countDiff, newKhl) {
 		// Start by getting the current number of dice (minimum 1).
 		let keep = Number.isNumeric(count) ? Number(count) : 1;
-		if (keep === 0) keep = 1;
+		if (keep === 0) {
+			keep = 1;
+		}
 
 		// Apply the count diff to adjust how many dice we need for adv/dis.
 		let newCount = keep + countDiff;
@@ -437,7 +439,9 @@ export default class TemplateDiceMap {
 		// Create the updated text string.
 		let result = `${newCount > 0 ? newCount : 1}${dice}`;
 		// Append kh or kl if needed.
-		if (newCount > 1 && newKeep > 0) result = `${result}${newKhl.includes("kh") ? "kh" : "kl"}`;
+		if (newCount > 1 && newKeep > 0) {
+			result = `${result}${newKhl.includes("kh") ? "kh" : "kl"}`;
+		}
 
 		// TODO: This allows for keeping multiple dice, but in this case, we only need to keep one.
 		// if (newCount > 1 && newKeep > 1) result = `${result}${newKeep}`;
