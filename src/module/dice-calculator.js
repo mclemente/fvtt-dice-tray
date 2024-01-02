@@ -105,18 +105,18 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			});
 
 			// Handle drop for dice.
-			$("html").on("drop", async (event) => {
-				let data = null;
+			$("html").on("drop", (event) => {
 				// This try-catch is needed because it conflicts with other modules
 				try {
-					data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+					const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
+					// If there's a formula, trigger the roll.
+					if (data?.origin === "dice-calculator" && data?.formula) {
+						new Roll(data.formula).toMessage();
+						event.stopImmediatePropagation();
+					}
 				} catch(err) {
 					// Unable to Parse Data, Return Event
 					return event;
-				}
-				// If there's a formula, trigger the roll.
-				if (data?.origin === "dice-calculator" && data?.formula) {
-					new Roll(data.formula).toMessage();
 				}
 			});
 
