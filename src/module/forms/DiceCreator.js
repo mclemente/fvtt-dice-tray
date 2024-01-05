@@ -16,12 +16,12 @@ export class DiceCreator extends FormApplication {
 	}
 
 	getData(options) {
-		const nextRow = Math.max(this.object.diceRows.findIndex((row) => Object.keys(row).length < 7), 1);
+		const nextRow = this.object.diceRows.findIndex((row) => Object.keys(row).length < 7);
 		return {
 			dice: this.object.dice,
 			diceRows: this.object.diceRows, // this.diceRows,
-			nextRow,
-			numOfRows: Math.max(nextRow, 1)
+			nextRow: nextRow < 0 ? this.object.diceRows.length : nextRow,
+			maxRows: Math.max(nextRow + 1, this.object.diceRows.length)
 		};
 	}
 
