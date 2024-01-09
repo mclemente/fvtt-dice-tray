@@ -115,7 +115,7 @@ export default class TemplateDiceMap {
 	 */
 	_createExtraButtons(html) {
 		const { kh, kl } = this.buttonFormulas;
-		html.find("#dice-tray-math").show();
+		html.find("#dice-tray-math").removeAttr("hidden");
 		html.find("#dice-tray-math").append(
 			`<div class="dice-tray__stacked flexcol">
                 <button class="dice-tray__ad dice-tray__advantage"
