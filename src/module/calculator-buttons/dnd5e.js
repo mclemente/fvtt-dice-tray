@@ -1,4 +1,4 @@
-import { DiceCalculator } from "./templates/calculator";
+import DiceCalculator from "./templates/calculator";
 
 export default class dnd5eDiceCalculator extends DiceCalculator {
 	adv = true;

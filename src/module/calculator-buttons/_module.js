@@ -1,3 +1,5 @@
+export { default as Template } from "./templates/calculator.js";
+
 export { default as archmage } from "./archmage.js";
 export { default as dcc } from "./dcc.js";
 export { default as demonlord } from "./demonlord.js";

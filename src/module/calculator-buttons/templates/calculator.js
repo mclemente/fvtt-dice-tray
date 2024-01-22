@@ -1,4 +1,4 @@
-export class DiceCalculator {
+export default class DiceCalculator {
 	/** Sets if the KH/KL buttons will be called Advantage/Disadvantage */
 	adv = false;
 

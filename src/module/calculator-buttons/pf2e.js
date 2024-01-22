@@ -1,4 +1,4 @@
-import { DiceCalculator } from "./templates/calculator";
+import DiceCalculator from "./templates/calculator";
 
 export default class pf2eDiceCalculator extends DiceCalculator {
 	adv = true;
