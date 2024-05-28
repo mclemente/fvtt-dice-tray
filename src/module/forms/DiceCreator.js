@@ -5,7 +5,7 @@ export class DiceCreator extends FormApplication {
 	}
 
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			id: "dice-creator-form",
 			title: "DICE_TRAY.SETTINGS.DiceCreator",
 			template: "./modules/dice-calculator/templates/DiceCreator.hbs",
@@ -21,7 +21,7 @@ export class DiceCreator extends FormApplication {
 			dice: this.object.dice,
 			diceRows: this.object.diceRows, // this.diceRows,
 			nextRow: nextRow < 0 ? this.object.diceRows.length : nextRow,
-			maxRows: Math.max(nextRow + 1, this.object.diceRows.length)
+			maxRows: Math.max(nextRow + 1, this.object.diceRows.length),
 		};
 	}
 
@@ -33,12 +33,12 @@ export class DiceCreator extends FormApplication {
 	}
 
 	async _updateObject(event, formData) {
-		const { dice, row } = expandObject(formData);
+		const { dice, row } = foundry.utils.expandObject(formData);
 		if (this.object.dice && dice.row !== row) {
 			const key = this.object.dice.originalKey;
 			delete this.object.form.diceRows[row][key];
 		}
-		if ((row + 1) > this.object.form.diceRows.length) {
+		if (row + 1 > this.object.form.diceRows.length) {
 			this.object.form.diceRows.push({});
 		}
 		const cleanKey = Object.fromEntries(Object.entries(dice).filter(([k, v]) => k !== "key" && v !== ""));

@@ -7,7 +7,7 @@ export class DiceRowSettings extends FormApplication {
 	}
 
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			id: "dice-row-form",
 			title: "DICE_TRAY.SETTINGS.DiceRowSettings",
 			template: "./modules/dice-calculator/templates/DiceRowSettings.hbs",
@@ -47,7 +47,7 @@ export class DiceRowSettings extends FormApplication {
 					img,
 					label,
 					tooltip: tooltip !== key ? tooltip : "",
-					row: row
+					row: row,
 				},
 			}).render(true);
 		});
@@ -66,7 +66,7 @@ export class DiceRowSettings extends FormApplication {
 		html.find("button[name=add]").on("click", async (event) => {
 			new DiceCreator({
 				form: this,
-				diceRows: this.diceRows
+				diceRows: this.diceRows,
 			}).render(true);
 		});
 		html.find("button[name=cancel]").on("click", async (event) => {
