@@ -12,8 +12,8 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("i18nInit", () => {
-	const newMaps = deepClone(keymaps);
-	const newCalculators = deepClone(diceCalculators);
+	const newMaps = foundry.utils.deepClone(keymaps);
+	const newCalculators = foundry.utils.deepClone(diceCalculators);
 
 	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
@@ -46,12 +46,14 @@ function getProviderString(regex) {
 Hooks.on("renderSidebarTab", async (app, html, data) => {
 	// Exit early if necessary;
 	if (app.tabName !== "chat") return;
-	const enableTray = game.user.getFlag("dice-calculator", "enableDiceTray") ?? game.settings.get("dice-calculator", "enableDiceTray");
+	const enableTray =
+		game.user.getFlag("dice-calculator", "enableDiceTray")
+		?? game.settings.get("dice-calculator", "enableDiceTray");
 	if (enableTray) {
 		// Prepare the dice tray for rendering.
 		let $chat_form = html.find("#chat-form");
 		const options = {
-			dicerows: game.settings.get("dice-calculator", "diceRows")
+			dicerows: game.settings.get("dice-calculator", "diceRows"),
 		};
 
 		const content = await renderTemplate("modules/dice-calculator/templates/tray.html", options);
@@ -121,17 +123,19 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			});
 
 			// Handle correcting the modifier math if it's null.
-			$content.find(".dice-tray__input").on("input", (event) => {
-				// event.preventDefault();
-				let $self = $(event.currentTarget);
-				let mod_val = $self.val();
+			$content
+				.find(".dice-tray__input")
+				.on("input", (event) => {
+					// event.preventDefault();
+					let $self = $(event.currentTarget);
+					let mod_val = $self.val();
 
-				mod_val = Number(mod_val);
-				mod_val = Number.isNaN(mod_val) ? 0 : mod_val;
+					mod_val = Number(mod_val);
+					mod_val = Number.isNaN(mod_val) ? 0 : mod_val;
 
-				$self.val(mod_val);
-				CONFIG.DICETRAY.applyModifier(html);
-			})
+					$self.val(mod_val);
+					CONFIG.DICETRAY.applyModifier(html);
+				})
 				// Handle changing the modifier with the scroll well.
 				.on("wheel", (event) => {
 					let $self = $(event.currentTarget);
@@ -166,7 +170,9 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			CONFIG.DICETRAY.applyLayout(html);
 		}
 	}
-	const enableCalculator = game.user.getFlag("dice-calculator", "enableDiceCalculator") ?? game.settings.get("dice-calculator", "enableDiceCalculator");
+	const enableCalculator =
+		game.user.getFlag("dice-calculator", "enableDiceCalculator")
+		?? game.settings.get("dice-calculator", "enableDiceCalculator");
 	if (enableCalculator) {
 		// Render a modal on click.
 		const diceIconSelector = html.find("#chat-controls .chat-control-icon i");
@@ -184,7 +190,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				const { abilities, attributes, customButtons } = calculatorConfig ?? {
 					abilities: [],
 					attributes: [],
-					customButtons: []
+					customButtons: [],
 				};
 
 				// Build the template.
@@ -194,21 +200,24 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					abilities,
 					attributes,
 					customButtons,
-					adv: CONFIG.DICETRAY?.calculator?.adv || false
+					adv: CONFIG.DICETRAY?.calculator?.adv || false,
 				};
 
 				// Render the modal.
 				const content = await renderTemplate("modules/dice-calculator/templates/calculator.html", templateData);
-				new DiceCalculatorDialog({
-					title: `Dice Tray: ${game.i18n.localize("DICE_TRAY.Calculator")}`,
-					content,
-					buttons: {
-						roll: {
-							label: game.i18n.localize("TABLE.Roll"),
-							callback: () => dcRollDice(actor)
-						}
-					}
-				}, { top: event.clientY - 80 }).render(true);
+				new DiceCalculatorDialog(
+					{
+						title: `Dice Tray: ${game.i18n.localize("DICE_TRAY.Calculator")}`,
+						content,
+						buttons: {
+							roll: {
+								label: game.i18n.localize("TABLE.Roll"),
+								callback: () => dcRollDice(actor),
+							},
+						},
+					},
+					{ top: event.clientY - 80 }
+				).render(true);
 			} else {
 				$dialog.remove();
 			}

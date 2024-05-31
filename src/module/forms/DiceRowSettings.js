@@ -3,7 +3,7 @@ import { DiceCreator } from "./DiceCreator";
 export class DiceRowSettings extends FormApplication {
 	constructor(object, options = {}) {
 		super(object, options);
-		this.diceRows = deepClone(game.settings.get("dice-calculator", "diceRows"));
+		this.diceRows = foundry.utils.deepClone(game.settings.get("dice-calculator", "diceRows"));
 	}
 
 	static get defaultOptions() {
