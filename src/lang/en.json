@@ -74,11 +74,11 @@
 			},
 			"enableDiceTray": {
 				"name": "Enable Dice Tray",
-				"hint": "Enable showing a dice tray below the chat message area (requires reload)."
+				"hint": "Enable showing a dice tray below the chat message area."
 			},
 			"enableDiceCalculator": {
 				"name": "Enable Dice Calculator",
-				"hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
+				"hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box."
 			},
 			"popout": {
 				"name": "Add button to popout Dice Tray",
