@@ -145,6 +145,7 @@ export default class TemplateDiceMap {
 			event.preventDefault();
 			let dataset = event.currentTarget.dataset;
 			let $chat = html.find("#chat-form textarea");
+			if (html.is("aside")) $chat = this.popout.chatElement.find("#chat-form textarea");
 			let chat_val = String($chat.val());
 			let match_string = /\d*d\d+[khl]*/;
 
@@ -203,7 +204,10 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	applyModifier(html) {
-		const $mod_input = html.find(".dice-tray__input");
+		let $mod_input = html.find(".dice-tray__input");
+		if (!$mod_input.length && this.popout?.rendered) {
+			$mod_input = $(this.popout.element).find(".dice-tray__input");
+		}
 		const mod_val = Number($mod_input.val());
 
 		if ($mod_input.length === 0 || isNaN(mod_val)) return;
@@ -345,19 +349,24 @@ export default class TemplateDiceMap {
 
 		// Add a flag indicator on the dice.
 		qty = Number(qty);
-		const $flag_button = html.find(`.dice-tray__flag--${dataset.formula}`);
+		let $flag_button = [html.find(`.dice-tray__flag--${dataset.formula}`)];
+		if (this.popout?.rendered) {
+			$flag_button.push($(this.popout.element).find(`.dice-tray__flag--${dataset.formula}`));
+		}
 		if (!qty) {
 			qty = direction === "add" ? 1 : 0;
 		}
 
-		if (qty > 0) {
-			$flag_button.text(qty);
-			$flag_button.removeClass("hide");
-		} else if (qty < 0) {
-			$flag_button.text(qty);
-		} else {
-			$flag_button.text("");
-			$flag_button.addClass("hide");
+		for (const button of $flag_button) {
+			if (qty > 0) {
+				button.text(qty);
+				button.removeClass("hide");
+			} else if (qty < 0) {
+				button.text(qty);
+			} else {
+				button.text("");
+				button.addClass("hide");
+			}
 		}
 
 		currFormula = $chat.val();

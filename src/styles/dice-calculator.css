@@ -5,12 +5,16 @@
 }
 
 #dice-tray-popout .window-content {
-	/* margin-top: 6px; */
 	padding: 0;
+}
+
+#dice-tray-popout .dice-tray {
+	margin-top: 14px;
 }
 
 #dice-tray-popout .dice-tray button {
 	padding: 0;
+	height: 100%;
 }
 
 #dice-tray-popout .dice-tray button:focus {
@@ -392,7 +396,6 @@
 	box-shadow: 0 0 6px inset #8d9ea7;
 	transition: all ease-in-out 0.25s;
 	position: relative;
-	height: 100%;
 }
 
 .dice-tray button:hover {
