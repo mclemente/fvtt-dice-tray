@@ -4,6 +4,10 @@
 	color: #ff9898;
 }
 
+.theme-light #dice-tray-popout .window-content {
+	background: url(../../../ui/denim075.png) repeat;
+}
+
 #dice-tray-popout .window-content {
 	padding: 0;
 }
