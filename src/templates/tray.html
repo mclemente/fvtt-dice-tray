@@ -5,7 +5,9 @@
 		<button class="dice-tray__button"
 			data-formula="{{key}}"
 			data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
-			data-tooltip-direction="UP">
+			data-tooltip-direction="UP"
+			draggable="true"
+			>
 			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
 			{{#if data.img}}
 			<div class="dice" style="

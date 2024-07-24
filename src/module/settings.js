@@ -61,4 +61,35 @@ export function registerSettings() {
 		default: [],
 		type: Array,
 	});
+
+	game.settings.register("dice-calculator", "popout", {
+		name: "DICE_TRAY.SETTINGS.popout.name",
+		hint: "DICE_TRAY.SETTINGS.popout.hint",
+		scope: "client",
+		config: true,
+		default: "none",
+		choices: {
+			none: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.none"),
+			tokens: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.tokens"),
+			all: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.all"),
+		},
+		type: String,
+		onChange: () => ui.controls.initialize()
+	});
+
+	game.settings.register("dice-calculator", "autoOpenPopout", {
+		name: "DICE_TRAY.SETTINGS.autoOpenPopout.name",
+		hint: "DICE_TRAY.SETTINGS.autoOpenPopout.hint",
+		scope: "client",
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	game.settings.register("dice-calculator", "popoutPosition", {
+		scope: "client",
+		config: false,
+		default: {},
+		type: Object
+	});
 }

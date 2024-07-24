@@ -1,74 +1,94 @@
 {
-  "DICE_TRAY": {
-    "Adv": "Adv",
-    "Advantage": "Advantage",
-    "Dis": "Dis",
-    "Disadvantage": "Disadvantage",
-    "FateDice": "Fate Dice",
-    "For": "For",
-    "Fortune": "Fortune (kh)",
-    "Misfortune": "Misfortune (kl)",
-    "Mis": "Mis",
-    "Wild": "Wild",
-    "Ace": "Ace",
-    "WildDie": "Wild Die",
-    "ExplodingDie": "Exploding Die",
-    "PlusOneDie": "+1d",
-    "MinusOneDie": "-1d",
-    "PlusOneDieLong": "Increase Dice Size",
-    "MinusOneDieLong": "Decrease Dice Size",
-    "KeepHighest": "Keep Highest",
-    "KeepLowest": "Keep Lowest",
-    "del": "del",
-    "clear": "clear",
+	"DICE_TRAY": {
+		"Adv": "Adv",
+		"Advantage": "Advantage",
+		"DiceTray": "Dice Tray",
+		"Dis": "Dis",
+		"Disadvantage": "Disadvantage",
+		"FateDice": "Fate Dice",
+		"For": "For",
+		"Fortune": "Fortune (kh)",
+		"Misfortune": "Misfortune (kl)",
+		"Mis": "Mis",
+		"Wild": "Wild",
+		"Ace": "Ace",
+		"WildDie": "Wild Die",
+		"ExplodingDie": "Exploding Die",
+		"PlusOneDie": "+1d",
+		"MinusOneDie": "-1d",
+		"PlusOneDieLong": "Increase Dice Size",
+		"MinusOneDieLong": "Decrease Dice Size",
+		"KeepHighest": "Keep Highest",
+		"KeepLowest": "Keep Lowest",
+		"del": "del",
+		"clear": "clear",
 
-    "Calculator": "Calculator",
+		"Calculator": "Calculator",
 
-    "DiceCreator": {
-      "CreateDice": "Create Dice",
-      "Formula": {
-        "name": "Formula",
-        "hint": "The formula that will be added to the chat."
-      },
-      "Row": {
-        "name": "Row",
-        "hint": "The row the button will be placed on."
-      },
-      "Image": {
-        "name": "Image"
-      },
-      "Label": {
-        "name": "Label",
-        "hint": "(Optional) The label shown in case the dice has no image."
-      },
-      "Tooltip": {
-        "name": "Tooltip",
-        "hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
-      },
-      "Color": {
-        "name": "Color",
-        "hint": "(Optional) The color that fills the image. Defaults to white."
-      }
-    },
+		"DiceCreator": {
+			"CreateDice": "Create Dice",
+			"Formula": {
+				"name": "Formula",
+				"hint": "The formula that will be added to the chat."
+			},
+			"Row": {
+				"name": "Row",
+				"hint": "The row the button will be placed on."
+			},
+			"Image": {
+				"name": "Image"
+			},
+			"Label": {
+				"name": "Label",
+				"hint": "(Optional) The label shown in case the dice has no image."
+			},
+			"Tooltip": {
+				"name": "Tooltip",
+				"hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
+			},
+			"Color": {
+				"name": "Color",
+				"hint": "(Optional) The color that fills the image. Defaults to white."
+			}
+		},
 
-    "DiceRows": {
-      "Instruction1": "Click any dice button to edit it.",
-      "Instruction2": "Right-Click any dice button to delete it."
-    },
+		"DiceRows": {
+			"Instruction1": "Click any dice button to edit it.",
+			"Instruction2": "Right-Click any dice button to delete it."
+		},
 
-    "SETTINGS": {
-      "DiceCreator": "Dice Creator",
-      "DiceRowSettings": "Dice Rows Setting",
-      "GeneralSettings": "General Settings",
-      "General": "General",
-      "enableDiceTray": {
-        "name": "Enable Dice Tray",
-        "hint": "Enable showing a dice tray below the chat message area (requires reload)."
-      },
-      "enableDiceCalculator": {
-        "name": "Enable Dice Calculator",
-        "hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
-      }
-    }
-  }
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Toggle Dice Tray Popout"
+			}
+		},
+
+		"SETTINGS": {
+			"DiceCreator": "Dice Creator",
+			"DiceRowSettings": "Dice Rows Setting",
+			"GeneralSettings": "General Settings",
+			"General": "General",
+			"autoOpenPopout": {
+				"name": "Auto Open Popout",
+				"hint": "Opens the Dice Tray popout automatically on page load."
+			},
+			"enableDiceTray": {
+				"name": "Enable Dice Tray",
+				"hint": "Enable showing a dice tray below the chat message area (requires reload)."
+			},
+			"enableDiceCalculator": {
+				"name": "Enable Dice Calculator",
+				"hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box (requires reload)."
+			},
+			"popout": {
+				"name": "Add button to popout Dice Tray",
+				"hint": "Adds a button on the Controls bar to toggle the Dice Tray popout. You can also toggle the popout by setting a keybinding.",
+				"options": {
+					"none": "None",
+					"tokens": "Token Controls",
+					"all": "All"
+				}
+			}
+		}
+	}
 }

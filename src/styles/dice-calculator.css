@@ -1,561 +1,576 @@
 /* Global styles */
 /* Dice icon */
 #chat-controls .chat-control-icon i.dice-calculator-toggle:hover {
-  color: #ff9898;
+	color: #ff9898;
+}
+
+#dice-tray-popout .window-content {
+	/* margin-top: 6px; */
+	padding: 0;
+}
+
+#dice-tray-popout .dice-tray button {
+	padding: 0;
+}
+
+#dice-tray-popout .dice-tray button:focus {
+	outline: none;
+	box-shadow: 0 0 6px inset #8d9ea7;
 }
 
 /* Calculator Styles */
 .dice-calculator {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto 1fr auto;
-  grid-gap: 4px;
-  margin-bottom: 8px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: auto 1fr auto;
+	grid-gap: 4px;
+	margin-bottom: 8px;
 }
 
 .dice-calculator > button,
 .dice-calculator .dice-calculator--button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border-radius: 2px;
-  font-weight: bold;
-  font-size: 18px;
-  height: 32px;
-  line-height: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border-radius: 2px;
+	font-weight: bold;
+	font-size: 18px;
+	height: 32px;
+	line-height: 1;
 }
 
 .dice-calculator > button:hover,
 .dice-calculator .dice-calculator--button:hover {
-  box-shadow: 0 0 5px rgba(255, 0, 0, 0.35);
+	box-shadow: 0 0 5px rgba(255, 0, 0, 0.35);
 }
 
 .dice-calculator > .dice-calculator__d2,
 .dice-calculator > .dice-calculator__d3 {
-  display: none;
+	display: none;
 }
 
 .dice-calculator--light {
-  background-color: rgba(0, 0, 0, 0.15);
+	background-color: rgba(0, 0, 0, 0.15);
 }
 
 .dice-calculator--dark {
-  background-color: rgba(0, 0, 0, 0.3);
-  border-color: #7d7d7d;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-color: #7d7d7d;
 }
 
 .dice-calculator--op {
-  background-color: rgba(226, 0, 0, 0.5);
-  border-color: #c84646;
+	background-color: rgba(226, 0, 0, 0.5);
+	border-color: #c84646;
 }
 
 .dice-calculator--math {
-  background-color: rgba(255, 177, 0, 0.5);
-  border-color: #c88c00;
+	background-color: rgba(255, 177, 0, 0.5);
+	border-color: #c88c00;
 }
 
 .dice-calculator--confirm {
-  background-color: rgba(0, 160, 175, 0.5);
-  border-color: #048790;
+	background-color: rgba(0, 160, 175, 0.5);
+	border-color: #048790;
 }
 
 .dice-calculator--stat,
 .dice-calculator--attr,
 .dice-calculator--custom {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .dice-calculator--stat {
-  background-color: rgba(185, 70, 160, 0.5);
-  border-color: #8c2da5;
+	background-color: rgba(185, 70, 160, 0.5);
+	border-color: #8c2da5;
 }
 
 .dice-calculator--attr {
-  background-color: rgba(19, 0, 177, 0.5);
-  border-color: #1300b1;
+	background-color: rgba(19, 0, 177, 0.5);
+	border-color: #1300b1;
 }
 
 .dice-calculator--custom {
-  background-color: rgba(145, 75, 235, 0.3);
-  border-color: #8c2da5;
+	background-color: rgba(145, 75, 235, 0.3);
+	border-color: #8c2da5;
 }
 
 .dice-calculator__input {
-  grid-column-start: 1;
-  grid-column-end: span 4;
-  grid-row-start: 1;
-  grid-row-end: span 2;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
+	grid-column-start: 1;
+	grid-column-end: span 4;
+	grid-row-start: 1;
+	grid-row-end: span 2;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
 }
 
 .dice-calculator__input-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  flex-grow: 1;
-  position: relative;
-  text-align: right;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	flex-grow: 1;
+	position: relative;
+	text-align: right;
 }
 
 .dice-calculator__input > label {
-  font-size: 20px;
-  padding-right: 12px;
+	font-size: 20px;
+	padding-right: 12px;
 }
 
 .dice-calculator__input-wrapper > textarea {
-  font-size: 18px;
-  width: auto;
-  min-height: 80px;
-  flex-grow: 1;
-  resize: none;
+	font-size: 18px;
+	width: auto;
+	min-height: 80px;
+	flex-grow: 1;
+	resize: none;
 }
 
 .dice-calculator__rolls--hidden {
-  position: absolute;
-  background: #ffffff;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: 100%;
-  z-index: 10;
-  display: none;
+	position: absolute;
+	background: #ffffff;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 100%;
+	z-index: 10;
+	display: none;
 }
 
 .dice-calculator__rolls--hidden.visible {
-  display: block;
+	display: block;
 }
 
 .dice-calculator__roll {
-  padding: 4px 8px;
-  color: #999;
-  border: 1px solid #999;
-  border-top: 0;
-  position: relative;
-  z-index: 12;
+	padding: 4px 8px;
+	color: #999;
+	border: 1px solid #999;
+	border-top: 0;
+	position: relative;
+	z-index: 12;
 }
 
 .dice-calculator__roll:hover {
-  background-color: #333;
-  color: #fff;
+	background-color: #333;
+	color: #fff;
 }
 
 /* Row 2 */
 .dice-calculator__d100 {
-  grid-column-start: 1;
-  grid-row-start: 3;
+	grid-column-start: 1;
+	grid-row-start: 3;
 }
 
 .dice-calculator__dx {
-  grid-column-start: 2;
-  grid-row-start: 3;
+	grid-column-start: 2;
+	grid-row-start: 3;
 }
 
 .dice-calculator__del {
-  grid-column-start: 3;
-  grid-row-start: 3;
+	grid-column-start: 3;
+	grid-row-start: 3;
 }
 
 .dice-calculator__ac {
-  grid-column-start: 4;
-  grid-row-start: 3;
+	grid-column-start: 4;
+	grid-row-start: 3;
 }
 
 /* Row 3 */
 .dice-calculator__d4 {
-  grid-column-start: 1;
-  grid-row-start: 4;
+	grid-column-start: 1;
+	grid-row-start: 4;
 }
 
 .dice-calculator__d6 {
-  grid-column-start: 2;
-  grid-row-start: 4;
+	grid-column-start: 2;
+	grid-row-start: 4;
 }
 
 .dice-calculator__d8 {
-  grid-column-start: 3;
-  grid-row-start: 4;
+	grid-column-start: 3;
+	grid-row-start: 4;
 }
 
 .dice-calculator__div {
-  grid-column-start: 4;
-  grid-row-start: 4;
+	grid-column-start: 4;
+	grid-row-start: 4;
 }
 
 /* Row 4 */
 .dice-calculator__d10 {
-  grid-column-start: 1;
-  grid-row-start: 5;
+	grid-column-start: 1;
+	grid-row-start: 5;
 }
 
 .dice-calculator__d12 {
-  grid-column-start: 2;
-  grid-row-start: 5;
+	grid-column-start: 2;
+	grid-row-start: 5;
 }
 
 .dice-calculator__d20 {
-  grid-column-start: 3;
-  grid-row-start: 5;
+	grid-column-start: 3;
+	grid-row-start: 5;
 }
 
 .dice-calculator__mul {
-  grid-column-start: 4;
-  grid-row-start: 5;
+	grid-column-start: 4;
+	grid-row-start: 5;
 }
 
 /* Row 5 */
 .dice-calculator__7 {
-  grid-column-start: 1;
-  grid-row-start: 6;
+	grid-column-start: 1;
+	grid-row-start: 6;
 }
 
 .dice-calculator__8 {
-  grid-column-start: 2;
-  grid-row-start: 6;
+	grid-column-start: 2;
+	grid-row-start: 6;
 }
 
 .dice-calculator__9 {
-  grid-column-start: 3;
-  grid-row-start: 6;
+	grid-column-start: 3;
+	grid-row-start: 6;
 }
 
 .dice-calculator__min {
-  grid-column-start: 4;
-  grid-row-start: 6;
+	grid-column-start: 4;
+	grid-row-start: 6;
 }
 
 /* Row 6 */
 .dice-calculator__4 {
-  grid-column-start: 1;
-  grid-row-start: 7;
+	grid-column-start: 1;
+	grid-row-start: 7;
 }
 
 .dice-calculator__5 {
-  grid-column-start: 2;
-  grid-row-start: 7;
+	grid-column-start: 2;
+	grid-row-start: 7;
 }
 
 .dice-calculator__6 {
-  grid-column-start: 3;
-  grid-row-start: 7;
+	grid-column-start: 3;
+	grid-row-start: 7;
 }
 
 .dice-calculator__plu {
-  grid-column-start: 4;
-  grid-row-start: 7;
+	grid-column-start: 4;
+	grid-row-start: 7;
 }
 
 /* Row 7 */
 .dice-calculator__1 {
-  grid-column-start: 1;
-  grid-row-start: 8;
+	grid-column-start: 1;
+	grid-row-start: 8;
 }
 
 .dice-calculator__2 {
-  grid-column-start: 2;
-  grid-row-start: 8;
+	grid-column-start: 2;
+	grid-row-start: 8;
 }
 
 .dice-calculator__3 {
-  grid-column-start: 3;
-  grid-row-start: 8;
+	grid-column-start: 3;
+	grid-row-start: 8;
 }
 
 .dice-calculator__kh {
-  grid-column-start: 4;
-  grid-row-start: 8;
+	grid-column-start: 4;
+	grid-row-start: 8;
 }
 
 /* Row 8 */
 .dice-calculator__0 {
-  grid-column-start: 1;
-  grid-row-start: 9;
+	grid-column-start: 1;
+	grid-row-start: 9;
 }
 
 .dice-calculator__p-left {
-  grid-column-start: 2;
-  grid-row-start: 9;
+	grid-column-start: 2;
+	grid-row-start: 9;
 }
 
 .dice-calculator__p-right {
-  grid-column-start: 3;
-  grid-row-start: 9;
+	grid-column-start: 3;
+	grid-row-start: 9;
 }
 
 .dice-calculator__kl {
-  grid-column-start: 4;
-  grid-row-start: 9;
+	grid-column-start: 4;
+	grid-row-start: 9;
 }
 
 .dice-calculator__actor {
-  grid-column-start: 1;
-  grid-column-end: span 4;
-  grid-row-start: 10;
+	grid-column-start: 1;
+	grid-column-end: span 4;
+	grid-row-start: 10;
 }
 
 /* Row 9 */
 .dice-calculator__btn-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 4px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 4px 0;
+	border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .dice-calculator__btn-group:first-child {
-  margin-top: 2px;
+	margin-top: 2px;
 }
 
 .dice-calculator__btn-group:last-child {
-  padding-bottom: 0;
+	padding-bottom: 0;
 }
 
 .dice-calculator__actor .dice-calculator--button {
-  width: auto;
-  flex-grow: 1;
-  height: 32px;
-  padding: 4px 8px;
-  margin: 2px;
-  white-space: nowrap;
+	width: auto;
+	flex-grow: 1;
+	height: 32px;
+	padding: 4px 8px;
+	margin: 2px;
+	white-space: nowrap;
 }
 
 .dice-calculator__btn-group .dice-calculator--button {
-  min-width: 20%;
+	min-width: 20%;
 }
 
 .dice-calculator__abil .dice-calculator--button {
-  min-width: 0;
+	min-width: 0;
 }
 
 .dialog--dice-calculator .dialog-button {
-  background-color: rgba(76, 177, 0, 0.5);
-  border-color: #429600;
-  font-weight: bold;
-  font-size: 18px;
-  height: 32px;
-  line-height: 1;
-  text-transform: uppercase;
+	background-color: rgba(76, 177, 0, 0.5);
+	border-color: #429600;
+	font-weight: bold;
+	font-size: 18px;
+	height: 32px;
+	line-height: 1;
+	text-transform: uppercase;
 }
 
 /* Dice Tray */
 .dice-tray {
-  flex: 0;
+	flex: 0;
 }
 
 .dice-tray > * {
-  margin: 2px;
+	margin: 2px;
 }
 
 .dice-tray .dice-tray__stacked {
-  height: 34px;
-  margin-right: 2px;
+	height: 34px;
+	margin-right: 2px;
 }
 
 .dice-tray .dice-tray__buttons {
-  height: 30px;
+	height: 30px;
 }
 
 .dice-tray .flexrow {
-  flex-wrap: nowrap;
+	flex-wrap: nowrap;
 }
 
 .dice-tray button {
-  background: transparent;
-  border: 1px solid #000;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  box-shadow: 0 0 6px inset #8d9ea7;
-  transition: all ease-in-out 0.25s;
-  position: relative;
+	background: transparent;
+	border: 1px solid #000;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	box-shadow: 0 0 6px inset #8d9ea7;
+	transition: all ease-in-out 0.25s;
+	position: relative;
+	height: 100%;
 }
 
 .dice-tray button:hover {
-  color: #ff6400;
-  border-color: #ff6400;
-  box-shadow: 0 0 6px inset #ff6400;
+	color: #ff6400;
+	border-color: #ff6400;
+	box-shadow: 0 0 6px inset #ff6400;
 }
 
 .dice-tray button:hover svg * {
-  fill: #ff6400;
+	fill: #ff6400;
 }
 
 .dice-tray button.dice-tray__roll:hover {
-  background: #ff6400;
-  box-shadow: none;
-  color: #fff;
+	background: #ff6400;
+	box-shadow: none;
+	color: #fff;
 }
 
 .dice-tray button.dice-tray__math--sub:hover {
-  background: #ff6400;
-  box-shadow: 0 0 6px inset #ff6400;
-  color: #fff;
+	background: #ff6400;
+	box-shadow: 0 0 6px inset #ff6400;
+	color: #fff;
 }
 
 .dice-tray button.dice-tray__math--add:hover {
-  background: #0a9843;
-  box-shadow: 0 0 6px inset #0a9843;
-  border-color: #0a9843;
-  color: #fff;
+	background: #0a9843;
+	box-shadow: 0 0 6px inset #0a9843;
+	border-color: #0a9843;
+	color: #fff;
 }
 
 .dice-tray button.dice-tray__ad {
-  font-size: 10px;
-  height: 17px;
-  flex: 17px;
-  line-height: 1;
-  text-transform: uppercase;
+	font-size: 10px;
+	height: 17px;
+	flex: 17px;
+	line-height: 1;
+	text-transform: uppercase;
 }
 
 .dice-tray button.dice-tray__advantage:hover {
-  color: #0a9843;
-  border-color: #0a9843;
-  box-shadow: 0 0 6px inset #0a9843;
+	color: #0a9843;
+	border-color: #0a9843;
+	box-shadow: 0 0 6px inset #0a9843;
 }
 
 .dice-tray button.dice-tray__advantage.active {
-  background: #0a9843;
-  box-shadow: 0 0 6px inset #0a9843;
-  border-color: #0a9843;
-  color: #fff;
+	background: #0a9843;
+	box-shadow: 0 0 6px inset #0a9843;
+	border-color: #0a9843;
+	color: #fff;
 }
 
 .dice-tray button.dice-tray__advantage.active:hover {
-  box-shadow: 0 0 6px inset #fff;
-  border-color: #fff;
+	box-shadow: 0 0 6px inset #fff;
+	border-color: #fff;
 }
 
 .dice-tray button.dice-tray__disadvantage:hover {
-  color: #ff6400;
-  border-color: #ff6400;
-  box-shadow: 0 0 6px inset #ff6400;
+	color: #ff6400;
+	border-color: #ff6400;
+	box-shadow: 0 0 6px inset #ff6400;
 }
 
 .dice-tray button.dice-tray__disadvantage.active {
-  background: #ff6400;
-  box-shadow: 0 0 6px inset #ff6400;
-  color: #fff;
+	background: #ff6400;
+	box-shadow: 0 0 6px inset #ff6400;
+	color: #fff;
 }
 
 .dice-tray button.dice-tray__disadvantage.active:hover {
-  box-shadow: 0 0 6px inset #fff;
-  border-color: #fff;
+	box-shadow: 0 0 6px inset #fff;
+	border-color: #fff;
 }
 
 .dice-tray button svg {
-  width: 100%;
-  height: auto;
-  transition: all ease-in-out 0.25s;
+	width: 100%;
+	height: auto;
+	transition: all ease-in-out 0.25s;
 }
 
 .dice-tray button svg * {
-  fill: #fff;
+	fill: #fff;
 }
 
 .dice-tray button img {
-  border: none;
+	border: none;
 }
 
 .dice-tray button div.dice {
-  height: 100%;
-  aspect-ratio: 1/1;
-  background-color: white;
+	height: 100%;
+	aspect-ratio: 1/1;
+	background-color: white;
 }
 
 .dice-tray button .dice-tray__flag {
-  position: absolute;
-  bottom: calc(100% - 2px);
-  left: 0;
-  right: 0;
-  font-size: 14px;
-  height: 18px;
-  line-height: 1;
-  background-color: #ff6400;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px 4px 0 0;
-  max-height: 18px;
-  transition: all ease-in-out 0.15s;
+	position: absolute;
+	bottom: calc(100% - 2px);
+	left: 0;
+	right: 0;
+	font-size: 14px;
+	height: 18px;
+	line-height: 1;
+	background-color: #ff6400;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px 4px 0 0;
+	max-height: 18px;
+	transition: all ease-in-out 0.15s;
 }
 
 .dice-tray button .dice-tray__flag:hover,
 .dice-tray button .dice-tray__flag:focus {
-  background-color: #ff6400;
-  color: #fff;
+	background-color: #ff6400;
+	color: #fff;
 }
 
 .dice-tray button .dice-tray__flag.hide {
-  max-height: 0;
+	max-height: 0;
 }
 
-.dice-tray input[type='text'] {
-  display: block;
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  height: 34px;
-  line-height: 34px;
-  text-align: center;
-  background-color: rgba(250, 250, 250, 0.15);
-  border: 1px solid #000;
-  box-shadow: 0 0 6px inset #fff;
+.dice-tray input[type="text"] {
+	display: block;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	height: 34px;
+	line-height: 34px;
+	text-align: center;
+	background-color: rgba(250, 250, 250, 0.15);
+	border: 1px solid #000;
+	box-shadow: 0 0 6px inset #fff;
 }
 
-.dice-tray input[type='text']:hover,
-.dice-tray input[type='text']:focus {
-  border: 1px solid #ff6400;
-  box-shadow: 0 0 6px inset #ff6400;
+.dice-tray input[type="text"]:hover,
+.dice-tray input[type="text"]:focus {
+	border: 1px solid #ff6400;
+	box-shadow: 0 0 6px inset #ff6400;
 }
 
 /* Dice Row Settings */
 .dice-tray-row-settings {
-  min-width: 320px;
+	min-width: 320px;
 }
 
 .dice-tray-row-settings .sidebar-preview {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  width: var(--sidebar-width);
-  margin: auto;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	width: var(--sidebar-width);
+	margin: auto;
 }
 
 .dice-tray-row-settings .sidebar-preview section {
-  background-color: black;
+	background-color: black;
 }
 
 .dice-tray-row-settings th,
 .dice-tray-row-settings td {
-  font-size: var(--font-size-16);
-  padding: 0;
-  text-align: center;
+	font-size: var(--font-size-16);
+	padding: 0;
+	text-align: center;
 }
 
 .dice-tray-row-settings .color div {
-  background-color: white;
-  margin: auto;
-  height: var(--line-height-30);
-  width: var(--line-height-30);
+	background-color: white;
+	margin: auto;
+	height: var(--line-height-30);
+	width: var(--line-height-30);
 }
 
 .dice-tray-row-settings img {
-  height: var(--line-height-30);
-  border: none;
+	height: var(--line-height-30);
+	border: none;
 }
 
 .dice-tray-row-settings .controls a {
-  padding: 8px;
+	padding: 8px;
 }

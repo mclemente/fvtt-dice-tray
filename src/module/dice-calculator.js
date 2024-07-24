@@ -2,6 +2,7 @@ import * as diceCalculators from "./calculator-buttons/_module.js";
 import * as keymaps from "./maps/_module.js";
 
 import { DiceCalculatorDialog } from "./dice-calculator-dialog.js";
+import { DiceTrayPopOut } from "./dice-tray-popout.js";
 import { KEYS } from "./maps/_keys.js";
 import { preloadTemplates } from "./preloadTemplates.js";
 import { registerSettings } from "./settings.js";
@@ -31,6 +32,22 @@ Hooks.once("i18nInit", () => {
 	}
 
 	registerSettings();
+	game.keybindings.register("dice-calculator", "popout", {
+		name: "DICE_TRAY.KEYBINGINDS.popout.name",
+		onDown: async () => {
+			await togglePopout();
+			if (game.settings.get("dice-calculator", "popout") === "none") return;
+			const tool = ui.controls.control.tools.find((t) => t.name === "dice-tray");
+			if (tool) {
+				tool.active = !tool.active;
+				ui.controls.render();
+			}
+		}
+	});
+});
+
+Hooks.once("ready", () => {
+	if (game.settings.get("dice-calculator", "autoOpenPopout")) togglePopout();
 });
 
 function getProviderString(regex) {
@@ -41,6 +58,12 @@ function getProviderString(regex) {
 		return id;
 	}
 	return "";
+}
+
+async function togglePopout() {
+	CONFIG.DICETRAY.popout ??= new DiceTrayPopOut();
+	if (CONFIG.DICETRAY.popout.rendered) await CONFIG.DICETRAY.popout.close({ animate: false });
+	else await CONFIG.DICETRAY.popout.render(true);
 }
 
 Hooks.on("renderSidebarTab", async (app, html, data) => {
@@ -74,7 +97,6 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 				CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
 			});
 			// Handle drag events.
-			$content.find(".dice-tray__button").attr("draggable", true);
 			$content.on("dragstart", ".dice-tray__button, .dice-tray__ad", (event) => {
 				const dataset = event.currentTarget.dataset;
 				const dragData = JSON.parse(JSON.stringify(dataset));
@@ -223,6 +245,24 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 			}
 		});
 	}
+});
+
+Hooks.on("getSceneControlButtons", (controls) => {
+	const popout = game.settings.get("dice-calculator", "popout");
+	if (popout === "none") return;
+	const autoOpenPopout = game.settings.get("dice-calculator", "autoOpenPopout");
+	const addButton = (control) => {
+		control.tools.push({
+			name: "dice-tray",
+			title: "Dice Tray",
+			icon: "fas fa-dice-d20",
+			onClick: () => togglePopout(),
+			active: CONFIG.DICETRAY.popout?.rendered || (!game.ready && autoOpenPopout),
+			toggle: true,
+		});
+	};
+	if (popout === "tokens") addButton(controls[0]);
+	else controls.forEach((c) => addButton(c));
 });
 
 /**

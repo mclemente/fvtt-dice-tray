@@ -93,6 +93,7 @@ export default class TemplateDiceMap {
 			this._extraButtonsLogic(html);
 		}
 
+		if (html.is("aside")) return;
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.find(".dice-tray__roll").on("click", (event) => {
 			event.preventDefault();
