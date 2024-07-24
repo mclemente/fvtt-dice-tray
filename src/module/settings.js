@@ -69,8 +69,8 @@ export function registerSettings() {
 		config: true,
 		default: "none",
 		choices: {
-			none: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.none"),
-			tokens: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.tokens"),
+			none: "",
+			tokens: game.i18n.localize("CONTROLS.GroupToken"),
 			all: game.i18n.localize("DICE_TRAY.SETTINGS.popout.options.all"),
 		},
 		type: String,
