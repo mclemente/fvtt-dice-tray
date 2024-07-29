@@ -1,58 +1,58 @@
 {
-  "id": "dice-calculator",
-  "title": "Dice Tray",
-  "description": "Adds a dice tray below chat, and turns the d20 near chat into a dice calculator.",
-  "authors": [
-    {
-      "name": "Asacolips",
-      "discord": "Asacolips#1867"
-    },
-    {
-      "name": "Matheus Clemente",
-      "discord": "mclemente#5524"
-    }
-  ],
-  "url": "This is auto replaced",
-  "version": "This is auto replaced",
-  "compatibility": {
-    "minimum": "11",
-    "verified": "12"
-  },
-  "esmodules": ["module/dice-calculator.js"],
-  "styles": ["styles/dice-calculator.css"],
-  "packs": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-    {
-      "lang": "pt-BR",
-      "name": "English",
-      "path": "lang/pt-BR.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    },
-    {
-      "lang": "it",
-      "name": "Italiano",
-      "path": "lang/it.json"
-    },
-    {
-      "lang": "ja",
-      "name": "日本語",
-      "path": "lang/ja.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "lang/de.json"
-    }
-  ],
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced"
+	"id": "dice-calculator",
+	"title": "Dice Tray",
+	"description": "Adds a dice tray below chat, and turns the d20 near chat into a dice calculator.",
+	"authors": [
+		{
+			"name": "Asacolips",
+			"discord": "Asacolips#1867"
+		},
+		{
+			"name": "Matheus Clemente",
+			"discord": "mclemente#5524"
+		}
+	],
+	"url": "This is auto replaced",
+	"version": "This is auto replaced",
+	"compatibility": {
+		"minimum": "12",
+		"verified": "12"
+	},
+	"esmodules": ["module/dice-calculator.js"],
+	"styles": ["styles/dice-calculator.css"],
+	"packs": [],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		},
+		{
+			"lang": "pt-BR",
+			"name": "English",
+			"path": "lang/pt-BR.json"
+		},
+		{
+			"lang": "es",
+			"name": "Español",
+			"path": "lang/es.json"
+		},
+		{
+			"lang": "it",
+			"name": "Italiano",
+			"path": "lang/it.json"
+		},
+		{
+			"lang": "ja",
+			"name": "日本語",
+			"path": "lang/ja.json"
+		},
+		{
+			"lang": "de",
+			"name": "Deutsch",
+			"path": "lang/de.json"
+		}
+	],
+	"manifest": "This is auto replaced",
+	"download": "This is auto replaced"
 }
