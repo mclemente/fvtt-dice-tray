@@ -305,9 +305,8 @@ export default class TemplateDiceMap {
 		if (match_string.test(currFormula)) {
 			const match = currFormula.match(match_string);
 			const parts = {
-				txt: match[0] || "",
-				qty: match[1] || "1",
-				die: match[2] || "",
+				qty: match.groups?.qty ?? (match[1] || "1"),
+				die: match.groups?.dice ?? (match[2] || ""),
 			};
 
 			if (parts.die === "" && match[3]) {
