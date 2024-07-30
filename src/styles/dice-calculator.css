@@ -26,6 +26,11 @@
 	box-shadow: 0 0 6px inset #8d9ea7;
 }
 
+#dice-tray-popout .dice-tray button.dice-tray__advantage:hover,
+#dice-tray-popout .dice-tray button.dice-tray__disadvantage:hover {
+	background: transparent;
+}
+
 /* Calculator Styles */
 .dice-calculator {
 	display: grid;
