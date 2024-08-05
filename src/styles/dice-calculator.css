@@ -10,10 +10,8 @@
 
 #dice-tray-popout .window-content {
 	padding: 0;
-}
-
-#dice-tray-popout .dice-tray {
-	margin-top: 14px;
+	overflow: visible;
+	z-index: 2;
 }
 
 #dice-tray-popout .dice-tray button {
