@@ -1,0 +1,34 @@
+.theme-light {
+	#dice-tray-popout {
+		.window-content {
+			background: url(../../../ui/denim075.png) repeat;
+		}
+	}
+}
+#dice-tray-popout {
+	.window-content {
+		padding: 0;
+		overflow: visible;
+		z-index: 2;
+	}
+	.dice-tray {
+		button {
+			padding: 0;
+			height: 100%;
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 6px inset #8d9ea7;
+			}
+			&.dice-tray__advantage {
+				&:hover {
+					background: transparent;
+				}
+			}
+			&.dice-tray__disadvantage {
+				&:hover {
+					background: transparent;
+				}
+			}
+		}
+	}
+}
