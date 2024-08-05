@@ -92,4 +92,14 @@ export function registerSettings() {
 		default: {},
 		type: Object
 	});
+
+	for (const [key, data] of Object.entries(CONFIG.DICETRAY.settings)) {
+		game.settings.register("dice-calculator", key, foundry.utils.mergeObject(
+			{
+				scope: "world",
+				config: true
+			},
+			data
+		));
+	}
 }

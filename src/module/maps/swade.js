@@ -25,6 +25,17 @@ export default class SWADEDiceMap extends GenericDiceMap {
 		};
 	}
 
+	get settings() {
+		return {
+			wildDieBehavior: {
+				name: "DICE_TRAY.SETTINGS.SWADE.wildDieBehavior.name",
+				hint: "DICE_TRAY.SETTINGS.SWADE.wildDieBehavior.hint",
+				default: false,
+				type: Boolean
+			}
+		};
+	}
+
 	_extraButtonsLogic(html) {
 		html.find(".dice-tray__advantage").on("click", (event) => {
 			event.preventDefault();
@@ -55,7 +66,15 @@ export default class SWADEDiceMap extends GenericDiceMap {
 		}
 
 		if (add_wild) {
-			return `{${qty === "" ? 1 : qty}${dice}${roll_suffix},1d6${roll_suffix}}kh`;
+			if (!game.settings.get("dice-calculator", "wildDieBehavior")) {
+				return `{${qty === "" ? 1 : qty}${dice}${roll_suffix},1d6${roll_suffix}}kh`;
+			}
+
+			dice = dice.replace("(", "").replace(")", "");
+			if (!Number.isNumeric(qty)) {
+				return `{1(?<dice>${dice})${roll_suffix}.*,1d6${roll_suffix}}kh(?<qty>\\d*)`;
+			}
+			return `{${`1${dice}${roll_suffix},`.repeat(qty)}1d6${roll_suffix}}kh${qty}`;
 		}
 		return `${qty === "" ? 1 : qty}${dice}${roll_suffix}`;
 	}

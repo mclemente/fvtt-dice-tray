@@ -84,6 +84,13 @@ export default class TemplateDiceMap {
 	}
 
 	/**
+	 * List of additional settings to be registered during the i18nInit hook.
+	 */
+	get settings() {
+		return {};
+	}
+
+	/**
 	 * Logic to set display the additiona KH/KL buttons and event listeners.
 	 * @param {HTMLElement} html
 	 */
