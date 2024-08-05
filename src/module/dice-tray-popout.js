@@ -42,7 +42,6 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 		const left = position.left ?? ui.nav?.element[0].getBoundingClientRect().left;
 		const top = position.top ?? ui.controls?.element[0].getBoundingClientRect().top;
 		options.position = {...options.position, left, top};
-		canvas.scene.apps[this.id] = this;
 	}
 
 	_onRender(context, options) {
