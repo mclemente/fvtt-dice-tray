@@ -279,15 +279,16 @@ $border-color_5: #8c2da5;
 			}
 		}
 	}
-	.dialog-buttons {
-		button {
-			background-color: rgba(76, 177, 0, 0.5);
-			border-color: #429600;
-			font-weight: bold;
-			font-size: 18px;
-			height: 32px;
-			line-height: 1;
-			text-transform: uppercase;
+	.dice-calculator--roll {
+		background-color: rgba(76, 177, 0, 0.5);
+		border-color: #429600;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 1;
+		text-transform: uppercase;
+		&:focus {
+			outline: none;
+			box-shadow: none;
 		}
 	}
 }
