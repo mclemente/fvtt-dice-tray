@@ -251,7 +251,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 						buttons: [
 							{
 								action: "roll",
-								class: "dice-calculator__roll",
+								class: "dice-calculator--roll",
 								label: game.i18n.localize("TABLE.Roll"),
 								callback: () => dcRollDice(actor),
 							}
