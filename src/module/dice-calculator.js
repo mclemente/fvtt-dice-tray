@@ -253,7 +253,7 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 								action: "roll",
 								class: "dice-calculator--roll",
 								label: game.i18n.localize("TABLE.Roll"),
-								callback: () => dcRollDice(actor),
+								callback: async () => await dcRollDice(actor),
 							}
 						],
 					}
@@ -288,7 +288,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
  * Helper function to roll dice formula and output to chat.
  * @param {object} actor The actor to use for rolls, if any.
  */
-function dcRollDice(actor = null) {
+async function dcRollDice(actor = null) {
 	// Retrieve the formula.
 	const formula = CONFIG.DICETRAY.dialog.element.querySelector(".dice-calculator textarea").value;
 	if (!formula) return;
@@ -296,7 +296,8 @@ function dcRollDice(actor = null) {
 	// Roll the dice!
 	const data = actor ? actor.getRollData() : {};
 	const roll = new Roll(formula, data);
-	roll.toMessage();
+	await roll.evaluate({ allowInteractive: false });
+	await roll.toMessage();
 
 	// Throw a warning to the user if they tried to use a stat without a token.
 	// If there's no actor and the user tried to use a stat, warn them.
