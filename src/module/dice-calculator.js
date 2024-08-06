@@ -1,4 +1,3 @@
-import * as diceCalculators from "./calculator-buttons/_module.js";
 import * as keymaps from "./maps/_module.js";
 
 import { DiceCalculatorDialog } from "./dice-calculator-dialog.js";
@@ -33,22 +32,12 @@ Hooks.once("init", () => {
 
 Hooks.once("i18nInit", () => {
 	const newMaps = foundry.utils.deepClone(keymaps);
-	const newCalculators = foundry.utils.deepClone(diceCalculators);
 
 	Hooks.callAll("dice-calculator.keymaps", newMaps, newMaps.Template);
 	const supportedSystemMaps = Object.keys(newMaps).join("|");
 	const systemMapsRegex = new RegExp(`^(${supportedSystemMaps})$`);
 	const providerStringMaps = getProviderString(systemMapsRegex) || "Template";
 	CONFIG.DICETRAY = new newMaps[providerStringMaps]();
-
-	Hooks.callAll("dice-calculator.calculator", newCalculators, newCalculators.Template);
-	const supportedSystemCalculators = Object.keys(newCalculators).join("|");
-	const systemCalculatorsRegex = new RegExp(`^(${supportedSystemCalculators})$`);
-	const providerStringCalculators = getProviderString(systemCalculatorsRegex);
-
-	if (providerStringCalculators) {
-		CONFIG.DICETRAY.calculator = new newCalculators[providerStringCalculators]();
-	}
 
 	registerSettings();
 	game.keybindings.register("dice-calculator", "popout", {
@@ -227,15 +216,9 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 					.map(([k, v]) => (k));
 				const highest = dice.pop();
 
-				const calculatorConfig = CONFIG.DICETRAY?.calculator?.getData();
-				const { customButtons } = calculatorConfig ?? {
-					customButtons: [],
-				};
-
 				// Build the template.
 				const rolls = game.settings.get("dice-calculator", "rolls");
 				const templateData = {
-					customButtons,
 					dice,
 					highest,
 					rolls,
