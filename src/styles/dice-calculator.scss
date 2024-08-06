@@ -1,42 +1,18 @@
 @import "dice-tray";
 
-$color_1: #ff9898;
-$color_2: #999;
-$color_3: #fff;
-$background-color_1: rgba(0, 0, 0, 0.15);
-$background-color_2: rgba(0, 0, 0, 0.3);
-$background-color_3: rgba(226, 0, 0, 0.5);
-$background-color_4: rgba(255, 177, 0, 0.5);
-$background-color_5: rgba(0, 160, 175, 0.5);
-$background-color_6: rgba(185, 70, 160, 0.5);
-$background-color_7: rgba(19, 0, 177, 0.5);
-$background-color_8: rgba(145, 75, 235, 0.3);
-$background-color_9: #333;
-$background-color_10: rgba(76, 177, 0, 0.5);
-$border-color_1: #7d7d7d;
-$border-color_2: #c84646;
-$border-color_3: #c88c00;
-$border-color_4: #048790;
 $border-color_5: #8c2da5;
-$border-color_6: #1300b1;
-$border-color_7: #429600;
 
 #chat-controls {
 	.chat-control-icon {
 		i.dice-calculator-toggle {
 			&:hover {
-				color: $color_1;
+				color: #ff9898;
 			}
 		}
 	}
 }
 .dialog--dice-calculator {
 	.dice-calculator {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: auto 1fr auto;
-		grid-gap: 4px;
-		margin-bottom: 8px;
 		>button {
 			display: flex;
 			justify-content: center;
@@ -65,49 +41,40 @@ $border-color_7: #429600;
 			font-size: 18px;
 			height: 32px;
 			line-height: 1;
+			flex: 0 0 auto;
+			width: calc(100% * (1/3) - 4px);
+
 			&:hover {
 				box-shadow: 0 0 5px rgba(255, 0, 0, 0.35);
 			}
+			&:focus {
+				outline: none;
+				box-shadow: none;
+			}
 		}
-		>.dice-calculator__d2 {
-			display: none;
-		}
-		>.dice-calculator__d3 {
-			display: none;
+		.operation-row {
+			.dice-calculator--button {
+				width: 100%
+			}
 		}
 		.dice-calculator--light {
-			background-color: $background-color_1;
+			background-color: rgba(0, 0, 0, 0.15);
 		}
 		.dice-calculator--dark {
-			background-color: $background-color_2;
-			border-color: $border-color_1;
+			background-color: rgba(0, 0, 0, 0.3);
+			border-color: #7d7d7d;
 		}
 		.dice-calculator--op {
-			background-color: $background-color_3;
-			border-color: $border-color_2;
+			background-color: rgba(226, 0, 0, 0.5);
+			border-color: #c84646;
 		}
 		.dice-calculator--math {
-			background-color: $background-color_4;
-			border-color: $border-color_3;
+			background-color: rgba(255, 177, 0, 0.5);
+			border-color: #c88c00;
 		}
 		.dice-calculator--confirm {
-			background-color: $background-color_5;
-			border-color: $border-color_4;
-		}
-		.dice-calculator--stat {
-			text-transform: uppercase;
-			background-color: $background-color_6;
-			border-color: $border-color_5;
-		}
-		.dice-calculator--attr {
-			text-transform: uppercase;
-			background-color: $background-color_7;
-			border-color: $border-color_6;
-		}
-		.dice-calculator--custom {
-			text-transform: uppercase;
-			background-color: $background-color_8;
-			border-color: $border-color_5;
+			background-color: rgba(0, 160, 175, 0.5);
+			border-color: #048790;
 		}
 		.dice-calculator__input {
 			grid-column-start: 1;
@@ -118,6 +85,7 @@ $border-color_7: #429600;
 			flex-direction: row;
 			flex-wrap: nowrap;
 			align-items: center;
+			margin-bottom: 1rem;
 			>label {
 				font-size: 20px;
 				padding-right: 12px;
@@ -154,14 +122,14 @@ $border-color_7: #429600;
 		}
 		.dice-calculator__roll {
 			padding: 4px 8px;
-			color: $color_2;
+			color: #999;
 			border: 1px solid #999;
 			border-top: 0;
 			position: relative;
 			z-index: 12;
 			&:hover {
-				background-color: $background-color_9;
-				color: $color_3;
+				background-color: #333;
+				color: #fff;
 			}
 		}
 		.dice-calculator__d100 {
@@ -313,8 +281,8 @@ $border-color_7: #429600;
 	}
 	.dialog-buttons {
 		button {
-			background-color: $background-color_10;
-			border-color: $border-color_7;
+			background-color: rgba(76, 177, 0, 0.5);
+			border-color: #429600;
 			font-weight: bold;
 			font-size: 18px;
 			height: 32px;

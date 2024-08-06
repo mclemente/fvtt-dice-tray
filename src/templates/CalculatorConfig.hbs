@@ -1,0 +1,8 @@
+<section>
+	{{#each dice}}
+	<div class="form-group">
+		<label>{{{ icon }}} {{ localize label }}</label>
+		<input name="{{@key}}" type="checkbox" {{checked (lookup ../configs @key)}}>
+	</div>
+	{{/each}}
+</section>

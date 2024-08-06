@@ -10,6 +10,25 @@ import { registerSettings } from "./settings.js";
 // Initialize module
 Hooks.once("init", () => {
 	preloadTemplates();
+	Handlebars.registerHelper({
+		diceTrayTimes: (n, options) => {
+			let accum = "";
+			let data;
+			if (options.data) {
+				data = Handlebars.createFrame(options.data);
+			}
+			let { start = 0, reverse = false } = options.hash;
+			for (let i = 0; i < n; ++i) {
+				if (data) {
+					data.index = reverse ? (n - i - 1 + start) : (i + start);
+					data.first = i === 0;
+					data.last = i === (n - 1);
+				}
+				accum += options.fn(i, { data: data });
+			}
+			return accum;
+		},
+	});
 });
 
 Hooks.once("i18nInit", () => {
@@ -202,46 +221,46 @@ Hooks.on("renderSidebarTab", async (app, html, data) => {
 		diceIconSelector.on("click", async (event) => {
 			event.preventDefault();
 
-			const $dialog = $(".dialog--dice-calculator");
+			if (!CONFIG.DICETRAY.dialog?.rendered) {
+				const dice = Object.entries(game.settings.get("dice-calculator", "calculatorConfigs"))
+					.filter(([k, v]) => v)
+					.map(([k, v]) => (k));
+				const highest = dice.pop();
 
-			if ($dialog.length < 1) {
-				const controlledTokens = canvas?.tokens?.controlled ?? [];
-				const actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
-
-				const calculatorConfig = CONFIG.DICETRAY?.calculator?.getData(actor);
-				const { abilities, attributes, customButtons } = calculatorConfig ?? {
-					abilities: [],
-					attributes: [],
+				const calculatorConfig = CONFIG.DICETRAY?.calculator?.getData();
+				const { customButtons } = calculatorConfig ?? {
 					customButtons: [],
 				};
 
 				// Build the template.
 				const rolls = game.settings.get("dice-calculator", "rolls");
 				const templateData = {
-					rolls,
-					abilities,
-					attributes,
 					customButtons,
-					adv: CONFIG.DICETRAY?.calculator?.adv || false,
+					dice,
+					highest,
+					rolls,
 				};
 
 				// Render the modal.
 				const content = await renderTemplate("modules/dice-calculator/templates/calculator.html", templateData);
-				new DiceCalculatorDialog(
+				const controlledTokens = canvas?.tokens?.controlled ?? [];
+				const actor = controlledTokens.length > 0 ? controlledTokens[0].actor : null;
+				CONFIG.DICETRAY.dialog = new DiceCalculatorDialog(
 					{
-						title: `Dice Tray: ${game.i18n.localize("DICE_TRAY.Calculator")}`,
 						content,
-						buttons: {
-							roll: {
+						buttons: [
+							{
+								action: "roll",
+								class: "dice-calculator__roll",
 								label: game.i18n.localize("TABLE.Roll"),
 								callback: () => dcRollDice(actor),
-							},
-						},
-					},
-					{ top: event.clientY - 80 }
-				).render(true);
+							}
+						],
+					}
+				);
+				CONFIG.DICETRAY.dialog.render(true);
 			} else {
-				$dialog.remove();
+				CONFIG.DICETRAY.dialog.close({ animate: false });
 			}
 		});
 	}
@@ -271,14 +290,12 @@ Hooks.on("getSceneControlButtons", (controls) => {
  */
 function dcRollDice(actor = null) {
 	// Retrieve the formula.
-	let formula = $(".dice-calculator textarea").val();
-	// Replace shorthand.
-	formula = formula.replace(/@abil\./g, "@abilities.").replace(/@attr\./g, "@attributes.");
+	const formula = CONFIG.DICETRAY.dialog.element.querySelector(".dice-calculator textarea").value;
 	if (!formula) return;
 
 	// Roll the dice!
-	let data = actor ? actor.getRollData() : {};
-	let roll = new Roll(formula, data);
+	const data = actor ? actor.getRollData() : {};
+	const roll = new Roll(formula, data);
 	roll.toMessage();
 
 	// Throw a warning to the user if they tried to use a stat without a token.

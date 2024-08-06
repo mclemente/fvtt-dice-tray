@@ -6,28 +6,12 @@ export default class DiceCalculator {
 	customButtons = [];
 
 	/**
-	 * Gets buttons that are specific to an actor.
-	 * @param {Actor} actor
-	 * @returns {{Array, Array ,Array}}
-	 */
-	actorSpecificButtons(actor) {
-		const abilities = [];
-		const attributes = [];
-		const customButtons = [];
-		return { abilities, attributes, customButtons };
-	}
-
-	/**
 	 * Handles the data and returns it to the module.
-	 * @param {Actor} actor
-	 * @returns {{Array, Array ,Array}}
+	 * @returns {{Array}}
 	 */
-	getData(actor = null) {
-		let { abilities, attributes, customButtons } = this.actorSpecificButtons(actor);
+	getData() {
 		return {
-			abilities,
-			attributes,
-			customButtons: [...customButtons, ...this.customButtons]
+			customButtons: this.customButtons
 		};
 	}
 }

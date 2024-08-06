@@ -64,8 +64,9 @@
 		},
 
 		"SETTINGS": {
+			"DiceCalculatorSettings": "Dice Calculator Configuration",
 			"DiceCreator": "Dice Creator",
-			"DiceRowSettings": "Dice Rows Setting",
+			"DiceRowSettings": "Dice Rows Configuration",
 			"GeneralSettings": "General Settings",
 			"General": "General",
 			"autoOpenPopout": {

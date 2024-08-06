@@ -1,3 +1,4 @@
+import { CalculatorConfig } from "./forms/CalculatorConfig.js";
 import { DiceRowSettings } from "./forms/DiceRowSettings";
 import { DiceTrayGeneralSettings } from "./forms/DiceTraySettings";
 
@@ -13,6 +14,13 @@ export function registerSettings() {
 		label: "DICE_TRAY.SETTINGS.DiceRowSettings",
 		icon: "fas fa-cogs",
 		type: DiceRowSettings,
+		restricted: true,
+	});
+	game.settings.registerMenu("dice-calculator", "DiceCalculatorSettings", {
+		name: "DICE_TRAY.SETTINGS.DiceCalculatorSettings",
+		label: "DICE_TRAY.SETTINGS.DiceCalculatorSettings",
+		icon: "fas fa-cogs",
+		type: CalculatorConfig,
 		restricted: true,
 	});
 
@@ -34,6 +42,16 @@ export function registerSettings() {
 		default: true,
 		type: Boolean,
 		requiresReload: true
+	});
+
+	game.settings.register("dice-calculator", "calculatorConfigs", {
+		scope: "world",
+		config: false,
+		default: Object.keys(CONFIG.Dice.fulfillment.dice).reduce((obj, die) => {
+			obj[die] = true;
+			return obj;
+		}, {}),
+		type: Object
 	});
 
 	game.settings.register("dice-calculator", "hideAdv", {
