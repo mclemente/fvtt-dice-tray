@@ -7,4 +7,4 @@ export { default as ModularFate, default as fateCoreOfficial, default as fatex }
 export { default as pf2e } from "./pf2e.js";
 export { default as starwarsffg } from "./starwarsffg.js";
 export { default as swade } from "./swade.js";
-
+export { default as hexxen1733 } from "./hexxen1733.js";
