@@ -3,5 +3,6 @@
  * for systems with dashes in their names is to create this map.
  */
 export const KEYS = {
-	"fate-core-official": "fateCoreOfficial"
+	"fate-core-official": "fateCoreOfficial",
+	"hexxen-1733": "hexxen1733"
 };
