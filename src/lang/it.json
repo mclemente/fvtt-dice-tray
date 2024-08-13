@@ -1,30 +1,99 @@
 {
-  "DICE_TRAY": {
-    "Adv": "Van",
-    "Advantage": "Vantaggio (kh)",
-    "Disadvantage": "Svantaggio (kl)",
-    "Dis": "Sva",
-    "For": "For",
-    "Fortune": "Fortuna (kh)",
-    "Misfortune": "Sfortuna (kl)",
-    "Mis": "Sfo",
-    "Roll": "Tira",
-    "RollDice": "Tira Dado",
-    "Wild": "Wild",
-    "Ace": "Ace",
-    "WildDie": "Wild Die",
-    "ExplodingDie": "Exploding Die",
-    "del": "canc",
-    "clear": "pulisci",
-    "SETTINGS": {
-      "enableDiceTray": {
-        "name": "Abilita Set di Dadi",
-        "hint": "Abilita la visualizzazione di un set di dadi sotto l'area dei messaggi di chat (richiede il ricaricamento)."
-      },
-      "enableDiceCalculator": {
-        "name": "Abilita Calcolatore Dadi",
-        "hint": "Abilita la visualizzazione di una finestra di dialogo per il calcolo dei dadi facendo clic sull'icona d20 vicino alla finestra della chat (richiede il ricaricamento)."
-      }
-    }
-  }
+	"DICE_TRAY": {
+		"Adv": "Van",
+		"Advantage": "Vantaggio",
+		"DiceTray": "Dice Tray",
+		"Dis": "Svan",
+		"Disadvantage": "Svantaggio",
+		"FateDice": "Fate Dice",
+		"For": "For",
+		"Fortune": "Fortuna (kh)",
+		"Misfortune": "Sfortuna (kl)",
+		"Mis": "Sfor",
+		"Wild": "Wild",
+		"Ace": "Ace",
+		"WildDie": "Wild Die",
+		"ExplodingDie": "Exploding Die",
+		"PlusOneDie": "+1d",
+		"MinusOneDie": "-1d",
+		"PlusOneDieLong": "Aumenta Taglia Dadi",
+		"MinusOneDieLong": "Diminuisci Taglia Dadi",
+		"KeepHighest": "Tieni il più alto",
+		"KeepLowest": "Tieni il più basso",
+		"del": "del",
+		"clear": "clear",
+
+		"Calculator": "Calcolatore",
+
+		"DiceCreator": {
+			"CreateDice": "Crea Dadi",
+			"Formula": {
+				"name": "Formula",
+				"hint": "La formula che sarà aggiunta alla chat."
+			},
+			"Row": {
+				"name": "Fila",
+				"hint": "Fila sulla quale verrà posizionato il pulsante."
+			},
+			"Image": {
+				"name": "Immagine"
+			},
+			"Label": {
+				"name": "Etichetta",
+				"hint": "(Opzionale) L'etichetta mostrata in caso il dado non abbia immagine."
+			},
+			"Tooltip": {
+				"name": "Suggerimento",
+				"hint": "(Opzionale) Il suggerimento mostrato quando si passa con il mouse sul pulsante. Impostazioni predefinite della formula."
+			},
+			"Color": {
+				"name": "Colore",
+				"hint": "(Opzionale) Il colore che riempie l'immagine. Il valore predefinito è bianco."
+			}
+		},
+
+		"DiceRows": {
+			"Instruction1": "Fare clic su qualsiasi dado per modificarlo.",
+			"Instruction2": "Clic con il pulsante destro del mouse su qualsiasi dado per eliminarlo."
+		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Attiva/Disattiva Dice Tray Popout"
+			}
+		},
+
+		"SETTINGS": {
+			"DiceCalculatorSettings": "Configurazione Dice Calculator",
+			"DiceCreator": "Creatore Dado",
+			"DiceRowSettings": "Configurazione Posizione Dadi",
+			"GeneralSettings": "Impostazioni Generali",
+			"General": "General",
+			"autoOpenPopout": {
+				"name": "Auto Apertura Popout",
+				"hint": "Apre automaticamente il popout Dice Tray al caricamento della pagina."
+			},
+			"enableDiceTray": {
+				"name": "Abilita Dice Tray",
+				"hint": "Abilita la visualizzazione di Dice Tray sotto l'area dei messaggi chat."
+			},
+			"enableDiceCalculator": {
+				"name": "Abiita Dice Calculator",
+				"hint": "Abilita la visualizzazione di una finestra di dialogo di Dice Calculator quando si fa clic sull'icona d20 vicino alla casella di chat."
+			},
+			"popout": {
+				"name": "Aggiungi pulsante popout Dice Tray",
+				"hint": "Aggiunge un pulsante sulla barra dei controlli per attivare/disattivare il popout di Dice Tray. Puoi anche attivare/disattivare il popout impostando una combinazione di tasti.",
+				"options": {
+					"all": "Tutti i controlli"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Usa Dice Pool per il Wild Button",
+					"hint": "Facendo clic sugli stessi dadi mentre Wild è attivo verranno aggiunti dadi alla riserva anziché aumentare i dadi correnti nell'elenco."
+				}
+			}
+		}
+	}
 }
