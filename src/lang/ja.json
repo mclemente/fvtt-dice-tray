@@ -17,9 +17,61 @@
     "MinusOneDie": "-1d",
     "PlusOneDieLong": "ダイス面数を増やす",
     "MinusOneDieLong": "ダイス面数を減らす",
+		"KeepHighest": "Keep Highest",
+		"KeepLowest": "Keep Lowest",
     "del": "削除",
     "clear": "クリア",
+
+		"Calculator": "Calculator",
+
+		"DiceCreator": {
+			"CreateDice": "Create Dice",
+			"Formula": {
+				"name": "Formula",
+				"hint": "The formula that will be added to the chat."
+			},
+			"Row": {
+				"name": "Row",
+				"hint": "The row the button will be placed on."
+			},
+			"Image": {
+				"name": "Image"
+			},
+			"Label": {
+				"name": "Label",
+				"hint": "(Optional) The label shown in case the dice has no image."
+			},
+			"Tooltip": {
+				"name": "Tooltip",
+				"hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
+			},
+			"Color": {
+				"name": "Color",
+				"hint": "(Optional) The color that fills the image. Defaults to white."
+			}
+		},
+
+		"DiceRows": {
+			"Instruction1": "Click any dice button to edit it.",
+			"Instruction2": "Right-Click any dice button to delete it."
+		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Toggle Dice Tray Popout"
+			}
+		},
+
     "SETTINGS": {
+      "DiceCalculatorSettings": "Dice Calculator Configuration",
+			"DiceCreator": "Dice Creator",
+			"DiceRowSettings": "Dice Rows Configuration",
+			"GeneralSettings": "General Settings",
+			"General": "General",
+			"autoOpenPopout": {
+				"name": "Auto Open Popout",
+				"hint": "Opens the Dice Tray popout automatically on page load."
+			},
       "enableDiceTray": {
         "name": "Dice Tray有効化",
         "hint": "チャットメッセージの下にダイス･トレイを表示します (再読み込みが必要です)｡"
@@ -27,7 +79,20 @@
       "enableDiceCalculator": {
         "name": "ダイス電卓有効化",
         "hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）"
-      }
+      },
+			"popout": {
+				"name": "Add button to popout Dice Tray",
+				"hint": "Adds a button on the Controls bar to toggle the Dice Tray popout. You can also toggle the popout by setting a keybinding.",
+				"options": {
+					"all": "All Controls"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Use Dice Pool for Wild Button",
+					"hint": "Clicking the same dice while Wild is active will add dice to the pool rather than increasing the current dice in the list."
+				}
+			}
     }
   }
 }
