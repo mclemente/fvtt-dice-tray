@@ -9,68 +9,68 @@
     "Fortune": "幸運 (kh)",
     "Misfortune": "不運 (kl)",
     "Mis": "不運",
-    "Wild": "Wild",
-    "Ace": "Ace",
+    "Wild": "ワイルド",
+    "Ace": "エース（Ace）",
     "WildDie": "ワイルドダイス",
     "ExplodingDie": "降り足しダイス",
     "PlusOneDie": "+1d",
     "MinusOneDie": "-1d",
     "PlusOneDieLong": "ダイス面数を増やす",
     "MinusOneDieLong": "ダイス面数を減らす",
-		"KeepHighest": "Keep Highest",
-		"KeepLowest": "Keep Lowest",
+		"KeepHighest": "最大値を保持",
+		"KeepLowest": "最低値を保持",
     "del": "削除",
     "clear": "クリア",
 
-		"Calculator": "Calculator",
+		"Calculator": "電卓",
 
 		"DiceCreator": {
-			"CreateDice": "Create Dice",
+			"CreateDice": "ダイス作成",
 			"Formula": {
-				"name": "Formula",
-				"hint": "The formula that will be added to the chat."
+				"name": "計算式",
+				"hint": "チャットに追加される計算式です。"
 			},
 			"Row": {
-				"name": "Row",
-				"hint": "The row the button will be placed on."
+				"name": "列",
+				"hint": "ボタンが配置される列を設定します。"
 			},
 			"Image": {
-				"name": "Image"
+				"name": "画像"
 			},
 			"Label": {
-				"name": "Label",
-				"hint": "(Optional) The label shown in case the dice has no image."
+				"name": "ラベル",
+				"hint": "（オプション）画像の無いダイスに表示されるラベルです。"
 			},
 			"Tooltip": {
-				"name": "Tooltip",
-				"hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
+				"name": "ツールチップ",
+				"hint": "（オプション）ボタンにマウスオーバーした時に表示されるツールチップです。初期設定は計算式です。"
 			},
 			"Color": {
-				"name": "Color",
-				"hint": "(Optional) The color that fills the image. Defaults to white."
+				"name": "色",
+				"hint": "（オプション）画像の塗りつぶし色です。初期設定は白です。"
 			}
 		},
 
 		"DiceRows": {
-			"Instruction1": "Click any dice button to edit it.",
-			"Instruction2": "Right-Click any dice button to delete it."
+			"Instruction1": "編集したいダイスボタンをクリック。",
+			"Instruction2": "削除したいダイスボタンを右クリック。"
 		},
 
 		"KEYBINGINDS": {
 			"popout": {
-				"name": "Toggle Dice Tray Popout"
+				"name": "Dice Trayポップアウトの開閉"
 			}
 		},
 
     "SETTINGS": {
-      "DiceCalculatorSettings": "Dice Calculator Configuration",
-			"DiceCreator": "Dice Creator",
-			"DiceRowSettings": "Dice Rows Configuration",
-			"GeneralSettings": "General Settings",
-			"General": "General",
+      "DiceCalculatorSettings": "ダイス電卓の編集",
+			"DiceCreator": "Diceメーカー",
+			"DiceRowSettings": "ダイスの列編集",
+			"GeneralSettings": "一般設定",
+			"General": "一般",
 			"autoOpenPopout": {
-				"name": "Auto Open Popout",
-				"hint": "Opens the Dice Tray popout automatically on page load."
+				"name": "ポップアウトを自動で開く",
+				"hint": "ページのロード時にDice Trayポップアウトを自動で開きます。"
 			},
       "enableDiceTray": {
         "name": "Dice Tray有効化",
@@ -81,16 +81,16 @@
         "hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）"
       },
 			"popout": {
-				"name": "Add button to popout Dice Tray",
-				"hint": "Adds a button on the Controls bar to toggle the Dice Tray popout. You can also toggle the popout by setting a keybinding.",
+				"name": "Dice Trayをポップアウトするボタンを追加",
+				"hint": "Dice Trayポップアウトを開閉するボタンをコントロールバーに追加します。キーバインドを設定することでもポップアウトを開閉できます。",
 				"options": {
-					"all": "All Controls"
+					"all": "全コントロール"
 				}
 			},
 			"SWADE": {
 				"wildDieBehavior": {
-					"name": "Use Dice Pool for Wild Button",
-					"hint": "Clicking the same dice while Wild is active will add dice to the pool rather than increasing the current dice in the list."
+					"name": "ワイルドボタンにダイスプールを使用",
+					"hint": "ワイルドが有効時に同じダイスをクリックすると現在のリストのダイスを増やすかわりに、プールにダイスを追加します。"
 				}
 			}
     }
