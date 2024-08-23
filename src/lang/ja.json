@@ -1,5 +1,5 @@
 {
-  "Localization Provided By": "Brother Sharp",
+  "Localization Provided By": "Brother Sharp, doumoku",
   "DICE_TRAY": {
     "Adv": "有利",
     "Advantage": "有利 (kh)",
@@ -9,17 +9,69 @@
     "Fortune": "幸運 (kh)",
     "Misfortune": "不運 (kl)",
     "Mis": "不運",
-    "Wild": "Wild",
-    "Ace": "Ace",
+    "Wild": "ワイルド",
+    "Ace": "エース（Ace）",
     "WildDie": "ワイルドダイス",
     "ExplodingDie": "降り足しダイス",
     "PlusOneDie": "+1d",
     "MinusOneDie": "-1d",
     "PlusOneDieLong": "ダイス面数を増やす",
     "MinusOneDieLong": "ダイス面数を減らす",
+		"KeepHighest": "最大値を保持",
+		"KeepLowest": "最低値を保持",
     "del": "削除",
     "clear": "クリア",
+
+		"Calculator": "電卓",
+
+		"DiceCreator": {
+			"CreateDice": "ダイス作成",
+			"Formula": {
+				"name": "計算式",
+				"hint": "チャットに追加される計算式です。"
+			},
+			"Row": {
+				"name": "列",
+				"hint": "ボタンが配置される列を設定します。"
+			},
+			"Image": {
+				"name": "画像"
+			},
+			"Label": {
+				"name": "ラベル",
+				"hint": "（オプション）画像の無いダイスに表示されるラベルです。"
+			},
+			"Tooltip": {
+				"name": "ツールチップ",
+				"hint": "（オプション）ボタンにマウスオーバーした時に表示されるツールチップです。初期設定は計算式です。"
+			},
+			"Color": {
+				"name": "色",
+				"hint": "（オプション）画像の塗りつぶし色です。初期設定は白です。"
+			}
+		},
+
+		"DiceRows": {
+			"Instruction1": "編集したいダイスボタンをクリック。",
+			"Instruction2": "削除したいダイスボタンを右クリック。"
+		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Dice Trayポップアウトの開閉"
+			}
+		},
+
     "SETTINGS": {
+      "DiceCalculatorSettings": "ダイス電卓の編集",
+			"DiceCreator": "Diceメーカー",
+			"DiceRowSettings": "ダイスの列編集",
+			"GeneralSettings": "一般設定",
+			"General": "一般",
+			"autoOpenPopout": {
+				"name": "ポップアウトを自動で開く",
+				"hint": "ページのロード時にDice Trayポップアウトを自動で開きます。"
+			},
       "enableDiceTray": {
         "name": "Dice Tray有効化",
         "hint": "チャットメッセージの下にダイス･トレイを表示します (再読み込みが必要です)｡"
@@ -27,7 +79,20 @@
       "enableDiceCalculator": {
         "name": "ダイス電卓有効化",
         "hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）"
-      }
+      },
+			"popout": {
+				"name": "Dice Trayをポップアウトするボタンを追加",
+				"hint": "Dice Trayポップアウトを開閉するボタンをコントロールバーに追加します。キーバインドを設定することでもポップアウトを開閉できます。",
+				"options": {
+					"all": "全コントロール"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "ワイルドボタンにダイスプールを使用",
+					"hint": "ワイルドが有効時に同じダイスをクリックすると現在のリストのダイスを増やすかわりに、プールにダイスを追加します。"
+				}
+			}
     }
   }
 }
