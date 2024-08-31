@@ -74,7 +74,7 @@ export function registerSettings() {
 	});
 
 	game.settings.register("dice-calculator", "rolls", {
-		scope: "world",
+		scope: "client",
 		config: false,
 		default: [],
 		type: Array,
