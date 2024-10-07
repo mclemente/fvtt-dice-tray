@@ -51,6 +51,11 @@
 			"lang": "de",
 			"name": "Deutsch",
 			"path": "lang/de.json"
+		},
+		{
+			"lang": "pl",
+			"name": "Polski",
+			"path": "lang/pl.json"
 		}
 	],
 	"manifest": "This is auto replaced",
