@@ -1,0 +1,99 @@
+{
+	"DICE_TRAY": {
+		"Adv": "Uła.",
+		"Advantage": "Ułatwienie",
+		"DiceTray": "Dice Tray",
+		"Dis": "Utr.",
+		"Disadvantage": "Utrudnienie",
+		"FateDice": "Kość Fate",
+		"For": "Szc.",
+		"Fortune": "Szczęście (kh)",
+		"Misfortune": "Nieszczęście (kl)",
+		"Mis": "Pech",
+		"Wild": "Dzika",
+		"Ace": "As",
+		"WildDie": "Dzika kość",
+		"ExplodingDie": "Eksplodująca kość",
+		"PlusOneDie": "+1k",
+		"MinusOneDie": "-1k",
+		"PlusOneDieLong": "Zwiększ rozmiar kości",
+		"MinusOneDieLong": "Zmniejsz rozmiar kości",
+		"KeepHighest": "Zachowaj większy wynik",
+		"KeepLowest": "Zachowaj mniejszy wynik",
+		"del": "usuń",
+		"clear": "wyczyść",
+
+		"Calculator": "Kalkulator",
+
+		"DiceCreator": {
+			"CreateDice": "Utwórz kość",
+			"Formula": {
+				"name": "Formuła",
+				"hint": "Formuła, która zostanie dodana do czatu."
+			},
+			"Row": {
+				"name": "Wiersz",
+				"hint": "Wiersz, w którym zostanie umieszczony przycisk."
+			},
+			"Image": {
+				"name": "Obraz"
+			},
+			"Label": {
+				"name": "Etykieta",
+				"hint": "(Opcjonalnie) Etykieta wyświetlana w przypadku, gdy kostka nie ma obrazu."
+			},
+			"Tooltip": {
+				"name": "Podpowiedź",
+				"hint": "(Opcjonalnie) Podpowiedź wyświetlana po najechaniu kursorem na przycisk. Domyślnie jest to Formuła."
+			},
+			"Color": {
+				"name": "Kolor",
+				"hint": "(Opcjonalnie) Kolor wypełniający obraz. Domyślnie biały."
+			}
+		},
+
+		"DiceRows": {
+			"Instruction1": "Kliknij dowolny przycisk kostki, aby go edytować.",
+			"Instruction2": "Kliknij prawym przyciskiem myszy dowolny przycisk kostki, aby go usunąć."
+		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Przełączanie wysuwanego Dice Tray"
+			}
+		},
+
+		"SETTINGS": {
+			"DiceCalculatorSettings": "Konfiguracja kalkulatora kości",
+			"DiceCreator": "Kreator kości",
+			"DiceRowSettings": "Konfiguracja wierszy kości",
+			"GeneralSettings": "Ogólne stawienia",
+			"General": "Ogólne",
+			"autoOpenPopout": {
+				"name": "Automatyczne otwieranie wyskakującego okienka",
+				"hint": "Automatycznie otwiera wyskakujące okienko Dice Tray po załadowaniu strony."
+			},
+			"enableDiceTray": {
+				"name": "Włącz Dice Tray",
+				"hint": "Włącz wyświetlanie Dice Tray poniżej obszaru wiadomości czatu."
+			},
+			"enableDiceCalculator": {
+				"name": "Włącz kalkulator kości",
+				"hint": "Włączenie wyświetlania okna dialogowego kalkulatora kości po kliknięciu ikony d20 w pobliżu okna czatu."
+			},
+			"popout": {
+				"name": "Dodaj przycisk do wyskakującego okna Dice Tray",
+				"hint": "Dodaje przycisk na pasku kontrolnym do włączania wyskakującego okienka Dice Tray. Można również przełączać wyskakujące okienko, ustawiając powiązanie klawiszy.",
+				"options": {
+					"all": "Wszystkie elementy sterujące"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Użyj puli kości dla dzikiego przycisku",
+					"hint": "Kliknięcie tej samej kości, gdy tryb Dziki jest aktywny, doda kości do puli, zamiast zwiększać obecną liczbę kości na liście."
+				}
+			}
+		}
+	}
+}
