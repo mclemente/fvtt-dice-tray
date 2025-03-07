@@ -63,10 +63,18 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 		// Convert our operation into math.
 		let delta = direction === "add" ? 1 : -1;
 
-		// Regex for the dice expression. Examples: /r 4d2t, /gmr 2d, /br 4p
-		const rollTextRegex = new RegExp(`(${rollModes})+\\s*(\\d+[dp])*(\\d+t)*`);
+		/**
+		 * Regex for the dice expression. Examples: /r 4d2t, /gmr 2d, /br 4p
+		 * Parts:
+		 * (${rollModes})+ - Will be the /r, /gmroll, etc.
+		 * \\s* - Whitespace between roll and formula.
+		 * (\\d+[dp])* - Dice or pool, 4d, 4p, etc.
+		 * (\\d+t)* - Thorns, 4t
+		 * (.)* - Catch all for trailing characters. Used to snip off extras like "/r 4d6" becoming "/r 4d"
+		 */
+		const rollTextRegex = new RegExp(`(${rollModes})+\\s*(\\d+[dp])*(\\d+t)*(.)*`);
 		// Run the regex with capture groups for targeted replacement.
-		currFormula = currFormula.replace(rollTextRegex, (match, rollMode, diceMatch, thornsMatch) => {
+		currFormula = currFormula.replace(rollTextRegex, (match, rollMode, diceMatch, thornsMatch, trailMatch) => {
 			// If this is a remove operation and no dice were found, exit early.
 			if (direction === "sub" && !diceMatch) {
 				return match;
@@ -160,8 +168,11 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 			}
 		});
 
-		// Update chat area.
-		chat.value = currFormula;
+		// Update chat area if the formula is valid.
+		if (rollTextRegex.test(currFormula)) {
+			// If there are dice, apply the formula. Otherwise, empty it.
+			chat.value = dice ? currFormula : '';
+		}
 	}
 
 	/**
