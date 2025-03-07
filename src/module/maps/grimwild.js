@@ -120,8 +120,9 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 			return `${rollPrefix} ${diceMatch}${thornsMatch ?? ""}`;
 		});
 
-		// Update flags over dice buttons.
-		let flagButton = html.querySelectorAll(".dice-tray__flag");
+		// Update flags over dice buttons. Use document instead of html so that we
+		// also catch the popout element if present.
+		let flagButton = document.querySelectorAll(".dice-tray__flag");
 		flagButton.forEach((button) => {
 			const buttonType = button.closest("button")?.dataset?.formula ?? false;
 			// Update dice button.
