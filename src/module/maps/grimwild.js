@@ -10,32 +10,32 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 	get dice() {
 		return [
 			{
-				d: { 
+				d: {
 					// img: "icons/dice/d6black.svg",
 					tooltip: "Dice",
-					label: `<i class="fas fa-dice-d6"></i> d`,
+					label: "<i class=\"fas fa-dice-d6\"></i> d",
 					direction: "LEFT"
 				},
 				t: {
 					// img: "icons/dice/d8black.svg",
 					tooltip: "Thorns",
-					label: `<i class="fas fa-dice-d8"></i> t`,
+					label: "<i class=\"fas fa-dice-d8\"></i> t",
 					direction: "LEFT"
 				},
 				p: {
 					// img: "icons/dice/d6black.svg",
 					tooltip: "Pool",
-					label: `<i class="fas fa-dice-d6"></i> Pool`,
+					label: "<i class=\"fas fa-dice-d6\"></i> Pool",
 					direction: "LEFT"
 				},
 			}
-		]
+		];
 	}
 
 	// Override the chat formula logic.
 	updateChatDice(dataset, direction, html) {
 		// Get the DOM element rather than the jQuery object.
-		html = html[0]
+		html = html[0];
 		// Retrieve the current chat value.
 		const chat = html.querySelector("#chat-form textarea");
 		let currFormula = String(chat.value);
@@ -44,8 +44,8 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 		// Grab the dice roll mode from chat.
 		let rollPrefix = this._getRollMode(html);
 		// Store the current dice and thorn values for later.
-		let dice = '';
-		let thorns = '';
+		let dice = "";
+		let thorns = "";
 
 		// If the current formula is empty, set it to the roll prefix as our baseline.
 		if (currFormula === "") currFormula = rollPrefix;
@@ -53,12 +53,12 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 		// Prepare a string of possible roll types for the regex. This should also
 		// catch any manually written roll types, like "/gmroll".
 		const rollModes = [
-			'\/roll', '\/r',
-			'\/publicroll', '\/pr',
-			'\/gmroll', '\/gmr',
-			'\/blindroll', '\/broll', '\/br',
-			'\/selfroll', '\/sr'
-		].join('|');
+			"/roll", "/r",
+			"/publicroll", "/pr",
+			"/gmroll", "/gmr",
+			"/blindroll", "/broll", "/br",
+			"/selfroll", "/sr"
+		].join("|");
 
 		// Convert our operation into math.
 		let delta = direction === "add" ? 1 : -1;
@@ -77,7 +77,7 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 				if (diceMatch) {
 					diceMatch = diceMatch.replace(/(\d+)([dp])/, (subMatch, digit, letter) => {
 						const newDigit = Number(digit) + delta;
-						return newDigit > 0 ? `${newDigit}${dataset.formula}` : '';
+						return newDigit > 0 ? `${newDigit}${dataset.formula}` : "";
 					});
 
 					if (!diceMatch && thornsMatch) {
@@ -98,18 +98,18 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 				if (thornsMatch) {
 					thornsMatch = thornsMatch.replace(/(\d+)(t)/, (subMatch, digit, letter) => {
 						const newDigit = Number(digit) + delta;
-						return newDigit > 0 ? `${newDigit}${letter}` : '';
+						return newDigit > 0 ? `${newDigit}${letter}` : "";
 					});
 				}
 				else if (delta > 0) {
-					thornsMatch = `1t`;
+					thornsMatch = "1t";
 				}
 
 				if (!diceMatch) {
-					diceMatch = `1d`;
+					diceMatch = "1d";
 				}
 
-				diceMatch = diceMatch.replace('p', 'd');
+				diceMatch = diceMatch.replace("p", "d");
 			}
 
 			// Update variables.
@@ -117,44 +117,44 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 			thorns = thornsMatch;
 
 			// Update the chat string.
-			return `${rollPrefix} ${diceMatch}${thornsMatch ?? ''}`;
+			return `${rollPrefix} ${diceMatch}${thornsMatch ?? ""}`;
 		});
 
 		// Update flags over dice buttons.
-		let flagButton = html.querySelectorAll(`.dice-tray__flag`);
+		let flagButton = html.querySelectorAll(".dice-tray__flag");
 		flagButton.forEach((button) => {
-			const buttonType = button.closest('button')?.dataset?.formula ?? false;
+			const buttonType = button.closest("button")?.dataset?.formula ?? false;
 			// Update dice button.
-			if (buttonType === 'd') {
-				if (dice && ['d','t'].includes(dataset.formula)) {
+			if (buttonType === "d") {
+				if (dice && ["d", "t"].includes(dataset.formula)) {
 					button.textContent = dice;
-					button.classList.remove('hide');
+					button.classList.remove("hide");
 				}
 				else {
-					button.textContent = '';
-					button.classList.add('hide');
+					button.textContent = "";
+					button.classList.add("hide");
 				}
 			}
 			// Update thorn button.
-			else if (buttonType === 't') {
-				if (thorns && ['d','t'].includes(dataset.formula)) {
+			else if (buttonType === "t") {
+				if (thorns && ["d", "t"].includes(dataset.formula)) {
 					button.textContent = thorns;
-					button.classList.remove('hide');
+					button.classList.remove("hide");
 				}
 				else {
-					button.textContent = '';
-					button.classList.add('hide');
+					button.textContent = "";
+					button.classList.add("hide");
 				}
 			}
 			// Update pool button.
-			else if (buttonType === 'p') {
-				if (dice && dataset.formula === 'p') {
+			else if (buttonType === "p") {
+				if (dice && dataset.formula === "p") {
 					button.textContent = dice;
-					button.classList.remove('hide');
+					button.classList.remove("hide");
 				}
 				else {
-					button.textContent = '';
-					button.classList.add('hide');
+					button.textContent = "";
+					button.classList.add("hide");
 				}
 			}
 		});
@@ -169,8 +169,8 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 	 */
 	_createExtraButtons(html) {
 		html = html[0];
-		html.querySelector('.dice-tray__math--sub').remove();
-		html.querySelector('.dice-tray__math--add').remove();
-		html.querySelector('.dice-tray__input').remove();
+		html.querySelector(".dice-tray__math--sub").remove();
+		html.querySelector(".dice-tray__math--add").remove();
+		html.querySelector(".dice-tray__input").remove();
 	}
 }
