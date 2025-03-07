@@ -171,7 +171,7 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 		// Update chat area if the formula is valid.
 		if (rollTextRegex.test(currFormula)) {
 			// If there are dice, apply the formula. Otherwise, empty it.
-			chat.value = dice ? currFormula : '';
+			chat.value = dice ? currFormula : "";
 		}
 	}
 
