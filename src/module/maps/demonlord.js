@@ -33,7 +33,7 @@ export default class demonlordDiceMap extends GenericDiceMap {
 		html.find(".dice-tray__ad").on("click", (event) => {
 			event.preventDefault();
 			let sign = event.currentTarget.dataset.formula;
-			let $chat = html.find("#chat-form textarea");
+			let $chat = this.textarea;
 			let chat_val = String($chat.val());
 			let match_string = /(?<sign>[+-])(?<qty>\d*)d6kh/;
 			const match = chat_val.match(match_string);

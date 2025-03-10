@@ -36,11 +36,11 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 		return ui.sidebar.popouts.chat?.element || ui.chat.element;
 	}
 
-	_onFirstRender(context, options) {
-		super._onFirstRender(context, options);
+	async _onFirstRender(context, options) {
+		await super._onFirstRender(context, options);
 		const position = game.settings.get("dice-calculator", "popoutPosition");
-		const left = position.left ?? ui.nav?.element[0].getBoundingClientRect().left;
-		const top = position.top ?? ui.controls?.element[0].getBoundingClientRect().top;
+		const left = position.left ?? ui.nav?.element.getBoundingClientRect().left;
+		const top = position.top ?? ui.controls?.element.getBoundingClientRect().top;
 		options.position = {...options.position, left, top};
 	}
 
@@ -136,18 +136,7 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 				CONFIG.DICETRAY.applyModifier(this.chatElement);
 			});
 		}
-		CONFIG.DICETRAY.applyLayout($(this.element));
-		this.element.querySelector(".dice-tray__roll").addEventListener("click", (event) => {
-			event.preventDefault();
-			let spoofed = CONFIG.DICETRAY.triggerRollClick();
-			this.chatElement.find("#chat-message").trigger(spoofed);
-			CONFIG.DICETRAY._resetTray($(this.element));
-		});
-		this.chatElement.find("#chat-message").keydown((e) => {
-			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				CONFIG.DICETRAY._resetTray($(this.element));
-			}
-		});
+		CONFIG.DICETRAY.applyLayout(this.element);
 	}
 
 	async _prepareContext(_options) {

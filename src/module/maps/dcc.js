@@ -47,7 +47,7 @@ export default class dccDiceMap extends GenericDiceMap {
 		html.find(".dice-tray__ad").on("click", (event) => {
 			event.preventDefault();
 			// Get the chat box
-			let $chat = html.find("#chat-form textarea");
+			let $chat = this.textarea;
 			let chat_val = String($chat.val());
 			let match_string = /(\d+)d(\d+)/;
 

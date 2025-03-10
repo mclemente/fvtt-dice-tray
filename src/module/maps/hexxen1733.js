@@ -45,7 +45,7 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 			mod_string = `${mod_temp}-`;
 		}
 
-		const $chat = html.find("#chat-form textarea");
+		const $chat = this.textarea;
 		const chat_val = String($chat.val());
 
 		const match_string = /(\d+)(\+|-)$/;
@@ -63,7 +63,7 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 	}
 
 	updateChatDice(dataset, direction, html) {
-		const $chat = html.find("#chat-form textarea");
+		const $chat = this.textarea;
 		let currFormula = String($chat.val());
 		if (direction === "sub" && currFormula === "") return;
 		let newFormula = null;
@@ -128,13 +128,13 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 		}
 
 		if (qty > 0) {
-			$flag_button.text(qty);
-			$flag_button.removeClass("hide");
+			$flag_button.textContent =(qty);
+			$flag_button.classList.remove("hide");
 		} else if (qty < 0) {
-			$flag_button.text(qty);
+			$flag_button.textContent =(qty);
 		} else {
-			$flag_button.text("");
-			$flag_button.addClass("hide");
+			$flag_button.textContent =("");
+			$flag_button.classList.add("hide");
 		}
 
 		currFormula = $chat.val();
