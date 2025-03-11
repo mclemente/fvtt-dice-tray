@@ -44,30 +44,32 @@ export default class dccDiceMap extends GenericDiceMap {
 	}
 
 	_extraButtonsLogic(html) {
-		html.find(".dice-tray__ad").on("click", (event) => {
-			event.preventDefault();
-			// Get the chat box
-			let $chat = this.textarea;
-			let chat_val = String($chat.val());
-			let match_string = /(\d+)d(\d+)/;
+		const buttons = html.querySelectorAll(".dice-tray__ad");
+		for (const button of buttons) {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				const chat = this.textarea;
+				let chatVal = chat.value;
+				const matchString = /(\d+)d(\d+)/;
 
-			// Find the first dice on the line to update
-			const match = chat_val.match(match_string);
-			if (match) {
-				const dice_chain = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30];
-				// Locate this die in the dice chain
-				const chain_index = dice_chain.indexOf(parseInt(match[2]));
-				if (chain_index >= 0) {
-					const new_index = chain_index + parseInt(event.currentTarget.dataset.formula);
-					// Is the new index still in range?
-					if (new_index >= 0 && new_index < dice_chain.length) {
-						chat_val = chat_val.replace(match_string, `${match[1]}d${dice_chain[new_index]}`);
+				// Find the first dice on the line to update
+				const match = chatVal.match(matchString);
+				if (match) {
+					const diceChain = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30];
+					// Locate this die in the dice chain
+					const chainIndex = diceChain.indexOf(parseInt(match[2]));
+					if (chainIndex >= 0) {
+						const newIndex = chainIndex + parseInt(event.currentTarget.dataset.formula);
+						// Is the new index still in range?
+						if (newIndex >= 0 && newIndex < diceChain.length) {
+							chatVal = chatVal.replace(matchString, `${match[1]}d${diceChain[newIndex]}`);
+						}
 					}
 				}
-			}
 
-			// Update the value.
-			$chat.val(chat_val);
-		});
+				// Update the value.
+				chat.value = chatVal;
+			});
+		}
 	}
 }

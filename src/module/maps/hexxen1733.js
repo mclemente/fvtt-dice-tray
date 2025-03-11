@@ -31,34 +31,35 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 	}
 
 	applyModifier(html) {
-		const $mod_input = html.find(".dice-tray__input");
-		const mod_val = Number($mod_input.val());
+		const modInput = html.querySelector(".dice-tray__input");
+		const modVal = Number(modInput.value);
 
-		if ($mod_input.length === 0 || isNaN(mod_val)) return;
+		if (modInput.length === 0 || isNaN(modVal)) return;
 
-		let mod_string = "";
-		let mod_temp = "";
-		if (mod_val > 0) {
-			mod_string = `${mod_val}+`;
-		} else if (mod_val < 0) {
-			mod_temp = Math.abs(mod_val);
-			mod_string = `${mod_temp}-`;
+		let modString = "";
+		let modTemp = "";
+		if (modVal > 0) {
+			modString = `${modVal}+`;
+		} else if (modVal < 0) {
+			modTemp = Math.abs(modVal);
+			modString = `${modTemp}-`;
 		}
 
-		const $chat = this.textarea;
-		const chat_val = String($chat.val());
+		const chat = this.textarea;
+		const chatVal = String(chat.value);
 
-		const match_string = /(\d+)(\+|-)$/;
-		if (match_string.test(chat_val)) {
-			$chat.val(chat_val.replace(match_string, mod_string));
-		} else if (chat_val !== "") {
-			$chat.val(chat_val + mod_string);
+		const matchString = /(\d+)(\+|-)$/;
+		if (matchString.test(chatVal)) {
+			chat.value = chatVal.replace(matchString, modString);
+		} else if (chatVal !== "") {
+			chat.value = chatVal + modString;
 		} else {
 			const rollPrefix = this._getRollMode(html);
-			$chat.val(`${rollPrefix} ${mod_string}`);
+			chat.value = `${rollPrefix} ${modString}`;
 		}
-		if (/(\/r|\/gmr|\/br|\/sr) $/g.test($chat.val())) {
-			$chat.val("");
+
+		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
+			chat.value = "";
 		}
 	}
 
@@ -72,10 +73,10 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 		let dice = "";
 
 		let match_dice = dataset.formula;
-		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=[0-9]|$)`);
+		const matchString = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=[0-9]|$)`);
 
-		if (match_string.test(currFormula)) {
-			const match = currFormula.match(match_string);
+		if (matchString.test(currFormula)) {
+			const match = currFormula.match(matchString);
 			const parts = {
 				txt: match[0] || "",
 				qty: match[1] || "1",
@@ -94,15 +95,15 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 			if (qty === "" && direction === "sub") {
 				newFormula = "";
 				let regexxx =`${this.rawFormula("(\\d+)", `(${match_dice})`, html)}(?=[0-9]|$)`;
-				const new_match_string = new RegExp(regexxx);
-				currFormula = currFormula.replace(new_match_string, newFormula);
+				const newMatchString = new RegExp(regexxx);
+				currFormula = currFormula.replace(newMatchString, newFormula);
 				if (!(/(\d+[hsbe+-])/.test(currFormula))) {
 
 					currFormula = "";
 				}
 			} else {
 				newFormula = this.rawFormula(qty, parts.die, html);
-				currFormula = currFormula.replace(match_string, newFormula);
+				currFormula = currFormula.replace(matchString, newFormula);
 			}
 			$chat.val(currFormula);
 		} else {
@@ -122,19 +123,19 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 
 		// Add a flag indicator on the dice.
 		qty = Number(qty);
-		const $flag_button = html.find(`.dice-tray__flag--${dataset.formula}`);
+		const flagButton = html.querySelector(`.dice-tray__flag--${dataset.formula}`);
 		if (!qty) {
 			qty = direction === "add" ? 1 : 0;
 		}
 
 		if (qty > 0) {
-			$flag_button.textContent =(qty);
-			$flag_button.classList.remove("hide");
+			flagButton.textContent = qty;
+			flagButton.classList.remove("hide");
 		} else if (qty < 0) {
-			$flag_button.textContent =(qty);
+			flagButton.textContent = qty;
 		} else {
-			$flag_button.textContent =("");
-			$flag_button.classList.add("hide");
+			flagButton.textContent = "";
+			flagButton.classList.add("hide");
 		}
 
 		currFormula = $chat.val();

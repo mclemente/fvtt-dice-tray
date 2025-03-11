@@ -143,9 +143,9 @@ export default class TemplateDiceMap {
 		});
 		diceTrayInput.addEventListener("wheel", (event) => {
 			const diff = event.deltaY < 0 ? 1 : -1;
-			let mod_val = event.currentTarget.value;
-			mod_val = Number.isNaN(mod_val) ? 0 : Number(mod_val);
-			event.currentTarget.value = mod_val + diff;
+			let modVal = event.currentTarget.value;
+			modVal = Number.isNaN(modVal) ? 0 : Number(modVal);
+			event.currentTarget.value = modVal + diff;
 			CONFIG.DICETRAY.applyModifier(html);
 		});
 
@@ -154,21 +154,21 @@ export default class TemplateDiceMap {
 		mathButtons.forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
-				let mod_val = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
-				mod_val = Number.isNaN(mod_val) ? 0 : mod_val;
+				let modVal = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
+				modVal = Number.isNaN(modVal) ? 0 : modVal;
 
 				switch (event.currentTarget.dataset.formula) {
 					case "+1":
-						mod_val += 1;
+						modVal += 1;
 						break;
 					case "-1":
-						mod_val -= 1;
+						modVal -= 1;
 						break;
 					default:
 						break;
 				}
 
-				html.querySelector('input[name="dice.tray.modifier"]').value = mod_val;
+				html.querySelector('input[name="dice.tray.modifier"]').value = modVal;
 				CONFIG.DICETRAY.applyModifier(html);
 			});
 		});
@@ -221,26 +221,26 @@ export default class TemplateDiceMap {
 		for (const button of buttons) {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
-				let dataset = event.currentTarget.dataset;
-				let $chat = this.textarea;
-				let chat_val = String($chat.value);
-				let match_string = /\d*d\d+[khl]*/;
+				const dataset = event.currentTarget.dataset;
+				const chat = this.textarea;
+				let chatVal = String(chat.value);
+				const matchString = /\d*d\d+[khl]*/;
 
 				// If there's a d20, toggle the current if needed.
-				if (match_string.test(chat_val)) {
+				if (matchString.test(chatVal)) {
 					// If there was previously a kh or kl, update it.
-					if (/d\d+k[hl]/g.test(chat_val)) {
-						chat_val = chat_val.replace(/(\d*)(d\d+)(k[hl]\d*)/g, (match, p1, p2, p3, offset, string) => {
+					if (/d\d+k[hl]/g.test(chatVal)) {
+						chatVal = chatVal.replace(/(\d*)(d\d+)(k[hl]\d*)/g, (match, p1, p2, p3, offset, string) => {
 							let diceKeep = this.updateDiceKeep(p1, p2, p3, -1, dataset.formula);
-							html.querySelector(`.dice-tray__flag--${p2}`).textContent =(diceKeep.count);
+							html.querySelector(`.dice-tray__flag--${p2}`).textContent = diceKeep.count;
 							return diceKeep.content;
 						});
 					}
 					// Otherwise, add it.
 					else {
-						chat_val = chat_val.replace(/(\d*)(d\d+)/g, (match, p1, p2, offset, string) => {
+						chatVal = chatVal.replace(/(\d*)(d\d+)/g, (match, p1, p2, offset, string) => {
 							let diceKeep = this.updateDiceKeep(p1, p2, "", 1, dataset.formula);
-							html.querySelector(`.dice-tray__flag--${p2}`).textContent =(diceKeep.count);
+							html.querySelector(`.dice-tray__flag--${p2}`).textContent = diceKeep.count;
 							return diceKeep.content;
 						});
 					}
@@ -248,17 +248,17 @@ export default class TemplateDiceMap {
 				// else {
 				// 	let diceKeep = this.updateDiceKeep("1", "d20", "", 1, dataset.formula);
 				// 	html.find(".dice-tray__flag--d20").text(diceKeep.count);
-				// 	chat_val += diceKeep.content;
+				// 	chatVal += diceKeep.content;
 				// }
 
 				// Handle toggle classes.
 				const toggleClass = (selector, condition) => {
 					html.querySelector(selector)?.classList.toggle("active", condition);
 				};
-				toggleClass(".dice-tray__advantage", chat_val.includes("kh"));
-				toggleClass(".dice-tray__disadvantage", chat_val.includes("kl"));
+				toggleClass(".dice-tray__advantage", chatVal.includes("kh"));
+				toggleClass(".dice-tray__disadvantage", chatVal.includes("kl"));
 				// Update the value.
-				$chat.value = chat_val;
+				chat.value = chatVal;
 			});
 		}
 	}
@@ -266,7 +266,7 @@ export default class TemplateDiceMap {
 	_resetTray(html) {
 		if (!html) return;
 		html.querySelector(".dice-tray__input").value = 0;
-		html.querySelector(".dice-tray__flag").textContent = ("");
+		html.querySelector(".dice-tray__flag").textContent = "";
 		html.querySelector(".dice-tray__flag").classList.add("hide");
 		if (this.removeAdvOnRoll) {
 			html.querySelector(".dice-tray__ad").classList.remove("active");
@@ -278,35 +278,32 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	applyModifier(html) {
-		let $mod_input = html.querySelector(".dice-tray__input");
-		if (!$mod_input && this.popout?.rendered) {
-			$mod_input = $(this.popout.element).find(".dice-tray__input");
-		}
-		const mod_val = Number($mod_input.value);
+		const modInput = html.querySelector(".dice-tray__input");
+		const modVal = Number(modInput.value);
 
-		if ($mod_input.length === 0 || isNaN(mod_val)) return;
+		if (modInput.length === 0 || isNaN(modVal)) return;
 
-		let mod_string = "";
-		if (mod_val > 0) {
-			mod_string = `+${mod_val}`;
-		} else if (mod_val < 0) {
-			mod_string = `${mod_val}`;
+		let modString = "";
+		if (modVal > 0) {
+			modString = `+${modVal}`;
+		} else if (modVal < 0) {
+			modString = `${modVal}`;
 		}
 
-		const $chat = this.textarea;
-		const chat_val = String($chat.value);
+		const chat = this.textarea;
+		const chatVal = String(chat.value);
 
-		const match_string = /(\+|-)(\d+)$/;
-		if (match_string.test(chat_val)) {
-			$chat.value = chat_val.replace(match_string, mod_string);
-		} else if (chat_val !== "") {
-			$chat.value = chat_val + mod_string;
+		const matchString = /(\+|-)(\d+)$/;
+		if (matchString.test(chatVal)) {
+			chat.value = chatVal.replace(matchString, modString);
+		} else if (chatVal !== "") {
+			chat.value = chatVal + modString;
 		} else {
 			const rollPrefix = this._getRollMode(html);
-			$chat.value = `${rollPrefix} ${mod_string}`;
+			chat.value = `${rollPrefix} ${modString}`;
 		}
-		if (/(\/r|\/gmr|\/br|\/sr) $/g.test($chat.value)) {
-			$chat.value = "";
+		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
+			chat.value = "";
 		}
 	}
 
@@ -338,22 +335,22 @@ export default class TemplateDiceMap {
 		let qty = 0;
 		let dice = "";
 
-		let match_dice = dataset.formula;
+		let matchDice = dataset.formula;
 		if (dataset.formula === "d10") {
 			// Filter out d100s
-			match_dice = "d10(?!0)";
+			matchDice = "d10(?!0)";
 		} else if (/^(\d+)(d.+)/.test(dataset.formula)) {
 			const match = dataset.formula.match(/^(\d+)(d.+)/);
 			qty = Number(match[1]);
-			match_dice = match[2];
+			matchDice = match[2];
 			dice = match[2];
 		}
 		// Catch KH/KL
-		match_dice = `${match_dice}[khl]*`;
+		matchDice = `${matchDice}[khl]*`;
 
-		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
-		if (match_string.test(currFormula)) {
-			const match = currFormula.match(match_string);
+		const matchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
+		if (matchString.test(currFormula)) {
+			const match = currFormula.match(matchString);
 			const parts = {
 				qty: match.groups?.qty ?? (match[1] || "1"),
 				die: match.groups?.dice ?? (match[2] || ""),
@@ -369,14 +366,14 @@ export default class TemplateDiceMap {
 			qty = qty < 1 ? "" : qty;
 
 			if (qty === "" && direction === "sub") {
-				const new_match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
-				currFormula = currFormula.replace(new_match_string, "");
+				const newMatchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
+				currFormula = currFormula.replace(newMatchString, "");
 				if (new RegExp(`${rollPrefix}\\s+(?!.*d\\d+.*)`).test(currFormula)) {
 					currFormula = "";
 				}
 			} else {
 				const newFormula = this.rawFormula(qty, parts.die, html);
-				currFormula = currFormula.replace(match_string, newFormula);
+				currFormula = currFormula.replace(matchString, newFormula);
 			}
 			$chat.value = currFormula;
 		} else {
@@ -397,22 +394,22 @@ export default class TemplateDiceMap {
 
 		// Add a flag indicator on the dice.
 		qty = Number(qty);
-		let $flag_button = [html.querySelector(`.dice-tray__flag--${dataset.formula}`)];
+		let flagButton = [html.querySelector(`.dice-tray__flag--${dataset.formula}`)];
 		if (this.popout?.rendered) {
-			$flag_button.push(this.popout.element.querySelector(`.dice-tray__flag--${dataset.formula}`));
+			flagButton.push(this.popout.element.querySelector(`.dice-tray__flag--${dataset.formula}`));
 		}
 		if (!qty) {
 			qty = direction === "add" ? 1 : 0;
 		}
 
-		for (const button of $flag_button) {
+		for (const button of flagButton) {
 			if (qty > 0) {
-				button.textContent =(qty);
+				button.textContent = qty;
 				button.classList.remove("hide");
 			} else if (qty < 0) {
-				button.textContent =(qty);
+				button.textContent = qty;
 			} else {
-				button.textContent =("");
+				button.textContent = "";
 				button.classList.add("hide");
 			}
 		}
