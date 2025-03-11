@@ -117,6 +117,63 @@ export default class TemplateDiceMap {
 		});
 	}
 
+	applyListeners(html) {
+		const diceButtons = html.querySelectorAll(".dice-tray__button");
+		diceButtons.forEach((button) => {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				const dataset = event.currentTarget.dataset;
+				CONFIG.DICETRAY.updateChatDice(dataset, "add", html);
+			});
+
+			button.addEventListener("contextmenu", (event) => {
+				event.preventDefault();
+				const dataset = event.currentTarget.dataset;
+				CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
+			});
+		});
+
+		// Handle correcting the modifier math if it's null.
+		const diceTrayInput = html.querySelector(".dice-tray__input");
+		diceTrayInput.addEventListener("input", (event) => {
+			let modVal = Number(event.target.value);
+			modVal = Number.isNaN(modVal) ? 0 : modVal;
+			event.target.value = modVal;
+			CONFIG.DICETRAY.applyModifier(html);
+		});
+		diceTrayInput.addEventListener("wheel", (event) => {
+			const diff = event.deltaY < 0 ? 1 : -1;
+			let mod_val = event.currentTarget.value;
+			mod_val = Number.isNaN(mod_val) ? 0 : Number(mod_val);
+			event.currentTarget.value = mod_val + diff;
+			CONFIG.DICETRAY.applyModifier(html);
+		});
+
+		// Handle +/- buttons near the modifier input.
+		const mathButtons = html.querySelectorAll("button.dice-tray__math");
+		mathButtons.forEach((button) => {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				let mod_val = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
+				mod_val = Number.isNaN(mod_val) ? 0 : mod_val;
+
+				switch (event.currentTarget.dataset.formula) {
+					case "+1":
+						mod_val += 1;
+						break;
+					case "-1":
+						mod_val -= 1;
+						break;
+					default:
+						break;
+				}
+
+				html.querySelector('input[name="dice.tray.modifier"]').value = mod_val;
+				CONFIG.DICETRAY.applyModifier(html);
+			});
+		});
+	}
+
 	reset() {
 		CONFIG.DICETRAY._resetTray(ui.chat.element);
 		CONFIG.DICETRAY._resetTray(ui.sidebar.popouts.chat?.element);
