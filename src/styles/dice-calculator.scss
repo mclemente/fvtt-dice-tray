@@ -25,6 +25,11 @@ $green: #0a9843;
 	.dice-tray__buttons, .dice-tray__math {
 		height: 30px;
 	}
+	.dice-tray__button {
+		&:focus {
+			outline: none;
+		}
+	}
 	.flexrow {
 		flex-wrap: nowrap;
 	}
