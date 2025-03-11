@@ -63,9 +63,8 @@ Hooks.on("renderChatLog", async (chatlog, html, data) => {
 	const content = await renderTemplate("modules/dice-calculator/templates/tray.html", options);
 
 	if (content.length > 0) {
-		const trayElement = document.createElement("div");
-		trayElement.innerHTML = content;
-		chatForm.insertAdjacentElement("afterend", trayElement);
+		chatForm.insertAdjacentHTML("afterend", content);
+		const trayElement = chatForm.nextElementSibling;
 
 		const diceButtons = trayElement.querySelectorAll(".dice-tray__button");
 		diceButtons.forEach((button) => {

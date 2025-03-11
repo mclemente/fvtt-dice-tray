@@ -4,9 +4,16 @@ $white: #fff;
 $orange: #ff6400;
 $green: #0a9843;
 
+#sidebar-content {
+	.dice-tray {
+		margin-left: 12px;
+		// --chat-message-spacing is 4px as of FVTT V13.337
+    	padding-inline: 2px var(--chat-message-spacing);
+		pointer-events: all;
+	}
+}
+
 .dice-tray {
-	flex: 0;
-	padding: 0 6px 6px 6px;
 	>* {
 		margin: 2px;
 	}
