@@ -1,3 +1,4 @@
+@import "sidebar";
 @import "popout";
 @import "grimwild";
 
@@ -5,30 +6,16 @@ $white: #fff;
 $orange: #ff6400;
 $green: #0a9843;
 
-#sidebar-content {
-	.dice-tray {
-		margin-left: 12px;
-		// --chat-message-spacing is 4px as of FVTT V13.337
-    	padding-inline: 2px var(--chat-message-spacing);
-		pointer-events: all;
-	}
-}
-
 .dice-tray {
-	>* {
-		margin: 2px;
-	}
+	padding-bottom: 2px;
 	.dice-tray__stacked {
-		height: 34px;
-		margin-right: 2px;
-	}
-	.dice-tray__buttons, .dice-tray__math {
 		height: 30px;
 	}
-	.dice-tray__button {
-		&:focus {
-			outline: none;
-		}
+	.dice-tray__buttons, .dice-tray__math, .dice-tray__input {
+		height: 30px;
+	}
+	.dice-tray__math__buttons {
+		margin-top: 2px;
 	}
 	.flexrow {
 		flex-wrap: nowrap;
@@ -48,6 +35,9 @@ $green: #0a9843;
 		position: relative;
 		padding: 0;
 		height: inherit;
+		&:focus {
+			outline: none;
+		}
 		&:hover {
 			color: $orange;
 			border-color: $orange;
@@ -126,8 +116,7 @@ $green: #0a9843;
 		}
 		&.dice-tray__ad {
 			font-size: 10px;
-			height: 17px;
-			flex: 17px;
+			flex: 1;
 			line-height: 1;
 			text-transform: uppercase;
 		}
