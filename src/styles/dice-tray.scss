@@ -212,3 +212,46 @@ $green: #0a9843;
 		}
 	}
 }
+
+.system-grimwild {
+	.dice-tray {
+		display: flex;
+		width: 100%;
+	}
+
+	.dice-tray__buttons {
+		flex: 3;
+	}
+
+	.dice-tray__math {
+		flex: 1;
+	}
+
+	.dice-tray__button {
+		font-size: var(--font-size-14);
+
+		&[data-formula="d"] {
+			box-shadow: 0 0 6px inset #307e30;
+
+			&:hover {
+				box-shadow: 0 0 6px inset #ff6400;
+			}
+		}
+
+		&[data-formula="t"] {
+			box-shadow: 0 0 6px inset #620c0c;
+
+			&:hover {
+				box-shadow: 0 0 6px inset #ff6400;
+			}
+		}
+
+		&[data-formula="p"] {
+			box-shadow: 0 0 6px inset #88710a;
+
+			&:hover {
+				box-shadow: 0 0 6px inset #ff6400;
+			}
+		}
+	}
+}
