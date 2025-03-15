@@ -328,8 +328,8 @@ export default class TemplateDiceMap {
 	 * @returns
 	 */
 	updateChatDice(dataset, direction, html) {
-		const $chat = this.textarea;
-		let currFormula = String($chat.value);
+		const chat = this.textarea;
+		let currFormula = String(chat.value);
 		if (direction === "sub" && currFormula === "") return;
 		let rollPrefix = this._getRollMode(html);
 		let qty = 0;
@@ -375,17 +375,17 @@ export default class TemplateDiceMap {
 				const newFormula = this.rawFormula(qty, parts.die, html);
 				currFormula = currFormula.replace(matchString, newFormula);
 			}
-			$chat.value = currFormula;
+			chat.value = currFormula;
 		} else {
 			if (!qty) {
 				qty = 1;
 			}
 			if (currFormula === "") {
-				$chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
+				chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
 			} else {
 				const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
 				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
-				$chat.value = currFormula;
+				chat.value = currFormula;
 			}
 		}
 
@@ -414,9 +414,9 @@ export default class TemplateDiceMap {
 			}
 		}
 
-		currFormula = $chat.value;
+		currFormula = chat.value;
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
-		$chat.value = currFormula;
+		chat.value = currFormula;
 		this.applyModifier(html);
 	}
 
