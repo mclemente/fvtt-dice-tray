@@ -64,8 +64,8 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 	}
 
 	updateChatDice(dataset, direction, html) {
-		const $chat = this.textarea;
-		let currFormula = String($chat.val());
+		const chat = this.textarea;
+		let currFormula = String(chat.value);
 		if (direction === "sub" && currFormula === "") return;
 		let newFormula = null;
 		let rollPrefix = this._getRollMode(html);
@@ -105,17 +105,17 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 				newFormula = this.rawFormula(qty, parts.die, html);
 				currFormula = currFormula.replace(matchString, newFormula);
 			}
-			$chat.val(currFormula);
+			chat.value = currFormula;
 		} else {
 			if (!qty) {
 				qty = 1;
 			}
 			if (currFormula === "") {
-				$chat.val(`${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`);
+				chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
 			} else {
 				const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "" : "";
 				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
-				$chat.val(currFormula);
+				chat.value = currFormula;
 			}
 		}
 		// TODO consider separate this into another method to make overriding simpler
@@ -138,11 +138,11 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 			flagButton.classList.add("hide");
 		}
 
-		currFormula = $chat.val();
+		currFormula = chat.value;
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `)
 			.replace(/\+{2}/g, "+")
 			.replace(/-{2}/g, "-");
-		$chat.val(currFormula);
+		chat.value = currFormula;
 		this.applyModifier(html);
 	}
 }
