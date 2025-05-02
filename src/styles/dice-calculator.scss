@@ -10,6 +10,9 @@ $green: #0a9843;
 	padding-bottom: 2px;
 	.dice-tray__stacked {
 		height: 30px;
+		button {
+			min-height: initial;
+		}
 	}
 	.dice-tray__buttons, .dice-tray__math, .dice-tray__input {
 		height: 30px;
