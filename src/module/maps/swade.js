@@ -37,31 +37,29 @@ export default class SWADEDiceMap extends GenericDiceMap {
 	}
 
 	_extraButtonsLogic(html) {
-		html.find(".dice-tray__advantage").on("click", (event) => {
+		const advantage = html.querySelector(".dice-tray__advantage");
+		const disadvantage = html.querySelector(".dice-tray__disadvantage");
+		advantage.addEventListener("click", (event) => {
 			event.preventDefault();
-			if (!html.find(".dice-tray__advantage").hasClass("active")) {
-				html.find(".dice-tray__advantage").addClass("active");
-				html.find(".dice-tray__disadvantage").addClass("active");
-			} else {
-				html.find(".dice-tray__advantage").removeClass("active");
+			advantage.classList.toggle("active");
+			if (!advantage.classList.has("active")) {
+				disadvantage.classList.add("active");
 			}
 		});
-		html.find(".dice-tray__disadvantage").on("click", (event) => {
+		disadvantage.addEventListener("click", (event) => {
 			event.preventDefault();
-			if (!html.find(".dice-tray__disadvantage").hasClass("active")) {
-				html.find(".dice-tray__disadvantage").addClass("active");
-			} else {
-				html.find(".dice-tray__disadvantage").removeClass("active");
-				html.find(".dice-tray__advantage").removeClass("active");
+			disadvantage.classList.toggle("active");
+			if (disadvantage.classList.has("active")) {
+				advantage.classList.remove("active");
 			}
 		});
 	}
 
 	rawFormula(qty, dice, html) {
 		let roll_suffix = "";
-		let add_wild = html.find(".dice-tray__advantage").hasClass("active");
+		let add_wild = html.querySelector(".dice-tray__advantage").classList.has("active");
 
-		if (html.find(".dice-tray__disadvantage").hasClass("active")) {
+		if (html.querySelector(".dice-tray__disadvantage").classList.has("active")) {
 			roll_suffix = "x=";
 		}
 

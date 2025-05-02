@@ -20,10 +20,7 @@
 		"MinusOneDieLong": "Decrease Dice Size",
 		"KeepHighest": "Keep Highest",
 		"KeepLowest": "Keep Lowest",
-		"del": "del",
-		"clear": "clear",
-
-		"Calculator": "Calculator",
+		"Roll": "Roll",
 
 		"DiceCreator": {
 			"CreateDice": "Create Dice",
@@ -64,22 +61,11 @@
 		},
 
 		"SETTINGS": {
-			"DiceCalculatorSettings": "Dice Calculator Configuration",
 			"DiceCreator": "Dice Creator",
 			"DiceRowSettings": "Dice Rows Configuration",
-			"GeneralSettings": "General Settings",
-			"General": "General",
 			"autoOpenPopout": {
 				"name": "Auto Open Popout",
 				"hint": "Opens the Dice Tray popout automatically on page load."
-			},
-			"enableDiceTray": {
-				"name": "Enable Dice Tray",
-				"hint": "Enable showing a dice tray below the chat message area."
-			},
-			"enableDiceCalculator": {
-				"name": "Enable Dice Calculator",
-				"hint": "Enable showing a dice calculator dialog when clicking the d20 icon near the chat box."
 			},
 			"popout": {
 				"name": "Add button to popout Dice Tray",

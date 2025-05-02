@@ -90,6 +90,11 @@ export default class TemplateDiceMap {
 		return {};
 	}
 
+	get textarea() {
+		const chatElement = ui.sidebar.popouts.chat?.element || ui.chat.element;
+		return chatElement.querySelector(".chat-form textarea");
+	}
+
 	/**
 	 * Logic to set display the additiona KH/KL buttons and event listeners.
 	 * @param {HTMLElement} html
@@ -100,21 +105,79 @@ export default class TemplateDiceMap {
 			this._extraButtonsLogic(html);
 		}
 
-		if (html.is("aside")) return;
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
-		html.find(".dice-tray__roll").on("click", (event) => {
+		html.querySelector(".dice-tray__roll").addEventListener("click", async (event) => {
 			event.preventDefault();
-			let spoofed = this.triggerRollClick();
-			html.find("#chat-message").trigger(spoofed);
-			this._resetTray(html);
+			// Taken from FoundryVTT V13's keyEvent function
+			const newEvent = document.createEvent("Event");
+			newEvent.initEvent("keydown", true, true);
+			newEvent.keyCode = 13;
+			newEvent.key = event.code = "Enter";
+			this.textarea.dispatchEvent(newEvent);
+		});
+	}
+
+	applyListeners(html) {
+		const diceButtons = html.querySelectorAll(".dice-tray__button");
+		diceButtons.forEach((button) => {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				const dataset = event.currentTarget.dataset;
+				CONFIG.DICETRAY.updateChatDice(dataset, "add", html);
+			});
+
+			button.addEventListener("contextmenu", (event) => {
+				event.preventDefault();
+				const dataset = event.currentTarget.dataset;
+				CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
+			});
 		});
 
-		/** Sending a message on the chat form clears the text and hides the orange numbers */
-		html.find("#chat-message").keydown((e) => {
-			if (e.code === "Enter" || e.key === "Enter" || e.keycode === "13") {
-				this._resetTray(html);
-			}
+		// Handle correcting the modifier math if it's null.
+		const diceTrayInput = html.querySelector(".dice-tray__input");
+		diceTrayInput.addEventListener("input", (event) => {
+			let modVal = Number(event.target.value);
+			modVal = Number.isNaN(modVal) ? 0 : modVal;
+			event.target.value = modVal;
+			CONFIG.DICETRAY.applyModifier(html);
 		});
+		diceTrayInput.addEventListener("wheel", (event) => {
+			const diff = event.deltaY < 0 ? 1 : -1;
+			let modVal = event.currentTarget.value;
+			modVal = Number.isNaN(modVal) ? 0 : Number(modVal);
+			event.currentTarget.value = modVal + diff;
+			CONFIG.DICETRAY.applyModifier(html);
+		});
+
+		// Handle +/- buttons near the modifier input.
+		const mathButtons = html.querySelectorAll("button.dice-tray__math");
+		mathButtons.forEach((button) => {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				let modVal = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
+				modVal = Number.isNaN(modVal) ? 0 : modVal;
+
+				switch (event.currentTarget.dataset.formula) {
+					case "+1":
+						modVal += 1;
+						break;
+					case "-1":
+						modVal -= 1;
+						break;
+					default:
+						break;
+				}
+
+				html.querySelector('input[name="dice.tray.modifier"]').value = modVal;
+				CONFIG.DICETRAY.applyModifier(html);
+			});
+		});
+	}
+
+	reset() {
+		CONFIG.DICETRAY._resetTray(ui.chat.element);
+		CONFIG.DICETRAY._resetTray(ui.sidebar.popouts.chat?.element);
+		CONFIG.DICETRAY._resetTray(CONFIG.DICETRAY.popout?.element);
 	}
 
 	/**
@@ -123,23 +186,29 @@ export default class TemplateDiceMap {
 	 */
 	_createExtraButtons(html) {
 		const { kh, kl } = this.buttonFormulas;
-		html.find("#dice-tray-math").removeAttr("hidden");
-		html.find("#dice-tray-math").append(
-			`<div class="dice-tray__stacked flexcol">
-                <button class="dice-tray__ad dice-tray__advantage"
-					data-formula="${kh}"
-					data-tooltip="${game.i18n.localize(this.labels.advantage)}"
-					data-tooltip-direction="UP">
-                    ${game.i18n.localize(this.labels.adv)}
-                </button>
-                <button class="dice-tray__ad dice-tray__disadvantage"
-					data-formula="${kl}"
-					data-tooltip="${game.i18n.localize(this.labels.disadvantage)}"
-					data-tooltip-direction="UP">
-                    ${game.i18n.localize(this.labels.dis)}
-                </button>
-            </div>`
-		);
+		const math = html.querySelector("#dice-tray-math");
+		math.removeAttribute("hidden");
+		const div = document.createElement("div");
+		div.classList.add("dice-tray__stacked", "flexcol");
+
+		const buttonAdv = document.createElement("button");
+		buttonAdv.classList.add("dice-tray__ad", "dice-tray__advantage");
+		buttonAdv.setAttribute("data-formula", kh);
+		buttonAdv.setAttribute("data-tooltip", game.i18n.localize(this.labels.advantage));
+		buttonAdv.setAttribute("data-tooltip-direction", "UP");
+		buttonAdv.textContent = game.i18n.localize(this.labels.adv);
+
+		const buttonDis = document.createElement("button");
+		buttonDis.classList.add("dice-tray__ad", "dice-tray__disadvantage");
+		buttonDis.setAttribute("data-formula", kl);
+		buttonDis.setAttribute("data-tooltip", game.i18n.localize(this.labels.disadvantage));
+		buttonDis.setAttribute("data-tooltip-direction", "UP");
+		buttonDis.textContent = game.i18n.localize(this.labels.dis);
+
+		div.appendChild(buttonAdv);
+		div.appendChild(buttonDis);
+
+		math.append(div);
 	}
 
 	/**
@@ -148,61 +217,59 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	_extraButtonsLogic(html) {
-		html.find(".dice-tray__ad").attr("draggable", true).on("click", (event) => {
-			event.preventDefault();
-			let dataset = event.currentTarget.dataset;
-			let $chat = html.find("#chat-form textarea");
-			if (html.is("aside")) $chat = this.popout.chatElement.find("#chat-form textarea");
-			let chat_val = String($chat.val());
-			let match_string = /\d*d\d+[khl]*/;
+		const buttons = html.querySelectorAll(".dice-tray__ad");
+		for (const button of buttons) {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				const dataset = event.currentTarget.dataset;
+				const chat = this.textarea;
+				let chatVal = String(chat.value);
+				const matchString = /\d*d\d+[khl]*/;
 
-			// If there's a d20, toggle the current if needed.
-			if (match_string.test(chat_val)) {
-				// If there was previously a kh or kl, update it.
-				if (/d\d+k[hl]/g.test(chat_val)) {
-					chat_val = chat_val.replace(/(\d*)(d\d+)(k[hl]\d*)/g, (match, p1, p2, p3, offset, string) => {
-						let diceKeep = this.updateDiceKeep(p1, p2, p3, -1, dataset.formula);
-						html.find(`.dice-tray__flag--${p2}`).text(diceKeep.count);
-						return diceKeep.content;
-					});
+				// If there's a d20, toggle the current if needed.
+				if (matchString.test(chatVal)) {
+					// If there was previously a kh or kl, update it.
+					if (/d\d+k[hl]/g.test(chatVal)) {
+						chatVal = chatVal.replace(/(\d*)(d\d+)(k[hl]\d*)/g, (match, p1, p2, p3, offset, string) => {
+							let diceKeep = this.updateDiceKeep(p1, p2, p3, -1, dataset.formula);
+							html.querySelector(`.dice-tray__flag--${p2}`).textContent = diceKeep.count;
+							return diceKeep.content;
+						});
+					}
+					// Otherwise, add it.
+					else {
+						chatVal = chatVal.replace(/(\d*)(d\d+)/g, (match, p1, p2, offset, string) => {
+							let diceKeep = this.updateDiceKeep(p1, p2, "", 1, dataset.formula);
+							html.querySelector(`.dice-tray__flag--${p2}`).textContent = diceKeep.count;
+							return diceKeep.content;
+						});
+					}
 				}
-				// Otherwise, add it.
-				else {
-					chat_val = chat_val.replace(/(\d*)(d\d+)/g, (match, p1, p2, offset, string) => {
-						let diceKeep = this.updateDiceKeep(p1, p2, "", 1, dataset.formula);
-						html.find(`.dice-tray__flag--${p2}`).text(diceKeep.count);
-						return diceKeep.content;
-					});
-				}
-			}
-			// else {
-			// 	let diceKeep = this.updateDiceKeep("1", "d20", "", 1, dataset.formula);
-			// 	html.find(".dice-tray__flag--d20").text(diceKeep.count);
-			// 	chat_val += diceKeep.content;
-			// }
+				// else {
+				// 	let diceKeep = this.updateDiceKeep("1", "d20", "", 1, dataset.formula);
+				// 	html.find(".dice-tray__flag--d20").text(diceKeep.count);
+				// 	chatVal += diceKeep.content;
+				// }
 
-			// Handle toggle classes.
-			if (chat_val.includes("kh")) {
-				html.find(".dice-tray__advantage").addClass("active");
-			} else {
-				html.find(".dice-tray__advantage").removeClass("active");
-			}
-
-			if (chat_val.includes("kl")) {
-				html.find(".dice-tray__disadvantage").addClass("active");
-			} else {
-				html.find(".dice-tray__disadvantage").removeClass("active");
-			}
-			// Update the value.
-			$chat.val(chat_val);
-		});
+				// Handle toggle classes.
+				const toggleClass = (selector, condition) => {
+					html.querySelector(selector)?.classList.toggle("active", condition);
+				};
+				toggleClass(".dice-tray__advantage", chatVal.includes("kh"));
+				toggleClass(".dice-tray__disadvantage", chatVal.includes("kl"));
+				// Update the value.
+				chat.value = chatVal;
+			});
+		}
 	}
 
 	_resetTray(html) {
-		html.find(".dice-tray__input").val(0);
-		html.find(".dice-tray__flag").text("").addClass("hide");
+		if (!html) return;
+		html.querySelector(".dice-tray__input").value = 0;
+		html.querySelector(".dice-tray__flag").textContent = "";
+		html.querySelector(".dice-tray__flag").classList.add("hide");
 		if (this.removeAdvOnRoll) {
-			html.find(".dice-tray__ad").removeClass("active");
+			html.querySelector(".dice-tray__ad").classList.remove("active");
 		}
 	}
 
@@ -211,35 +278,32 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	applyModifier(html) {
-		let $mod_input = html.find(".dice-tray__input");
-		if (!$mod_input.length && this.popout?.rendered) {
-			$mod_input = $(this.popout.element).find(".dice-tray__input");
-		}
-		const mod_val = Number($mod_input.val());
+		const modInput = html.querySelector(".dice-tray__input");
+		const modVal = Number(modInput.value);
 
-		if ($mod_input.length === 0 || isNaN(mod_val)) return;
+		if (modInput.length === 0 || isNaN(modVal)) return;
 
-		let mod_string = "";
-		if (mod_val > 0) {
-			mod_string = `+${mod_val}`;
-		} else if (mod_val < 0) {
-			mod_string = `${mod_val}`;
+		let modString = "";
+		if (modVal > 0) {
+			modString = `+${modVal}`;
+		} else if (modVal < 0) {
+			modString = `${modVal}`;
 		}
 
-		const $chat = html.find("#chat-form textarea");
-		const chat_val = String($chat.val());
+		const chat = this.textarea;
+		const chatVal = String(chat.value);
 
-		const match_string = /(\+|-)(\d+)$/;
-		if (match_string.test(chat_val)) {
-			$chat.val(chat_val.replace(match_string, mod_string));
-		} else if (chat_val !== "") {
-			$chat.val(chat_val + mod_string);
+		const matchString = /(\+|-)(\d+)$/;
+		if (matchString.test(chatVal)) {
+			chat.value = chatVal.replace(matchString, modString);
+		} else if (chatVal !== "") {
+			chat.value = chatVal + modString;
 		} else {
 			const rollPrefix = this._getRollMode(html);
-			$chat.val(`${rollPrefix} ${mod_string}`);
+			chat.value = `${rollPrefix} ${modString}`;
 		}
-		if (/(\/r|\/gmr|\/br|\/sr) $/g.test($chat.val())) {
-			$chat.val("");
+		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
+			chat.value = "";
 		}
 	}
 
@@ -257,29 +321,6 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Creates a fake Enter keypress to trigger the chat message box.
-	 * @returns {{}}
-	 */
-	triggerRollClick() {
-		// Set up the keypress event properties.
-		let spoofedProperties = {
-			which: 13,
-			keycode: 13,
-			code: "Enter",
-			key: "Enter",
-		};
-		// Create an event for the keypress.
-		let spoofed = $.Event("keydown", spoofedProperties);
-		// Create a second event for the originalEvent property.
-		let spoofedOriginal = $.Event("keydown", spoofedProperties);
-		spoofedOriginal.isComposing = false;
-		// Assign the original event.
-		spoofed.originalEvent = spoofedOriginal;
-
-		return spoofed;
-	}
-
-	/**
 	 * Handles clicks on the dice buttons.
 	 * @param {Object} dataset
 	 * @param {String} direction
@@ -287,30 +328,29 @@ export default class TemplateDiceMap {
 	 * @returns
 	 */
 	updateChatDice(dataset, direction, html) {
-		const $chat = html.find("#chat-form textarea");
-		let currFormula = String($chat.val());
+		const chat = this.textarea;
+		let currFormula = String(chat.value);
 		if (direction === "sub" && currFormula === "") return;
-		let newFormula = null;
 		let rollPrefix = this._getRollMode(html);
 		let qty = 0;
 		let dice = "";
 
-		let match_dice = dataset.formula;
+		let matchDice = dataset.formula;
 		if (dataset.formula === "d10") {
 			// Filter out d100s
-			match_dice = "d10(?!0)";
+			matchDice = "d10(?!0)";
 		} else if (/^(\d+)(d.+)/.test(dataset.formula)) {
 			const match = dataset.formula.match(/^(\d+)(d.+)/);
 			qty = Number(match[1]);
-			match_dice = match[2];
+			matchDice = match[2];
 			dice = match[2];
 		}
 		// Catch KH/KL
-		match_dice = `${match_dice}[khl]*`;
+		matchDice = `${matchDice}[khl]*`;
 
-		const match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
-		if (match_string.test(currFormula)) {
-			const match = currFormula.match(match_string);
+		const matchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
+		if (matchString.test(currFormula)) {
+			const match = currFormula.match(matchString);
 			const parts = {
 				qty: match.groups?.qty ?? (match[1] || "1"),
 				die: match.groups?.dice ?? (match[2] || ""),
@@ -326,27 +366,26 @@ export default class TemplateDiceMap {
 			qty = qty < 1 ? "" : qty;
 
 			if (qty === "" && direction === "sub") {
-				newFormula = "";
-				const new_match_string = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=\\+|\\-|$)`);
-				currFormula = currFormula.replace(new_match_string, newFormula);
+				const newMatchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
+				currFormula = currFormula.replace(newMatchString, "");
 				if (new RegExp(`${rollPrefix}\\s+(?!.*d\\d+.*)`).test(currFormula)) {
 					currFormula = "";
 				}
 			} else {
-				newFormula = this.rawFormula(qty, parts.die, html);
-				currFormula = currFormula.replace(match_string, newFormula);
+				const newFormula = this.rawFormula(qty, parts.die, html);
+				currFormula = currFormula.replace(matchString, newFormula);
 			}
-			$chat.val(currFormula);
+			chat.value = currFormula;
 		} else {
 			if (!qty) {
 				qty = 1;
 			}
 			if (currFormula === "") {
-				$chat.val(`${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`);
+				chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
 			} else {
 				const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
 				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
-				$chat.val(currFormula);
+				chat.value = currFormula;
 			}
 		}
 
@@ -355,29 +394,29 @@ export default class TemplateDiceMap {
 
 		// Add a flag indicator on the dice.
 		qty = Number(qty);
-		let $flag_button = [html.find(`.dice-tray__flag--${dataset.formula}`)];
+		let flagButton = [html.querySelector(`.dice-tray__flag--${dataset.formula}`)];
 		if (this.popout?.rendered) {
-			$flag_button.push($(this.popout.element).find(`.dice-tray__flag--${dataset.formula}`));
+			flagButton.push(this.popout.element.querySelector(`.dice-tray__flag--${dataset.formula}`));
 		}
 		if (!qty) {
 			qty = direction === "add" ? 1 : 0;
 		}
 
-		for (const button of $flag_button) {
+		for (const button of flagButton) {
 			if (qty > 0) {
-				button.text(qty);
-				button.removeClass("hide");
+				button.textContent = qty;
+				button.classList.remove("hide");
 			} else if (qty < 0) {
-				button.text(qty);
+				button.textContent = qty;
 			} else {
-				button.text("");
-				button.addClass("hide");
+				button.textContent = "";
+				button.classList.add("hide");
 			}
 		}
 
-		currFormula = $chat.val();
+		currFormula = chat.value;
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
-		$chat.val(currFormula);
+		chat.value = currFormula;
 		this.applyModifier(html);
 	}
 

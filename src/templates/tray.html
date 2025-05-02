@@ -6,7 +6,6 @@
 			data-formula="{{key}}"
 			data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
 			data-tooltip-direction="{{#if data.direction}}{{data.direction}}{{else}}UP{{/if}}"
-			draggable="true"
 			>
 			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
 			{{!-- Image (and label, optionally) --}}
@@ -31,11 +30,11 @@
 		{{/each}}
     </div>
     {{/each}}
-    <div class="dice-tray__math flexrow">
+    <div class="dice-tray__math dice-tray__math__buttons flexrow">
 		<button class="dice-tray__math dice-tray__math--sub" data-formula="-1">-</button>
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
 		<button class="dice-tray__math dice-tray__math--add" data-formula="+1">+</button>
 		<div id="dice-tray-math" hidden></div>
-		<button class="dice-tray__roll">{{localize "TABLE.Roll"}}</button>
+		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
     </div>
 </section>
