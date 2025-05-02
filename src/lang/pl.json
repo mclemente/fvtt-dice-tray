@@ -20,10 +20,7 @@
 		"MinusOneDieLong": "Zmniejsz rozmiar kości",
 		"KeepHighest": "Zachowaj większy wynik",
 		"KeepLowest": "Zachowaj mniejszy wynik",
-		"del": "usuń",
-		"clear": "wyczyść",
-
-		"Calculator": "Kalkulator",
+		"Roll": "Rzut",
 
 		"DiceCreator": {
 			"CreateDice": "Utwórz kość",
@@ -64,22 +61,11 @@
 		},
 
 		"SETTINGS": {
-			"DiceCalculatorSettings": "Konfiguracja kalkulatora kości",
 			"DiceCreator": "Kreator kości",
 			"DiceRowSettings": "Konfiguracja wierszy kości",
-			"GeneralSettings": "Ogólne stawienia",
-			"General": "Ogólne",
 			"autoOpenPopout": {
 				"name": "Automatyczne otwieranie wyskakującego okienka",
 				"hint": "Automatycznie otwiera wyskakujące okienko Dice Tray po załadowaniu strony."
-			},
-			"enableDiceTray": {
-				"name": "Włącz Dice Tray",
-				"hint": "Włącz wyświetlanie Dice Tray poniżej obszaru wiadomości czatu."
-			},
-			"enableDiceCalculator": {
-				"name": "Włącz kalkulator kości",
-				"hint": "Włączenie wyświetlania okna dialogowego kalkulatora kości po kliknięciu ikony d20 w pobliżu okna czatu."
 			},
 			"popout": {
 				"name": "Dodaj przycisk do wyskakującego okna Dice Tray",
