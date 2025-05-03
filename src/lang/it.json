@@ -20,10 +20,7 @@
 		"MinusOneDieLong": "Diminuisci Taglia Dadi",
 		"KeepHighest": "Tieni il più alto",
 		"KeepLowest": "Tieni il più basso",
-		"del": "del",
-		"clear": "clear",
-
-		"Calculator": "Calcolatore",
+		"Roll": "Tira",
 
 		"DiceCreator": {
 			"CreateDice": "Crea Dadi",
@@ -64,22 +61,11 @@
 		},
 
 		"SETTINGS": {
-			"DiceCalculatorSettings": "Configurazione Dice Calculator",
 			"DiceCreator": "Creatore Dado",
 			"DiceRowSettings": "Configurazione Posizione Dadi",
-			"GeneralSettings": "Impostazioni Generali",
-			"General": "General",
 			"autoOpenPopout": {
 				"name": "Auto Apertura Popout",
 				"hint": "Apre automaticamente il popout Dice Tray al caricamento della pagina."
-			},
-			"enableDiceTray": {
-				"name": "Abilita Dice Tray",
-				"hint": "Abilita la visualizzazione di Dice Tray sotto l'area dei messaggi chat."
-			},
-			"enableDiceCalculator": {
-				"name": "Abiita Dice Calculator",
-				"hint": "Abilita la visualizzazione di una finestra di dialogo di Dice Calculator quando si fa clic sull'icona d20 vicino alla casella di chat."
 			},
 			"popout": {
 				"name": "Aggiungi pulsante popout Dice Tray",
