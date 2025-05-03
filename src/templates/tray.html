@@ -1,32 +1,36 @@
+{{#*inline "button"}}
+<button class="dice-tray__button"
+	data-formula="{{key}}"
+	data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
+	data-tooltip-direction="{{#if data.direction}}{{data.direction}}{{else}}UP{{/if}}"
+	>
+	<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
+	{{!-- Image (and label, optionally) --}}
+	{{#if data.img}}
+	<div class="dice" style="
+		mask: url({{data.img}}) center 2px/contain no-repeat;
+		-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
+		{{#if data.color}}background-color: {{data.color}};{{/if}}
+	"></div>
+	{{#if data.label}}
+	<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
+		{{{data.label}}}
+	</span>
+	{{/if}}
+	{{!-- Label only, if no image --}}
+	{{else}}
+	<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
+		{{{data.label}}}
+	</span>
+	{{/if}}
+</button>
+{{/inline}}
+
 <section class="dice-tray">
     {{#each dicerows as |dice|}}
     <div class="dice-tray__buttons flexrow">
 		{{#each dice as |data key|}}
-		<button class="dice-tray__button"
-			data-formula="{{key}}"
-			data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
-			data-tooltip-direction="{{#if data.direction}}{{data.direction}}{{else}}UP{{/if}}"
-			>
-			<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
-			{{!-- Image (and label, optionally) --}}
-			{{#if data.img}}
-			<div class="dice" style="
-				mask: url({{data.img}}) center 2px/contain no-repeat;
-				-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
-				{{#if data.color}}background-color: {{data.color}};{{/if}}
-			"></div>
-			{{#if data.label}}
-			<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
-				{{{data.label}}}
-			</span>
-			{{/if}}
-			{{!-- Label only, if no image --}}
-			{{else}}
-			<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
-				{{{data.label}}}
-			</span>
-			{{/if}}
-		</button>
+		{{> button data=data key=key}}
 		{{/each}}
     </div>
     {{/each}}
