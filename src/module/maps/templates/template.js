@@ -266,8 +266,10 @@ export default class TemplateDiceMap {
 	_resetTray(html) {
 		if (!html) return;
 		html.querySelector(".dice-tray__input").value = 0;
-		html.querySelector(".dice-tray__flag").textContent = "";
-		html.querySelector(".dice-tray__flag").classList.add("hide");
+		for (const flag of html.querySelectorAll(".dice-tray__flag")) {
+			flag.textContent = "";
+			flag.classList.add("hide");
+		}
 		if (this.removeAdvOnRoll) {
 			html.querySelector(".dice-tray__ad").classList.remove("active");
 		}
