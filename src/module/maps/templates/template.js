@@ -461,10 +461,7 @@ export default class TemplateDiceMap {
      */
 	updateDiceKeep(count, dice, khl, countDiff, newKhl) {
 		// Start by getting the current number of dice (minimum 1).
-		let keep = Number.isNumeric(count) ? Number(count) : 1;
-		if (keep === 0) {
-			keep = 1;
-		}
+		const keep = Number.isNumeric(count) ? Math.max(Number(count), 1) : 1;
 
 		// Apply the count diff to adjust how many dice we need for adv/dis.
 		let newCount = keep + countDiff;
