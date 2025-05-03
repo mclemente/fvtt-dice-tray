@@ -28,6 +28,25 @@ export function registerSettings() {
 		type: Array,
 	});
 
+	game.settings.register("dice-calculator", "compactMode", {
+		scope: "world",
+		config: false,
+		default: false,
+		type: Boolean,
+	});
+	game.settings.register("dice-calculator", "hideNumberInput", {
+		scope: "world",
+		config: false,
+		default: false,
+		type: Boolean,
+	});
+	game.settings.register("dice-calculator", "hideRollButton", {
+		scope: "world",
+		config: false,
+		default: false,
+		type: Boolean,
+	});
+
 	game.settings.register("dice-calculator", "popout", {
 		name: "DICE_TRAY.SETTINGS.popout.name",
 		hint: "DICE_TRAY.SETTINGS.popout.hint",

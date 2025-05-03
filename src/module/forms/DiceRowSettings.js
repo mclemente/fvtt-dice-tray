@@ -18,15 +18,29 @@ export class DiceRowSettings extends FormApplication {
 		});
 	}
 
+	settings;
+
+	static settingsKeys = ["compactMode", "hideNumberInput", "hideRollButton"];
+
 	getData(options) {
+		this.settings ??= DiceRowSettings.settingsKeys.reduce((obj, key) => {
+			obj[key] = game.settings.get("dice-calculator", key);
+			return obj;
+		}, {});
 		return {
 			diceRows: this.diceRows,
+			settings: this.settings
 		};
 	}
 
 	async activateListeners(html) {
 		super.activateListeners(html);
 		CONFIG.DICETRAY.applyLayout(html[0]);
+		html.find("input").on("click", async (event) => {
+			const { checked, name } = event.currentTarget;
+			this.settings[name] = checked;
+			this.render(true);
+		});
 		html.find(".dice-tray button").on("click", async (event) => {
 			event.preventDefault();
 		});
@@ -48,7 +62,7 @@ export class DiceRowSettings extends FormApplication {
 					img,
 					label,
 					tooltip: tooltip !== key ? tooltip : "",
-					row: row,
+					row: row + 1,
 				},
 			}).render(true);
 		});
@@ -80,10 +94,20 @@ export class DiceRowSettings extends FormApplication {
 	}
 
 	async _updateObject(event, formData) {
+		let requiresWorldReload = false;
+		await Promise.all(
+			DiceRowSettings.settingsKeys.map(async (key) => {
+				const current = game.settings.get("dice-calculator", key);
+				if (current !== this.settings[key]) {
+					await game.settings.set("dice-calculator", key, this.settings[key]);
+					requiresWorldReload = true;
+				}
+			})
+		);
 		const current = game.settings.get("dice-calculator", "diceRows");
 		if (JSON.stringify(this.diceRows) !== JSON.stringify(current)) {
 			await game.settings.set("dice-calculator", "diceRows", this.diceRows);
-			await SettingsConfig.reloadConfirm({ world: true });
 		}
+		if (requiresWorldReload) await SettingsConfig.reloadConfirm({ world: true });
 	}
 }

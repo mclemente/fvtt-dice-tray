@@ -4,9 +4,28 @@
             <p>{{localize "DICE_TRAY.DiceRows.Instruction1"}}</p>
             <p>{{localize "DICE_TRAY.DiceRows.Instruction2"}}</p>
         </div>
+        <div class="form-group">
+            <label>Compact Mode</label>
+            <div class="form-fields">
+                <input type="checkbox" name="compactMode" {{checked settings.compactMode}}>
+            </div>
+            <p class="hint">Disables any additional dice rows and merges the original two rows together.</p>
+        </div>
+        <div class="form-group">
+            <label>Hide Number Input</label>
+            <div class="form-fields">
+                <input type="checkbox" name="hideNumberInput" {{checked settings.hideNumberInput}} {{disabled (not settings.compactMode)}}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Hide Roll Button</label>
+            <div class="form-fields">
+                <input type="checkbox" name="hideRollButton" {{checked settings.hideRollButton}}>
+            </div>
+        </div>
         <h2>Preview</h2>
         <section class="flexcol">
-            {{>"modules/dice-calculator/templates/tray.html" dicerows=diceRows }}
+            {{>"modules/dice-calculator/templates/tray.html" dicerows=diceRows settings=settings }}
         </section>
     </div>
     <div class="form-group">

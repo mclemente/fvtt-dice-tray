@@ -1,6 +1,7 @@
 import * as keymaps from "./maps/_module.js";
 
 import { DiceTrayPopOut } from "./dice-tray-popout.js";
+import { DiceRowSettings } from "./forms/DiceRowSettings.js";
 import { KEYS } from "./maps/_keys.js";
 import { registerSettings } from "./settings.js";
 
@@ -58,6 +59,10 @@ Hooks.on("renderChatLog", async (chatlog, html, data) => {
 	let chatForm = html.querySelector(".chat-form");
 	const options = {
 		dicerows: game.settings.get("dice-calculator", "diceRows"),
+		settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
+			obj[key] = game.settings.get("dice-calculator", key);
+			return obj;
+		}, {})
 	};
 
 	const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", options);
