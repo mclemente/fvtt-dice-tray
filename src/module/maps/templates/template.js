@@ -106,7 +106,7 @@ export default class TemplateDiceMap {
 		}
 
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
-		html.querySelector(".dice-tray__roll").addEventListener("click", async (event) => {
+		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
 			// Taken from FoundryVTT V13's keyEvent function
 			const newEvent = document.createEvent("Event");
@@ -135,13 +135,13 @@ export default class TemplateDiceMap {
 
 		// Handle correcting the modifier math if it's null.
 		const diceTrayInput = html.querySelector(".dice-tray__input");
-		diceTrayInput.addEventListener("input", (event) => {
+		diceTrayInput?.addEventListener("input", (event) => {
 			let modVal = Number(event.target.value);
 			modVal = Number.isNaN(modVal) ? 0 : modVal;
 			event.target.value = modVal;
 			CONFIG.DICETRAY.applyModifier(html);
 		});
-		diceTrayInput.addEventListener("wheel", (event) => {
+		diceTrayInput?.addEventListener("wheel", (event) => {
 			const diff = event.deltaY < 0 ? 1 : -1;
 			let modVal = event.currentTarget.value;
 			modVal = Number.isNaN(modVal) ? 0 : Number(modVal);
@@ -151,7 +151,7 @@ export default class TemplateDiceMap {
 
 		// Handle +/- buttons near the modifier input.
 		const mathButtons = html.querySelectorAll("button.dice-tray__math");
-		mathButtons.forEach((button) => {
+		mathButtons?.forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				let modVal = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
@@ -281,6 +281,7 @@ export default class TemplateDiceMap {
 	 */
 	applyModifier(html) {
 		const modInput = html.querySelector(".dice-tray__input");
+		if (!modInput) return;
 		const modVal = Number(modInput.value);
 
 		if (modInput.length === 0 || isNaN(modVal)) return;

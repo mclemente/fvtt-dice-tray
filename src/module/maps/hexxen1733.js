@@ -32,6 +32,7 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 
 	applyModifier(html) {
 		const modInput = html.querySelector(".dice-tray__input");
+		if (!modInput) return;
 		const modVal = Number(modInput.value);
 
 		if (modInput.length === 0 || isNaN(modVal)) return;

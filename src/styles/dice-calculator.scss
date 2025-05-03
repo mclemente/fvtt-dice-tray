@@ -8,6 +8,7 @@ $green: #0a9843;
 
 .dice-tray {
 	padding-bottom: 2px;
+	width: var(--sidebar-width);
 	.dice-tray__stacked {
 		height: 30px;
 		button {
@@ -38,6 +39,7 @@ $green: #0a9843;
 		position: relative;
 		padding: 0;
 		height: inherit;
+		min-height: 1rem;
 		&:focus {
 			outline: none;
 		}
