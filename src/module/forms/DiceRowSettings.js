@@ -26,6 +26,7 @@ export class DiceRowSettings extends FormApplication {
 
 	async activateListeners(html) {
 		super.activateListeners(html);
+		CONFIG.DICETRAY.applyLayout(html[0]);
 		html.find(".dice-tray button").on("click", async (event) => {
 			event.preventDefault();
 		});
