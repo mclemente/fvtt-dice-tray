@@ -6,7 +6,7 @@ import { registerSettings } from "./settings.js";
 
 // Initialize module
 Hooks.once("init", () => {
-	loadTemplates(["modules/dice-calculator/templates/tray.html"]);
+	foundry.applications.handlebars.loadTemplates(["modules/dice-calculator/templates/tray.html"]);
 });
 
 Hooks.once("i18nInit", () => {
@@ -60,7 +60,7 @@ Hooks.on("renderChatLog", async (chatlog, html, data) => {
 		dicerows: game.settings.get("dice-calculator", "diceRows"),
 	};
 
-	const content = await renderTemplate("modules/dice-calculator/templates/tray.html", options);
+	const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", options);
 
 	if (content.length > 0) {
 		chatForm.insertAdjacentHTML("afterend", content);
