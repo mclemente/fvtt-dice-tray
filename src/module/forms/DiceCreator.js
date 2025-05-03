@@ -16,12 +16,16 @@ export class DiceCreator extends FormApplication {
 	}
 
 	getData(options) {
+		const { dice, settings } = this.object;
 		const nextRow = this.object.diceRows.findIndex((row) => Object.keys(row).length < 7);
+		const rowIndex = Math.clamp(nextRow, 0, this.object.diceRows.length) + 1;
 		return {
-			dice: this.object.dice,
+			dice,
 			diceRows: this.object.diceRows, // this.diceRows,
-			nextRow: nextRow < 0 ? this.object.diceRows.length : nextRow,
-			maxRows: Math.max(nextRow + 1, this.object.diceRows.length),
+			value: dice?.row ?? rowIndex,
+			nextRow: rowIndex,
+			maxRows: rowIndex + 1,
+			settings
 		};
 	}
 
@@ -33,7 +37,8 @@ export class DiceCreator extends FormApplication {
 	}
 
 	async _updateObject(event, formData) {
-		const { dice, row } = foundry.utils.expandObject(formData);
+		let { dice, row } = foundry.utils.expandObject(formData);
+		row -= 1;
 		if (this.object.dice && dice.row !== row) {
 			const key = this.object.dice.originalKey;
 			delete this.object.form.diceRows[row][key];

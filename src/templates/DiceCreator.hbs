@@ -5,19 +5,32 @@
 		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
 	</div>
 
+	{{#if settings.compactMode}}
+	<input
+			type="number"
+			name="row"
+			value="{{value}}"
+			min="{{value}}"
+			max="{{maxRows}}"
+			steps="1"
+			required
+			hidden
+		/>
+	{{else}}
 	<div class="form-group">
 		<label>{{localize "DICE_TRAY.DiceCreator.Row.name"}}</label>
 		<input
 			type="number"
 			name="row"
-			value="{{#if dice.row includeZero=true}}{{dice.row}}{{else}}{{nextRow}}{{/if}}"
-			min="0"
+			value="{{value}}"
+			min="{{value}}"
 			max="{{maxRows}}"
 			steps="1"
 			required
 		/>
 		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
 	</div>
+	{{/if}}
 
 	<div class="form-group">
 		<label>{{localize "DICE_TRAY.DiceCreator.Image.name"}}</label>
@@ -46,11 +59,7 @@
 	<div class="form-group">
 		<button type="submit" name="create">
 			<i class="fas fa-save"></i>
-			{{#if dice.key}}
-			{{localize "SETTINGS.Save"}}
-			{{else}}
-			{{localize "DICE_TRAY.DiceCreator.CreateDice"}}
-			{{/if}}
+			{{ifThen dice.key (localize "SETTINGS.Save") (localize "DICE_TRAY.DiceCreator.CreateDice")}}
 		</button>
 		<button type="button" name="cancel">
 			<i class="fas fa-ban"></i> {{localize "Cancel"}}

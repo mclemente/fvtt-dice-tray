@@ -64,6 +64,7 @@ export class DiceRowSettings extends FormApplication {
 					tooltip: tooltip !== key ? tooltip : "",
 					row: row + 1,
 				},
+				settings: this.settings
 			}).render(true);
 		});
 		html.find(".dice-tray__button").on("contextmenu", async (event) => {
@@ -79,9 +80,13 @@ export class DiceRowSettings extends FormApplication {
 			this.render(false);
 		});
 		html.find("button[name=add]").on("click", async (event) => {
+			if (Object.keys(this.diceRows[0]).length >= 7) {
+				return ui.notifications.notify("You're in Compact Mode and have too many dice. Edit or delete an existing dice before adding any more.");
+			}
 			new DiceCreator({
 				form: this,
 				diceRows: this.diceRows,
+				settings: this.settings
 			}).render(true);
 		});
 		html.find("button[name=cancel]").on("click", async (event) => {
