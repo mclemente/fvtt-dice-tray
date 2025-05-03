@@ -120,6 +120,10 @@ export default class TemplateDiceMap {
 	applyListeners(html) {
 		const diceButtons = html.querySelectorAll(".dice-tray__button");
 		diceButtons.forEach((button) => {
+			// Avoids moving focus to the button
+			button.addEventListener("pointerdown", (event) => {
+				event.preventDefault();
+			});
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
@@ -308,6 +312,7 @@ export default class TemplateDiceMap {
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
 			chat.value = "";
 		}
+		this.textarea.focus();
 	}
 
 	/**
