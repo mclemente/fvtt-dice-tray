@@ -67,11 +67,23 @@
 				"name": "Automatyczne otwieranie wyskakującego okienka",
 				"hint": "Automatycznie otwiera wyskakujące okienko Dice Tray po załadowaniu strony."
 			},
+			"enableDiceTray": {
+				"name": "Włącz Dice Tray",
+				"hint": "Włącz wyświetlanie tacki na kości pod obszarem wiadomości czatu. Jest to ustawienie użytkownika dla graczy, którzy nie chcą tej tacki."
+			},
 			"popout": {
 				"name": "Dodaj przycisk do wyskakującego okna Dice Tray",
 				"hint": "Dodaje przycisk na pasku kontrolnym do włączania wyskakującego okienka Dice Tray. Można również przełączać wyskakujące okienko, ustawiając powiązanie klawiszy.",
 				"options": {
 					"all": "Wszystkie elementy sterujące"
+				}
+			},
+			"rightClickCommand": {
+				"name": "Polecenie prawego przycisku myszy",
+				"hint": "Ustawia zachowanie przycisku rzutu kością po kliknięciu prawym przyciskiem myszy.",
+				"options": {
+					"decrease": "Domyślne (zmniejsz liczbę kości)",
+					"roll": "Rzuć jedną kostką"
 				}
 			},
 			"SWADE": {
