@@ -91,8 +91,7 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		const chatElement = ui.sidebar.popouts.chat?.element || ui.chat.element;
-		return chatElement.querySelector(".chat-form textarea");
+		return document.querySelector("textarea.chat-input");
 	}
 
 	/**
