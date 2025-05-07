@@ -94,6 +94,7 @@ export function registerSettings() {
 		scope: "world",
 		config: true,
 		type: new foundry.data.fields.StringField({
+			required: true,
 			blank: false,
 			choices: {
 				decrease: "DICE_TRAY.SETTINGS.rightClickCommand.options.decrease",
