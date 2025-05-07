@@ -67,11 +67,23 @@
 				"name": "Auto Apertura Popout",
 				"hint": "Apre automaticamente il popout Dice Tray al caricamento della pagina."
 			},
+      "enableDiceTray": {
+				"name": "Abilita Scorciatoia Dadi",
+				"hint": "Abilita la visualizzazione di una scorciatoia per i dadi sotto l'area dei messaggi della chat. Questa è un'impostazione utente per i giocatori che non la desiderano."
+			},
 			"popout": {
 				"name": "Aggiungi pulsante popout Dice Tray",
 				"hint": "Aggiunge un pulsante sulla barra dei controlli per attivare/disattivare il popout di Dice Tray. Puoi anche attivare/disattivare il popout impostando una combinazione di tasti.",
 				"options": {
 					"all": "Tutti i controlli"
+				}
+			},
+      "rightClickCommand": {
+				"name": "Comando Tasto Destro",
+				"hint": "Imposta il comportamento da adottare quando si fa clic con il pulsante destro del mouse su un pulsante di un dado.",
+				"options": {
+					"decrease": "Predefinito (Diminuisci Dadi)",
+					"roll": "Tira un solo dado"
 				}
 			},
 			"SWADE": {
