@@ -93,3 +93,6 @@ Hooks.on("getSceneControlButtons", (controls) => {
 	if (popout === "tokens") addButton(controls.tokens);
 	else Object.keys(controls).forEach((c) => addButton(controls[c]));
 });
+
+// Called when a message is sent through chat
+Hooks.on("chatMessage", () => CONFIG.DICETRAY.reset());
