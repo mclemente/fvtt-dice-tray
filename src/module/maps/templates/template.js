@@ -423,15 +423,12 @@ export default class TemplateDiceMap {
 
 		// Add a flag indicator on the dice.
 		qty = Number(qty);
-		let flagButton = [html.querySelector(`.dice-tray__flag--${dataset.formula}`)];
-		if (this.popout?.rendered) {
-			flagButton.push(this.popout.element.querySelector(`.dice-tray__flag--${dataset.formula}`));
-		}
+		const flagButtons = document.querySelectorAll(`.dice-tray__flag--${dataset.formula}`);
 		if (!qty) {
 			qty = direction === "add" ? 1 : 0;
 		}
 
-		for (const button of flagButton) {
+		for (const button of flagButtons) {
 			if (qty > 0) {
 				button.textContent = qty;
 				button.classList.remove("hide");
