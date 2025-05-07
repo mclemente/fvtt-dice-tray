@@ -54,7 +54,8 @@ async function togglePopout() {
 	else await CONFIG.DICETRAY.popout.render(true);
 }
 
-Hooks.on("renderChatLog", async (chatlog, html, data) => {
+Hooks.on("renderChatLog", async (chatlog, html, data, opt) => {
+	if (!opt.isFirstRender) return;
 	const enableTray = game.settings.get("dice-calculator", "enableDiceTray");
 	if (!enableTray) return;
 	// Prepare the dice tray for rendering.
