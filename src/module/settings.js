@@ -9,6 +9,16 @@ export function registerSettings() {
 		restricted: true,
 	});
 
+	game.settings.register("dice-calculator", "enableDiceTray", {
+		name: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.name"),
+		hint: game.i18n.localize("DICE_TRAY.SETTINGS.enableDiceTray.hint"),
+		scope: "user",
+		config: true,
+		default: true,
+		type: Boolean,
+		requiresReload: true
+	});
+
 	game.settings.register("dice-calculator", "hideAdv", {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.hideAdv.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.hideAdv.hint"),

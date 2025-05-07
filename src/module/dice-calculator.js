@@ -55,6 +55,8 @@ async function togglePopout() {
 }
 
 Hooks.on("renderChatLog", async (chatlog, html, data) => {
+	const enableTray = game.settings.get("dice-calculator", "enableDiceTray");
+	if (!enableTray) return;
 	// Prepare the dice tray for rendering.
 	let chatForm = html.querySelector(".chat-form");
 	const options = {
