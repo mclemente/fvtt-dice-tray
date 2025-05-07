@@ -1,3 +1,4 @@
+import { DiceRowSettings } from "./forms/DiceRowSettings.js";
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -53,6 +54,10 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 	async _prepareContext(_options) {
 		return {
 			dicerows: game.settings.get("dice-calculator", "diceRows"),
+			settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
+				obj[key] = game.settings.get("dice-calculator", key);
+				return obj;
+			}, {})
 		};
 	}
 
