@@ -88,6 +88,22 @@ export function registerSettings() {
 		type: Object
 	});
 
+	game.settings.register("dice-calculator", "rightClickCommand", {
+		name: "DICE_TRAY.SETTINGS.rightClickCommand.name",
+		hint: "DICE_TRAY.SETTINGS.rightClickCommand.hint",
+		scope: "world",
+		config: true,
+		type: new foundry.data.fields.StringField({
+			blank: false,
+			choices: {
+				decrease: "DICE_TRAY.SETTINGS.rightClickCommand.options.decrease",
+				roll: "DICE_TRAY.SETTINGS.rightClickCommand.options.roll"
+			},
+			initial: "decrease"
+		}),
+		onChange: (v) => { CONFIG.DICETRAY._rightClickCommand = v; }
+	});
+
 	for (const [key, data] of Object.entries(CONFIG.DICETRAY.settings)) {
 		game.settings.register("dice-calculator", key, foundry.utils.mergeObject(
 			{

@@ -78,6 +78,14 @@
 					"all": "All Controls"
 				}
 			},
+			"rightClickCommand": {
+				"name": "Right Click Command",
+				"hint": "Sets which behavior right-clicking a dice button should have.",
+				"options": {
+					"decrease": "Default (Decrease Dice)",
+					"roll": "Roll One Dice"
+				}
+			},
 			"SWADE": {
 				"wildDieBehavior": {
 					"name": "Use Dice Pool for Wild Button",

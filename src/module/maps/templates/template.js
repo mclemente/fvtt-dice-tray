@@ -1,4 +1,6 @@
 export default class TemplateDiceMap {
+	_rightClickCommand;
+
 	/** Unmark the KH/KL buttons if a roll is made */
 	removeAdvOnRoll = true;
 
@@ -83,6 +85,11 @@ export default class TemplateDiceMap {
 		};
 	}
 
+	get rightClickCommand() {
+		this._rightClickCommand ??= game.settings.get("dice-calculator", "rightClickCommand");
+		return this._rightClickCommand;
+	}
+
 	/**
 	 * List of additional settings to be registered during the i18nInit hook.
 	 */
@@ -92,6 +99,10 @@ export default class TemplateDiceMap {
 
 	get textarea() {
 		return document.querySelector("textarea.chat-input");
+	}
+
+	roll(formula) {
+		Roll.create(formula).toMessage();
 	}
 
 	/**
@@ -107,12 +118,9 @@ export default class TemplateDiceMap {
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
-			// Taken from FoundryVTT V13's keyEvent function
-			const newEvent = document.createEvent("Event");
-			newEvent.initEvent("keydown", true, true);
-			newEvent.keyCode = 13;
-			newEvent.key = event.code = "Enter";
-			this.textarea.dispatchEvent(newEvent);
+			this.roll(this.textarea.value.replace(/(\/r|\/gmr|\/br|\/sr) /, ""));
+			this.reset();
+			this.textarea.value = "";
 		});
 	}
 
@@ -132,7 +140,15 @@ export default class TemplateDiceMap {
 			button.addEventListener("contextmenu", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
-				CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
+				switch (this.rightClickCommand) {
+					case "roll": {
+						this.roll(dataset.formula);
+						break;
+					}
+					case "decrease":
+					default:
+						CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
+				}
 			});
 		});
 
@@ -177,6 +193,9 @@ export default class TemplateDiceMap {
 		});
 	}
 
+	/**
+	 * Clears the dice tray's orange markers
+	 */
 	reset() {
 		TemplateDiceMap._resetTray(ui.chat.element);
 		TemplateDiceMap._resetTray(ui.sidebar.popouts.chat?.element);
@@ -337,7 +356,10 @@ export default class TemplateDiceMap {
 	updateChatDice(dataset, direction, html) {
 		const chat = this.textarea;
 		let currFormula = String(chat.value);
-		if (direction === "sub" && currFormula === "") return;
+		if (direction === "sub" && currFormula === "") {
+			this.reset();
+			return;
+		}
 		let rollPrefix = this._getRollMode(html);
 		let qty = 0;
 		let dice = "";
@@ -428,7 +450,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Gets the selected roll mode
+	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the rollMode is picked up during Roll#toMessage
 	 * @param {HTMLElement} html
 	 * @returns {String}
 	 */
