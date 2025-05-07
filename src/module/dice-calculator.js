@@ -94,4 +94,5 @@ Hooks.on("getSceneControlButtons", (controls) => {
 	else Object.keys(controls).forEach((c) => addButton(controls[c]));
 });
 
+// Called when a message is sent through chat (be it Enter key or the Roll button)
 Hooks.on("chatMessage", () => CONFIG.DICETRAY.reset());

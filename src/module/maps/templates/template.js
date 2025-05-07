@@ -178,9 +178,9 @@ export default class TemplateDiceMap {
 	}
 
 	reset() {
-		CONFIG.DICETRAY._resetTray(ui.chat.element);
-		CONFIG.DICETRAY._resetTray(ui.sidebar.popouts.chat?.element);
-		CONFIG.DICETRAY._resetTray(CONFIG.DICETRAY.popout?.element);
+		TemplateDiceMap._resetTray(ui.chat.element);
+		TemplateDiceMap._resetTray(ui.sidebar.popouts.chat?.element);
+		TemplateDiceMap._resetTray(CONFIG.DICETRAY.popout?.element);
 	}
 
 	/**
@@ -266,15 +266,15 @@ export default class TemplateDiceMap {
 		}
 	}
 
-	_resetTray(html) {
+	static _resetTray(html) {
 		if (!html) return;
-		html.querySelector(".dice-tray__input").value = 0;
+		if (html.querySelector(".dice-tray__input")) html.querySelector(".dice-tray__input").value = 0;
 		for (const flag of html.querySelectorAll(".dice-tray__flag")) {
 			flag.textContent = "";
 			flag.classList.add("hide");
 		}
 		if (this.removeAdvOnRoll) {
-			html.querySelector(".dice-tray__ad").classList.remove("active");
+			html.querySelector(".dice-tray__ad")?.classList?.remove("active");
 		}
 	}
 
