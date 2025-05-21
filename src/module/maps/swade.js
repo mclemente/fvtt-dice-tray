@@ -42,14 +42,14 @@ export default class SWADEDiceMap extends GenericDiceMap {
 		advantage.addEventListener("click", (event) => {
 			event.preventDefault();
 			advantage.classList.toggle("active");
-			if (!advantage.classList.has("active")) {
+			if (!advantage.classList.contains("active")) {
 				disadvantage.classList.add("active");
 			}
 		});
 		disadvantage.addEventListener("click", (event) => {
 			event.preventDefault();
 			disadvantage.classList.toggle("active");
-			if (disadvantage.classList.has("active")) {
+			if (disadvantage.classList.contains("active")) {
 				advantage.classList.remove("active");
 			}
 		});
@@ -57,9 +57,9 @@ export default class SWADEDiceMap extends GenericDiceMap {
 
 	rawFormula(qty, dice, html) {
 		let roll_suffix = "";
-		let add_wild = html.querySelector(".dice-tray__advantage").classList.has("active");
+		let add_wild = html.querySelector(".dice-tray__advantage").classList.contains("active");
 
-		if (html.querySelector(".dice-tray__disadvantage").classList.has("active")) {
+		if (html.querySelector(".dice-tray__disadvantage").classList.contains("active")) {
 			roll_suffix = "x=";
 		}
 
