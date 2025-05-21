@@ -1,4 +1,3 @@
-@import "sidebar";
 @import "popout";
 @import "grimwild";
 
@@ -6,9 +5,21 @@ $white: #fff;
 $orange: #ff6400;
 $green: #0a9843;
 
+#ui-right,
+#sidebar-content {
+	.dice-tray {
+		pointer-events: all;
+	}
+}
+
+#chat-popout,
+#sidebar-content {
+	.dice-tray {
+		margin-top: -6px;
+	}
+}
+
 .dice-tray {
-	margin-top: -6px;
-	width: var(--sidebar-width);
 	.dice-tray__stacked {
 		height: 30px;
 		button {
