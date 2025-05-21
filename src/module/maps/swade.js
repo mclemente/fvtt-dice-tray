@@ -42,16 +42,12 @@ export default class SWADEDiceMap extends GenericDiceMap {
 		advantage.addEventListener("click", (event) => {
 			event.preventDefault();
 			advantage.classList.toggle("active");
-			if (!advantage.classList.contains("active")) {
-				disadvantage.classList.add("active");
-			}
+			disadvantage.classList.toggle("active", advantage.classList.contains("active"));
 		});
 		disadvantage.addEventListener("click", (event) => {
 			event.preventDefault();
 			disadvantage.classList.toggle("active");
-			if (disadvantage.classList.contains("active")) {
-				advantage.classList.remove("active");
-			}
+			if (!disadvantage.classList.contains("active")) advantage.classList.remove("active");
 		});
 	}
 
