@@ -197,8 +197,7 @@ export default class TemplateDiceMap {
 	 * Clears the dice tray's orange markers
 	 */
 	reset() {
-		TemplateDiceMap._resetTray(ui.chat.element);
-		TemplateDiceMap._resetTray(ui.sidebar.popouts.chat?.element);
+		TemplateDiceMap._resetTray(this.element);
 		TemplateDiceMap._resetTray(CONFIG.DICETRAY.popout?.element);
 	}
 
