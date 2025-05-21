@@ -32,6 +32,7 @@ Hooks.once("i18nInit", () => {
 			}
 		}
 	});
+	CONFIG.DICETRAY.enabled = game.settings.get("dice-calculator", "enableDiceTray");
 });
 
 Hooks.once("ready", () => {
@@ -54,27 +55,42 @@ async function togglePopout() {
 	else await CONFIG.DICETRAY.popout.render(true);
 }
 
-Hooks.on("renderChatLog", async (chatlog, html, data, opt) => {
-	if (!opt.isFirstRender) return;
-	const enableTray = game.settings.get("dice-calculator", "enableDiceTray");
-	if (!enableTray) return;
+Hooks.once("renderChatLog", async (chatlog, html, data, opt) => {
+	if (!CONFIG.DICETRAY.enabled) return;
 	// Prepare the dice tray for rendering.
-	let chatForm = html.querySelector(".chat-form");
-	const options = {
+	const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", {
 		dicerows: game.settings.get("dice-calculator", "diceRows"),
 		settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
 			obj[key] = game.settings.get("dice-calculator", key);
 			return obj;
 		}, {})
-	};
-
-	const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", options);
+	});
 
 	if (content.length > 0) {
-		chatForm.insertAdjacentHTML("afterend", content);
-		CONFIG.DICETRAY.applyListeners(chatForm.nextElementSibling);
-		CONFIG.DICETRAY.applyLayout(html);
+		const inputElement = document.getElementById("chat-message");
+		inputElement.insertAdjacentHTML("afterend", content);
+		CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
+		CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
+		CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
 	}
+});
+
+function moveDiceTray() {
+	const inputElement = document.getElementById("chat-message");
+	inputElement.insertAdjacentElement("afterend", CONFIG.DICETRAY.element);
+}
+
+Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
+	if (!chatlog.isPopout) return;
+	moveDiceTray();
+});
+Hooks.on("closeChatLog", (chatlog, html, data, opt) => {
+	if (!chatlog.isPopout) return;
+	moveDiceTray();
+});
+Hooks.on("collapseSidebar", (sidebar, expanded) => {
+	if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
+	moveDiceTray();
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
