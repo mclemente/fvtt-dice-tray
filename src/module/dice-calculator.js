@@ -88,6 +88,10 @@ Hooks.on("closeChatLog", (chatlog, html, data, opt) => {
 	if (!chatlog.isPopout) return;
 	moveDiceTray();
 });
+Hooks.on("activateChatLog", (chatlog) => {
+	if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
+	moveDiceTray();
+});
 Hooks.on("collapseSidebar", (sidebar, expanded) => {
 	if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
 	moveDiceTray();
