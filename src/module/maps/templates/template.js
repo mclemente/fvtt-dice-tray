@@ -171,6 +171,10 @@ export default class TemplateDiceMap {
 		// Handle +/- buttons near the modifier input.
 		const mathButtons = html.querySelectorAll("button.dice-tray__math");
 		mathButtons?.forEach((button) => {
+			// Avoids moving focus to the button
+			button.addEventListener("pointerdown", (event) => {
+				event.preventDefault();
+			});
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				let modVal = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
@@ -240,6 +244,10 @@ export default class TemplateDiceMap {
 	_extraButtonsLogic(html) {
 		const buttons = html.querySelectorAll(".dice-tray__ad");
 		for (const button of buttons) {
+			// Avoids moving focus to the button
+			button.addEventListener("pointerdown", (event) => {
+				event.preventDefault();
+			});
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
