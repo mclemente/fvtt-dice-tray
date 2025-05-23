@@ -80,7 +80,7 @@ export class DiceRowSettings extends FormApplication {
 			this.render(false);
 		});
 		html.find("button[name=add]").on("click", async (event) => {
-			if (Object.keys(this.diceRows[0]).length >= 7) {
+			if (html.find("input[name=compactMode]").is(":checked") && Object.keys(this.diceRows[0]).length >= 7) {
 				return ui.notifications.notify("You're in Compact Mode and have too many dice. Edit or delete an existing dice before adding any more.");
 			}
 			new DiceCreator({
