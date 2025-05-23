@@ -32,7 +32,42 @@ Hooks.once("i18nInit", () => {
 			}
 		}
 	});
-	CONFIG.DICETRAY.enabled = game.settings.get("dice-calculator", "enableDiceTray");
+	if (game.settings.get("dice-calculator", "enableDiceTray")) {
+		Hooks.once("renderChatLog", async (chatlog, html, data, opt) => {
+			// Prepare the dice tray for rendering.
+			const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", {
+				dicerows: game.settings.get("dice-calculator", "diceRows"),
+				settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
+					obj[key] = game.settings.get("dice-calculator", key);
+					return obj;
+				}, {})
+			});
+
+			if (content.length > 0) {
+				const inputElement = document.getElementById("chat-message");
+				inputElement.insertAdjacentHTML("afterend", content);
+				CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
+				CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
+				CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
+			}
+		});
+		Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
+			if (!chatlog.isPopout) return;
+			moveDiceTray();
+		});
+		Hooks.on("closeChatLog", (chatlog, html, data, opt) => {
+			if (!chatlog.isPopout) return;
+			moveDiceTray();
+		});
+		Hooks.on("activateChatLog", (chatlog) => {
+			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
+			moveDiceTray();
+		});
+		Hooks.on("collapseSidebar", (sidebar, expanded) => {
+			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
+			moveDiceTray();
+		});
+	}
 });
 
 Hooks.once("ready", () => {
@@ -55,47 +90,10 @@ async function togglePopout() {
 	else await CONFIG.DICETRAY.popout.render(true);
 }
 
-Hooks.once("renderChatLog", async (chatlog, html, data, opt) => {
-	if (!CONFIG.DICETRAY.enabled) return;
-	// Prepare the dice tray for rendering.
-	const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", {
-		dicerows: game.settings.get("dice-calculator", "diceRows"),
-		settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
-			obj[key] = game.settings.get("dice-calculator", key);
-			return obj;
-		}, {})
-	});
-
-	if (content.length > 0) {
-		const inputElement = document.getElementById("chat-message");
-		inputElement.insertAdjacentHTML("afterend", content);
-		CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
-		CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
-		CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
-	}
-});
-
 function moveDiceTray() {
 	const inputElement = document.getElementById("chat-message");
 	inputElement.insertAdjacentElement("afterend", CONFIG.DICETRAY.element);
 }
-
-Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
-	if (!chatlog.isPopout) return;
-	moveDiceTray();
-});
-Hooks.on("closeChatLog", (chatlog, html, data, opt) => {
-	if (!chatlog.isPopout) return;
-	moveDiceTray();
-});
-Hooks.on("activateChatLog", (chatlog) => {
-	if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
-	moveDiceTray();
-});
-Hooks.on("collapseSidebar", (sidebar, expanded) => {
-	if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
-	moveDiceTray();
-});
 
 Hooks.on("getSceneControlButtons", (controls) => {
 	const popout = game.settings.get("dice-calculator", "popout");
