@@ -16,15 +16,14 @@ export class DiceCreator extends FormApplication {
 	}
 
 	getData(options) {
-		const { dice, settings } = this.object;
-		const nextRow = this.object.diceRows.findIndex((row) => Object.keys(row).length < 7);
-		const rowIndex = Math.clamp(nextRow, 0, this.object.diceRows.length) + 1;
+		const { dice, diceRows, settings } = this.object;
+		const nextRow = diceRows.findIndex((row) => Object.keys(row).length < 7);
+		const rowIndex = (nextRow !== -1 ? nextRow : diceRows.length) + 1;
 		return {
 			dice,
 			diceRows: this.object.diceRows, // this.diceRows,
 			value: dice?.row ?? rowIndex,
-			nextRow: rowIndex,
-			maxRows: rowIndex + 1,
+			maxRows: rowIndex,
 			settings
 		};
 	}

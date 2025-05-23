@@ -27,6 +27,7 @@
 			max="{{maxRows}}"
 			steps="1"
 			required
+			{{disabled (eq value maxRows)}}
 		/>
 		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
 	</div>
