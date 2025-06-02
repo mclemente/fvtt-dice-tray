@@ -22,6 +22,8 @@
 		"KeepLowest": "Tieni il più basso",
 		"Roll": "Tira",
 
+		"Optional": "Opzionale",
+
 		"DiceCreator": {
 			"CreateDice": "Crea Dadi",
 			"Formula": {
@@ -37,21 +39,20 @@
 			},
 			"Label": {
 				"name": "Etichetta",
-				"hint": "(Opzionale) L'etichetta mostrata in caso il dado non abbia immagine."
+				"hint": "L'etichetta mostrata in caso il dado non abbia immagine."
 			},
 			"Tooltip": {
 				"name": "Suggerimento",
-				"hint": "(Opzionale) Il suggerimento mostrato quando si passa con il mouse sul pulsante. Impostazioni predefinite della formula."
+				"hint": "Il suggerimento mostrato quando si passa con il mouse sul pulsante. Impostazioni predefinite della formula."
 			},
 			"Color": {
 				"name": "Colore",
-				"hint": "(Opzionale) Il colore che riempie l'immagine. Il valore predefinito è bianco."
+				"hint": "Il colore che riempie l'immagine."
 			}
 		},
 
 		"DiceRows": {
-			"Instruction1": "Fare clic su qualsiasi dado per modificarlo.",
-			"Instruction2": "Clic con il pulsante destro del mouse su qualsiasi dado per eliminarlo."
+			"Instruction1": "Fare clic su qualsiasi dado per modificarlo. Clic con il pulsante destro del mouse su qualsiasi dado per eliminarlo."
 		},
 
 		"KEYBINGINDS": {
@@ -67,7 +68,7 @@
 				"name": "Auto Apertura Popout",
 				"hint": "Apre automaticamente il popout Dice Tray al caricamento della pagina."
 			},
-      "enableDiceTray": {
+			"enableDiceTray": {
 				"name": "Abilita Scorciatoia Dadi",
 				"hint": "Abilita la visualizzazione di una scorciatoia per i dadi sotto l'area dei messaggi della chat. Questa è un'impostazione utente per i giocatori che non la desiderano."
 			},
@@ -78,7 +79,7 @@
 					"all": "Tutti i controlli"
 				}
 			},
-      "rightClickCommand": {
+			"rightClickCommand": {
 				"name": "Comando Tasto Destro",
 				"hint": "Imposta il comportamento da adottare quando si fa clic con il pulsante destro del mouse su un pulsante di un dado.",
 				"options": {

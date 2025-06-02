@@ -1,94 +1,94 @@
 {
-  "DICE_TRAY": {
-    "Adv": "Van",
-    "Advantage": "Vantagem (kh)",
-    "DiceTray": "Bandeja de Dados",
-    "Dis": "Des",
-    "Disadvantage": "Desvantagem (kl)",
-    "FateDice": "Dado Fate",
-    "For": "For",
-    "Fortune": "Fortuna (kh)",
-    "Misfortune": "Infortúnio (kl)",
-    "Mis": "Inf",
-    "Wild": "Selvagem",
-    "Ace": "Ás",
-    "WildDie": "Dado Selvagem",
-    "ExplodingDie": "Dado Explosivo",
-    "PlusOneDie": "+1d",
-    "MinusOneDie": "-1d",
-    "PlusOneDieLong": "Aumentar Tipo de Dado",
-    "MinusOneDieLong": "Diminuir Tipo de Dado",
-    "KeepHighest": "Manter Maior",
-    "KeepLowest": "Manter Menor",
-    "del": "Apagar",
-    "clear": "Limpar",
-    "Calculator": "Calculadora",
-    "DiceCreator": {
-      "CreateDice": "Criar Dado",
-      "Formula": {
-        "name": "Fórmula",
-        "hint": "A fórmula que será adicionada ao chat."
-      },
-      "Row": {
-        "name": "Linha",
-        "hint": "A linha em que o botão será colocado."
-      },
-      "Image": {
-        "name": "Imagem"
-      },
-      "Label": {
-        "name": "Nome",
-        "hint": "(Opcional) O nome mostrado caso o dado não tenha imagem."
-      },
-      "Tooltip": {
-        "name": "Dica",
-        "hint": "(Opcional) A dica de ferramenta mostrada ao passar o mouse sobre o botão. O padrão é a Fórmula."
-      },
-      "Color": {
-        "name": "Cor",
-        "hint": "(Opcional) A cor que preenche a imagem. O padrão é branco."
-      }
-    },
-    "DiceRows": {
-      "Instruction1": "Clique em qualquer botão de dados para editá-lo.",
-      "Instruction2": "Clique com o botão direito em qualquer botão de dado para excluí-lo."
-    },
-    "KEYBINGINDS": {
-      "popout": {
-        "name": "Alternar Popout do Dice Tray"
-      }
-    },
-    "SETTINGS": {
-      "DiceCalculatorSettings": "Configurações da Calculadora",
-      "DiceCreator": "Criador de Dados",
-      "DiceRowSettings": "Configuração das Linhas de Dados",
-      "GeneralSettings": "Configurações Gerais",
-      "General": "Geral",
-      "autoOpenPopout": {
-        "name": "Abrir Popout Automaticamente",
-        "hint": "Abre o popout do Dice Tray automaticamente quando a página carregar."
-      },
-      "enableDiceTray": {
-        "name": "Habilitar Bandeja de Dados",
-        "hint": "Exibe uma bandeja de dados abaixo da caixa de texto do chat."
-      },
-      "enableDiceCalculator": {
-        "name": "Habilitar Calculadora de Dados",
-        "hint": "Exibe uma calculadora ao clicar no ícone de dado próxima à caixa de texto do chat."
-      },
-      "popout": {
-        "name": "Adicionar botão para abrir o popout do Dice Tray",
-        "hint": "Adiciona um botão à barra de controles para alternar o popout do Dice Tray. Você também pode alternar o popout definindo um atalho de teclas.",
-        "options": {
-          "all": "Todos os Controles"
-        }
-      },
-      "SWADE": {
-        "wildDieBehavior": {
-          "name": "Usar \"Dice Pool\" para o botão Selvagem",
-          "hint": "Clicar no mesmo dado enquanto Selvagem está ativo irá adicionar dados à rolagem em vez de aumentar o dado atual na lista."
-        }
-      }
-    }
-  }
+	"DICE_TRAY": {
+		"Adv": "Van",
+		"Advantage": "Vantagem (kh)",
+		"DiceTray": "Bandeja de Dados",
+		"Dis": "Des",
+		"Disadvantage": "Desvantagem (kl)",
+		"FateDice": "Dado Fate",
+		"For": "For",
+		"Fortune": "Fortuna (kh)",
+		"Misfortune": "Infortúnio (kl)",
+		"Mis": "Inf",
+		"Wild": "Selvagem",
+		"Ace": "Ás",
+		"WildDie": "Dado Selvagem",
+		"ExplodingDie": "Dado Explosivo",
+		"PlusOneDie": "+1d",
+		"MinusOneDie": "-1d",
+		"PlusOneDieLong": "Aumentar Tipo de Dado",
+		"MinusOneDieLong": "Diminuir Tipo de Dado",
+		"KeepHighest": "Manter Maior",
+		"KeepLowest": "Manter Menor",
+		"del": "Apagar",
+		"clear": "Limpar",
+		"Calculator": "Calculadora",
+		"Optional": "Opcional",
+		"DiceCreator": {
+			"CreateDice": "Criar Dado",
+			"Formula": {
+				"name": "Fórmula",
+				"hint": "A fórmula que será adicionada ao chat."
+			},
+			"Row": {
+				"name": "Linha",
+				"hint": "A linha em que o botão será colocado."
+			},
+			"Image": {
+				"name": "Imagem"
+			},
+			"Label": {
+				"name": "Nome",
+				"hint": "O nome mostrado caso o dado não tenha imagem."
+			},
+			"Tooltip": {
+				"name": "Dica",
+				"hint": "A dica de ferramenta mostrada ao passar o mouse sobre o botão. O padrão é a Fórmula."
+			},
+			"Color": {
+				"name": "Cor",
+				"hint": "A cor que preenche a imagem."
+			}
+		},
+		"DiceRows": {
+			"Instruction1": "Clique em qualquer botão de dados para editá-lo. Clique com o botão direito em qualquer botão de dado para excluí-lo."
+		},
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Alternar Popout do Dice Tray"
+			}
+		},
+		"SETTINGS": {
+			"DiceCalculatorSettings": "Configurações da Calculadora",
+			"DiceCreator": "Criador de Dados",
+			"DiceRowSettings": "Configuração das Linhas de Dados",
+			"GeneralSettings": "Configurações Gerais",
+			"General": "Geral",
+			"autoOpenPopout": {
+				"name": "Abrir Popout Automaticamente",
+				"hint": "Abre o popout do Dice Tray automaticamente quando a página carregar."
+			},
+			"enableDiceTray": {
+				"name": "Habilitar Bandeja de Dados",
+				"hint": "Exibe uma bandeja de dados abaixo da caixa de texto do chat."
+			},
+			"enableDiceCalculator": {
+				"name": "Habilitar Calculadora de Dados",
+				"hint": "Exibe uma calculadora ao clicar no ícone de dado próxima à caixa de texto do chat."
+			},
+			"popout": {
+				"name": "Adicionar botão para abrir o popout do Dice Tray",
+				"hint": "Adiciona um botão à barra de controles para alternar o popout do Dice Tray. Você também pode alternar o popout definindo um atalho de teclas.",
+				"options": {
+					"all": "Todos os Controles"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Usar \"Dice Pool\" para o botão Selvagem",
+					"hint": "Clicar no mesmo dado enquanto Selvagem está ativo irá adicionar dados à rolagem em vez de aumentar o dado atual na lista."
+				}
+			}
+		}
+	}
 }

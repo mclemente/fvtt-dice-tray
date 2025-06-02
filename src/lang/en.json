@@ -22,6 +22,8 @@
 		"KeepLowest": "Keep Lowest",
 		"Roll": "Roll",
 
+		"Optional": "Optional",
+
 		"DiceCreator": {
 			"CreateDice": "Create Dice",
 			"Formula": {
@@ -37,21 +39,20 @@
 			},
 			"Label": {
 				"name": "Label",
-				"hint": "(Optional) The label shown in case the dice has no image."
+				"hint": "The label shown in case the dice has no image."
 			},
 			"Tooltip": {
 				"name": "Tooltip",
-				"hint": "(Optional) The tooltip shown when hovering over the button. Defaults to the Formula."
+				"hint": "The tooltip shown when hovering over the button. Defaults to the Formula."
 			},
 			"Color": {
 				"name": "Color",
-				"hint": "(Optional) The color that fills the image. Defaults to white."
+				"hint": "The color that fills the image."
 			}
 		},
 
 		"DiceRows": {
-			"Instruction1": "Click any dice button to edit it.",
-			"Instruction2": "Right-Click any dice button to delete it."
+			"Instruction1": "Click any dice button to edit it. Right-Click any dice button to delete it."
 		},
 
 		"KEYBINGINDS": {

@@ -1,47 +1,32 @@
-<form>
-    <div class="sidebar-preview">
-        <div>
-            <p>{{localize "DICE_TRAY.DiceRows.Instruction1"}}</p>
-            <p>{{localize "DICE_TRAY.DiceRows.Instruction2"}}</p>
-        </div>
+<div>
+    <fieldset>
         <div class="form-group">
-            <label>Compact Mode</label>
+            <label for="compactMode">Compact Mode</label>
             <div class="form-fields">
-                <input type="checkbox" name="compactMode" {{checked settings.compactMode}}>
+                <input id="compactMode" type="checkbox" name="compactMode" {{checked settings.compactMode}}>
             </div>
             <p class="hint">Disables any additional dice rows and merges the original two rows together.</p>
         </div>
         <div class="form-group">
-            <label>Hide Number Input</label>
+            <label for="hideNumberInput">Hide Number Input</label>
             <div class="form-fields">
-                <input type="checkbox" name="hideNumberInput" {{checked settings.hideNumberInput}} {{disabled (not settings.compactMode)}}>
+                <input id="hideNumberInput" type="checkbox" name="hideNumberInput" {{checked settings.hideNumberInput}} {{disabled (not settings.compactMode)}}>
             </div>
         </div>
         <div class="form-group">
-            <label>Hide Roll Button</label>
+            <label for="hideRollButton">Hide Roll Button</label>
             <div class="form-fields">
-                <input type="checkbox" name="hideRollButton" {{checked settings.hideRollButton}}>
+                <input id="hideRollButton" type="checkbox" name="hideRollButton" {{checked settings.hideRollButton}}>
             </div>
         </div>
-        <h2>Preview</h2>
-        <section class="flexcol">
+    </fieldset>
+    <fieldset>
+        <legend>{{localize "Preview"}}</legend>
+        <div>
+            <p class="hint">{{localize "DICE_TRAY.DiceRows.Instruction1"}}</p>
+        </div>
+        <section class="sidebar-preview flexcol">
             {{>"modules/dice-calculator/templates/tray.html" dicerows=diceRows settings=settings }}
         </section>
-    </div>
-    <div class="form-group">
-        <button type="button" name="add">
-			<i class="fas fa-plus"></i> {{localize "DICE_TRAY.DiceCreator.CreateDice"}}
-		</button>
-        <button type="submit" name="save">
-			<i class="fas fa-save"></i> {{localize "SETTINGS.Save"}}
-		</button>
-    </div>
-    <div class="form-group">
-		<button type="button" name="reset">
-			<i class="fas fa-undo"></i> {{localize "SETTINGS.Reset"}}
-		</button>
-		<button type="button" name="cancel">
-			<i class="fas fa-ban"></i> {{localize "Cancel"}}
-		</button>
-    </div>
-</form>
+    </fieldset>
+</div>

@@ -1,70 +1,71 @@
 {
-  "DICE_TRAY": {
-    "Adv": "Ven",
-    "Advantage": "Ventaja (kh)",
-    "Dis": "Des",
-    "Disadvantage": "Desventaja (kl)",
-    "FateDice": "Dados Fate",
-    "For": "For",
-    "Fortune": "Fortuna (kh)",
-    "Misfortune": "Desventura (kl)",
-    "Mis": "Des",
-    "Wild": "Salvaje",
-    "Ace": "Explota",
-    "WildDie": "Dado dalvaje",
-    "ExplodingDie": "Dado explosivo",
-    "PlusOneDie": "+1d",
-    "MinusOneDie": "-1d",
-    "PlusOneDieLong": "Aumentar tipo de dado",
-    "MinusOneDieLong": "Disminuir tipo de dado",
-    "KeepHighest": "Mantener más alto",
-    "KeepLowest": "Mantener el más bajo",
-    "del": "borrar",
-    "clear": "limpiar",
-    "Calculator": "Calculadora",
-    "DiceCreator": {
-      "CreateDice": "Crear dados",
-      "Formula": {
-        "name": "Fórmula",
-        "hint": "La fórmula que se agregará al chat."
-      },
-      "Row": {
-        "name": "Fila",
-        "hint": "La fila en la que se colocará el botón."
-      },
-      "Image": {
-        "name": "Imagen"
-      },
-      "Label": {
-        "name": "Nombre",
-        "hint": "(Opcional) El nombre que se muestra en caso de que el dado no tenga imagen."
-      },
-      "Tooltip": {
-        "name": "Información",
-        "hint": "(Opcional) La información que se muestra al pasar el cursor sobre el botón. El valor predeterminado es la Fórmula."
-      },
-      "Color": {
-        "name": "Color",
-        "hint": "(Opcional) El color que llena la imagen. El valor predeterminado es blanco."
-      }
-    },
-    "DiceRows": {
-      "Instruction1": "Haga clic en cualquier botón de dado para editarlo.",
-      "Instruction2": "Haga clic derecho en cualquier botón de dado para eliminarlo."
-    },
-    "SETTINGS": {
-      "DiceCreator": "Creador de dados",
-      "DiceRowSettings": "Configuración de filas de dados",
-      "GeneralSettings": "Configuración general",
-      "General": "General",
-      "enableDiceTray": {
-        "name": "Habilitar bandeja de dados",
-        "hint": "Habilite mostrar una bandeja de dados debajo del área de mensajes de chat (requiere recarga)."
-      },
-      "enableDiceCalculator": {
-        "name": "Habilitar Dice Calculator",
-        "hint": "Habilita la calculadora de dados al hacer clic en el dado d20 junto al chat (requiere recargar)"
-      }
-    }
-  }
+	"DICE_TRAY": {
+		"Adv": "Ven",
+		"Advantage": "Ventaja (kh)",
+		"Dis": "Des",
+		"Disadvantage": "Desventaja (kl)",
+		"FateDice": "Dados Fate",
+		"For": "For",
+		"Fortune": "Fortuna (kh)",
+		"Misfortune": "Desventura (kl)",
+		"Mis": "Des",
+		"Wild": "Salvaje",
+		"Ace": "Explota",
+		"WildDie": "Dado dalvaje",
+		"ExplodingDie": "Dado explosivo",
+		"PlusOneDie": "+1d",
+		"MinusOneDie": "-1d",
+		"PlusOneDieLong": "Aumentar tipo de dado",
+		"MinusOneDieLong": "Disminuir tipo de dado",
+		"KeepHighest": "Mantener más alto",
+		"KeepLowest": "Mantener el más bajo",
+		"del": "borrar",
+		"clear": "limpiar",
+		"Calculator": "Calculadora",
+
+		"Optional": "Opcional",
+		"DiceCreator": {
+			"CreateDice": "Crear dados",
+			"Formula": {
+				"name": "Fórmula",
+				"hint": "La fórmula que se agregará al chat."
+			},
+			"Row": {
+				"name": "Fila",
+				"hint": "La fila en la que se colocará el botón."
+			},
+			"Image": {
+				"name": "Imagen"
+			},
+			"Label": {
+				"name": "Nombre",
+				"hint": "El nombre que se muestra en caso de que el dado no tenga imagen."
+			},
+			"Tooltip": {
+				"name": "Información",
+				"hint": "La información que se muestra al pasar el cursor sobre el botón. El valor predeterminado es la Fórmula."
+			},
+			"Color": {
+				"name": "Color",
+				"hint": "El color que llena la imagen."
+			}
+		},
+		"DiceRows": {
+			"Instruction1": "Haga clic en cualquier botón de dado para editarlo. Haga clic derecho en cualquier botón de dado para eliminarlo."
+		},
+		"SETTINGS": {
+			"DiceCreator": "Creador de dados",
+			"DiceRowSettings": "Configuración de filas de dados",
+			"GeneralSettings": "Configuración general",
+			"General": "General",
+			"enableDiceTray": {
+				"name": "Habilitar bandeja de dados",
+				"hint": "Habilite mostrar una bandeja de dados debajo del área de mensajes de chat (requiere recarga)."
+			},
+			"enableDiceCalculator": {
+				"name": "Habilitar Dice Calculator",
+				"hint": "Habilita la calculadora de dados al hacer clic en el dado d20 junto al chat (requiere recargar)"
+			}
+		}
+	}
 }

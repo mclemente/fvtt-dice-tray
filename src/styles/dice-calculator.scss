@@ -190,7 +190,6 @@ $green: #0a9843;
 	}
 }
 .dice-tray-row-settings {
-	min-width: 320px;
 	.sidebar-preview {
 		display: flex;
 		flex-direction: column;
@@ -198,9 +197,6 @@ $green: #0a9843;
 		justify-content: flex-start;
 		width: var(--sidebar-width);
 		margin: auto;
-		section {
-			background-color: #000;
-		}
 	}
 	th {
 		font-size: var(--font-size-16);

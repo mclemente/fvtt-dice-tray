@@ -1,69 +1,73 @@
-<form>
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Formula.name"}}</label>
-		<input type="text" name="dice.key" value="{{dice.key}}" required />
-		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
-	</div>
+<div>
+	<fieldset>
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Formula.name"}}</label>
+			<div class="form-fields">
+				<input type="text" name="dice.key" value="{{dice.key}}" required />
+			</div>
+			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
+		</div>
 
-	{{#if settings.compactMode}}
-	<input
-			type="number"
-			name="row"
-			value="{{value}}"
-			min="{{value}}"
-			max="{{maxRows}}"
-			steps="1"
-			required
-			hidden
-		/>
-	{{else}}
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Row.name"}}</label>
+		{{#if settings.compactMode}}
 		<input
-			type="number"
-			name="row"
-			value="{{value}}"
-			min="{{value}}"
-			max="{{maxRows}}"
-			steps="1"
-			required
-			{{disabled (eq value maxRows)}}
-		/>
-		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
-	</div>
-	{{/if}}
+				type="number"
+				name="row"
+				value="{{value}}"
+				min="{{value}}"
+				max="{{maxRows}}"
+				steps="1"
+				required
+				hidden
+			/>
+		{{else}}
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Row.name"}}</label>
+			<div class="form-fields">
+				<input
+					type="number"
+					name="row"
+					value="{{value}}"
+					min="{{value}}"
+					max="{{maxRows}}"
+					steps="1"
+					required
+					{{ifThen (eq value maxRows) "readonly" ""}}
+				/>
+			</div>
+			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
+		</div>
+		{{/if}}
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Image.name"}}</label>
+			<div class="form-fields">
+				<file-picker name="dice.img" value="{{dice.img}}" data-type="image" data-target="img"></file-picker>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>{{localize "DICE_TRAY.Optional"}}</legend>
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Label.name"}}</label>
+			<div class="form-fields">
+				<input type="text" name="dice.label" value="{{dice.label}}" placeholder="{{dice.key}}" />
+			</div>
+			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Label.hint"}}</p>
+		</div>
 
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Image.name"}}</label>
-		{{filePicker type="image" target="img"}}
-		<input type="text" name="dice.img" value="{{dice.img}}">
-	</div>
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Tooltip.name"}}</label>
+			<div class="form-fields">
+				<input type="text" name="dice.tooltip" value="{{dice.tooltip}}" placeholder="{{dice.key}}"/>
+			</div>
+			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Tooltip.hint"}}</p>
+		</div>
 
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Label.name"}}</label>
-		<input type="text" name="dice.label" value="{{dice.label}}" placeholder="{{dice.key}}" />
-		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Label.hint"}}</p>
-	</div>
-
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Tooltip.name"}}</label>
-		<input type="text" name="dice.tooltip" value="{{dice.tooltip}}" placeholder="{{dice.key}}"/>
-		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Tooltip.hint"}}</p>
-	</div>
-
-	<div class="form-group">
-		<label>{{localize "DICE_TRAY.DiceCreator.Color.name"}}</label>
-		{{colorPicker name="dice.color" value=dice.color default="#ffffff"}}
-		<p class="notes">{{localize "DICE_TRAY.DiceCreator.Color.hint"}}</p>
-	</div>
-
-	<div class="form-group">
-		<button type="submit" name="create">
-			<i class="fas fa-save"></i>
-			{{ifThen dice.key (localize "SETTINGS.Save") (localize "DICE_TRAY.DiceCreator.CreateDice")}}
-		</button>
-		<button type="button" name="cancel">
-			<i class="fas fa-ban"></i> {{localize "Cancel"}}
-		</button>
-	</div>
-</form>
+		<div class="form-group">
+			<label>{{localize "DICE_TRAY.DiceCreator.Color.name"}}</label>
+			<div class="form-fields">
+				<color-picker name="dice.color" value="{{dice.color}}"></color-picker>
+			</div>
+			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Color.hint"}}</p>
+		</div>
+	</fieldset>
+</div>

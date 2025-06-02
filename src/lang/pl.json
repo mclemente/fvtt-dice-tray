@@ -22,6 +22,8 @@
 		"KeepLowest": "Zachowaj mniejszy wynik",
 		"Roll": "Rzut",
 
+		"Opcional": "Opcjonalnie",
+
 		"DiceCreator": {
 			"CreateDice": "Utwórz kość",
 			"Formula": {
@@ -37,21 +39,20 @@
 			},
 			"Label": {
 				"name": "Etykieta",
-				"hint": "(Opcjonalnie) Etykieta wyświetlana w przypadku, gdy kostka nie ma obrazu."
+				"hint": "Etykieta wyświetlana w przypadku, gdy kostka nie ma obrazu."
 			},
 			"Tooltip": {
 				"name": "Podpowiedź",
-				"hint": "(Opcjonalnie) Podpowiedź wyświetlana po najechaniu kursorem na przycisk. Domyślnie jest to Formuła."
+				"hint": "Podpowiedź wyświetlana po najechaniu kursorem na przycisk. Domyślnie jest to Formuła."
 			},
 			"Color": {
 				"name": "Kolor",
-				"hint": "(Opcjonalnie) Kolor wypełniający obraz. Domyślnie biały."
+				"hint": "Kolor wypełniający obraz."
 			}
 		},
 
 		"DiceRows": {
-			"Instruction1": "Kliknij dowolny przycisk kostki, aby go edytować.",
-			"Instruction2": "Kliknij prawym przyciskiem myszy dowolny przycisk kostki, aby go usunąć."
+			"Instruction1": "Kliknij dowolny przycisk kostki, aby go edytować. Kliknij prawym przyciskiem myszy dowolny przycisk kostki, aby go usunąć."
 		},
 
 		"KEYBINGINDS": {
