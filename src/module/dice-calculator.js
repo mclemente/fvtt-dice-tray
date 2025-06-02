@@ -32,6 +32,7 @@ Hooks.once("i18nInit", () => {
 		}
 	});
 	if (game.settings.get("dice-calculator", "enableDiceTray")) {
+		Hooks.on("dice-calculator.forceRender", () => CONFIG.DICETRAY.render());
 		Hooks.once("renderChatLog", () => CONFIG.DICETRAY.render());
 		Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
 			if (!chatlog.isPopout) return;

@@ -129,18 +129,21 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	static async #onSubmit(event, form, formData) {
+		let forceRender = false;
 		await Promise.all(
 			DiceRowSettings.settingsKeys.map(async (key) => {
 				const current = game.settings.get("dice-calculator", key);
 				if (current !== this.settings[key]) {
 					await game.settings.set("dice-calculator", key, this.settings[key]);
+					forceRender = true;
 				}
 			})
 		);
 		const current = game.settings.get("dice-calculator", "diceRows");
 		if (JSON.stringify(this.diceRows) !== JSON.stringify(current)) {
 			await game.settings.set("dice-calculator", "diceRows", this.diceRows);
+			forceRender = true;
 		}
-		CONFIG.DICETRAY.render();
+		if (forceRender) Hooks.callAll("dice-calculator.forceRender");
 	}
 }
