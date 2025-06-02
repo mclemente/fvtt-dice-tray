@@ -114,7 +114,8 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	applyLayout(html) {
-		if (this.showExtraButtons) {
+		const disableExtras = game.settings.settings.get("dice-calculator.hideAdv").config && game.settings.get("dice-calculator", "hideAdv");
+		if (this.showExtraButtons && !disableExtras) {
 			this._createExtraButtons(html);
 			this._extraButtonsLogic(html);
 		}

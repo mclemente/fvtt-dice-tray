@@ -72,6 +72,10 @@
 				"name": "Enable Dice Tray",
 				"hint": "Enable showing a dice tray below the chat message area. This is a user setting for players that don't want the tray."
 			},
+			"hideAdv": {
+				"name": "Hide Extra Buttons",
+				"hint": "Hides the KH/KL buttons."
+			},
 			"popout": {
 				"name": "Add button to popout Dice Tray",
 				"hint": "Adds a button on the Controls bar to toggle the Dice Tray popout. You can also toggle the popout by setting a keybinding.",
