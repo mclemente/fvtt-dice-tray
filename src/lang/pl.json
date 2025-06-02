@@ -22,7 +22,7 @@
 		"KeepLowest": "Zachowaj mniejszy wynik",
 		"Roll": "Rzut",
 
-		"Opcional": "Opcjonalnie",
+		"Optional": "Opcjonalnie",
 
 		"DiceCreator": {
 			"CreateDice": "Utwórz kość",
@@ -52,7 +52,7 @@
 		},
 
 		"DiceRows": {
-			"Instruction1": "Kliknij dowolny przycisk kostki, aby go edytować. Kliknij prawym przyciskiem myszy dowolny przycisk kostki, aby go usunąć."
+			"Instruction1": "Kliknij dowolny przycisk kości, aby go edytować. Kliknij prawym przyciskiem myszy dowolny przycisk kości, aby go usunąć."
 		},
 
 		"KEYBINGINDS": {
@@ -71,6 +71,10 @@
 			"enableDiceTray": {
 				"name": "Włącz Dice Tray",
 				"hint": "Włącz wyświetlanie tacki na kości pod obszarem wiadomości czatu. Jest to ustawienie użytkownika dla graczy, którzy nie chcą tej tacki."
+			},
+			"hideAdv": {
+				"name": "Ukryj dodatkowe przyciski",
+				"hint": "Ukrywa przyciski Szczęścia/Nieszczęścia."
 			},
 			"popout": {
 				"name": "Dodaj przycisk do wyskakującego okna Dice Tray",
