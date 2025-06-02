@@ -144,5 +144,6 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			await game.settings.set("dice-calculator", "diceRows", this.diceRows);
 		}
 		if (requiresWorldReload) await SettingsConfig.reloadConfirm({ world: true });
+		CONFIG.DICETRAY.render();
 	}
 }

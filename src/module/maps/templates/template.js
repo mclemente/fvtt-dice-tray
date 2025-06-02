@@ -1,3 +1,5 @@
+import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
+
 export default class TemplateDiceMap {
 	_rightClickCommand;
 
@@ -6,6 +8,8 @@ export default class TemplateDiceMap {
 
 	/** Shows the KH/KL buttons */
 	showExtraButtons = true;
+
+	template = "modules/dice-calculator/templates/tray.html";
 
 	/**
 	 * The formula that will be rendered on the KH/KL buttons
@@ -195,6 +199,26 @@ export default class TemplateDiceMap {
 				CONFIG.DICETRAY.applyModifier(html);
 			});
 		});
+	}
+
+	async render() {
+		const content = await foundry.applications.handlebars.renderTemplate(this.template, {
+			dicerows: game.settings.get("dice-calculator", "diceRows"),
+			settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
+				obj[key] = game.settings.get("dice-calculator", key);
+				return obj;
+			}, {})
+		});
+
+		if (this.rendered) this.element.remove();
+		if (content.length > 0) {
+			const inputElement = document.getElementById("chat-message");
+			inputElement.insertAdjacentHTML("afterend", content);
+			CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
+			CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
+			CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
+		}
+		this.rendered = true;
 	}
 
 	/**

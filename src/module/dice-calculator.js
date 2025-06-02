@@ -1,7 +1,6 @@
 import * as keymaps from "./maps/_module.js";
 
 import { DiceTrayPopOut } from "./dice-tray-popout.js";
-import { DiceRowSettings } from "./forms/DiceRowSettings.js";
 import { KEYS } from "./maps/_keys.js";
 import { registerSettings } from "./settings.js";
 
@@ -33,24 +32,7 @@ Hooks.once("i18nInit", () => {
 		}
 	});
 	if (game.settings.get("dice-calculator", "enableDiceTray")) {
-		Hooks.once("renderChatLog", async (chatlog, html, data, opt) => {
-			// Prepare the dice tray for rendering.
-			const content = await foundry.applications.handlebars.renderTemplate("modules/dice-calculator/templates/tray.html", {
-				dicerows: game.settings.get("dice-calculator", "diceRows"),
-				settings: DiceRowSettings.settingsKeys.reduce((obj, key) => {
-					obj[key] = game.settings.get("dice-calculator", key);
-					return obj;
-				}, {})
-			});
-
-			if (content.length > 0) {
-				const inputElement = document.getElementById("chat-message");
-				inputElement.insertAdjacentHTML("afterend", content);
-				CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
-				CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
-				CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
-			}
-		});
+		Hooks.once("renderChatLog", () => CONFIG.DICETRAY.render());
 		Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
 			if (!chatlog.isPopout) return;
 			moveDiceTray();
