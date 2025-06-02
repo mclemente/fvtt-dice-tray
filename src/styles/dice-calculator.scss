@@ -5,6 +5,44 @@ $white: #fff;
 $orange: #ff6400;
 $green: #0a9843;
 
+@mixin dice-tray-theme {
+	.dice-tray {
+		button {
+			color: var(--color-dark-2);
+			background: rgba(255, 255, 255, 0.6);
+			&:hover {
+				background: rgba(255, 255, 255, 0.85);
+			}
+			div.dice {
+				background-color: var(--color-dark-2);
+			}
+		}
+		input[type="text"] {
+			color: var(--color-dark-2);
+			background: rgba(255, 255, 255, 0.6);
+			&:hover {
+				background: rgba(255, 255, 255, 0.85);
+			}
+		}
+	}
+}
+
+%dice-tray-style {
+	background: var(--color-cool-5-75);
+	border: 1px solid #000;
+	box-shadow: inset 0 0 6px #8d9ea7;
+	color: var(--color-light-2);
+	font-weight: bold;
+	font-size: var(--font-size-18);
+	transition: all 0.25s ease-in-out;
+	padding: 0;
+	&:hover {
+		background: var(--color-cool-5);
+		border-color: $orange;
+		box-shadow: 0 0 6px inset var(--color-warm-2);
+	}
+}
+
 #ui-right,
 #sidebar-content {
 	.dice-tray {
@@ -36,29 +74,19 @@ $green: #0a9843;
 		flex-wrap: nowrap;
 	}
 	button {
-		background: var(--color-cool-5-75);
-		border: 1px solid #000;
+		@extend %dice-tray-style;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		color: var(--color-light-2);
-		font-weight: bold;
-		font-size: var(--font-size-18);
-		box-shadow: 0 0 6px inset #8d9ea7;
-		transition: all ease-in-out 0.25s;
 		position: relative;
-		padding: 0;
 		height: inherit;
 		min-height: 1rem;
 		&:focus {
 			outline: none;
 		}
 		&:hover {
-			background: var(--color-cool-5);
 			color: $orange;
-			border-color: $orange;
-			box-shadow: 0 0 6px inset var(--color-warm-2);
 			div.dice {
 				background-color: var(--color-light-1);
 			}
@@ -68,7 +96,7 @@ $green: #0a9843;
 			height: auto;
 			transition: all ease-in-out 0.25s;
 			* {
-				fill: #fff;
+				fill: $white;
 			}
 		}
 		img {
@@ -107,24 +135,29 @@ $green: #0a9843;
 				max-height: 0;
 			}
 		}
+		&.dice-tray__button {
+			div.dice + span.dice-label {
+				padding-right: 0.25rem;
+			}
+		}
 		&.dice-tray__roll {
 			&:hover {
-				background: #ff6400;
+				background: $orange;
 				box-shadow: none;
 				color: $white;
 			}
 		}
 		&.dice-tray__math--sub {
 			&:hover {
-				background: #ff6400;
-				box-shadow: 0 0 6px inset #ff6400;
+				background: $orange;
+				box-shadow: 0 0 6px inset $orange;
 				color: $white;
 			}
 		}
 		&.dice-tray__math--add {
 			&:hover {
-				background: #0a9843;
-				box-shadow: 0 0 6px inset #0a9843;
+				background: $green;
+				box-shadow: 0 0 6px inset $green;
 				border-color: $green;
 				color: $white;
 			}
@@ -139,15 +172,15 @@ $green: #0a9843;
 			&:hover {
 				color: $green;
 				border-color: $green;
-				box-shadow: 0 0 6px inset #0a9843;
+				box-shadow: 0 0 6px inset $green;
 			}
 			&.active {
-				background: #0a9843;
-				box-shadow: 0 0 6px inset #0a9843;
+				background: $green;
+				box-shadow: 0 0 6px inset $green;
 				border-color: $green;
 				color: $white;
 				&:hover {
-					box-shadow: 0 0 6px inset #fff;
+					box-shadow: 0 0 6px inset $white;
 					border-color: $white;
 				}
 			}
@@ -156,36 +189,31 @@ $green: #0a9843;
 			&:hover {
 				color: $orange;
 				border-color: $orange;
-				box-shadow: 0 0 6px inset #ff6400;
+				box-shadow: 0 0 6px inset $orange;
 			}
 			&.active {
-				background: #ff6400;
-				box-shadow: 0 0 6px inset #ff6400;
+				background: $orange;
+				box-shadow: 0 0 6px inset $orange;
 				color: $white;
 				&:hover {
-					box-shadow: 0 0 6px inset #fff;
+					box-shadow: 0 0 6px inset $white;
 					border-color: $white;
 				}
 			}
 		}
 	}
 	input[type="text"] {
+		@extend %dice-tray-style;
 		display: block;
 		color: $white;
-		font-weight: bold;
-		font-size: var(--font-size-18);
 		text-align: center;
-		background-color: rgba(250, 250, 250, 0.15);
-		border: 1px solid #000;
-		box-shadow: 0 0 6px inset #fff;
-		padding: 0;
 		&:hover {
-			border: 1px solid #ff6400;
-			box-shadow: 0 0 6px inset #ff6400;
+			border-color: $orange;
 		}
 		&:focus {
-			border: 1px solid #ff6400;
-			box-shadow: 0 0 6px inset #ff6400;
+			background: var(--color-cool-5);
+			border-color: $orange;
+			box-shadow: 0 0 6px inset $orange;
 		}
 	}
 }
@@ -198,48 +226,15 @@ $green: #0a9843;
 		width: var(--sidebar-width);
 		margin: auto;
 	}
-	th {
-		font-size: var(--font-size-16);
-		padding: 0;
-		text-align: center;
-	}
-	td {
-		font-size: var(--font-size-16);
-		padding: 0;
-		text-align: center;
-	}
-	.color {
-		div {
-			background-color: $white;
-			margin: auto;
-			height: var(--line-height-30);
-			width: var(--line-height-30);
-		}
-	}
-	img {
-		height: var(--line-height-30);
-		border: none;
-	}
-	.controls {
-		a {
-			padding: 8px;
-		}
-	}
 }
 
+body:has(#interface.theme-light) {
+	.application {
+		@include dice-tray-theme;
+	}
+}
 #interface {
 	&.theme-light {
-		.dice-tray {
-			button {
-				color: var(--color-dark-2);
-				background: rgba(255, 255, 255, 0.6);
-				&:hover {
-					background: rgba(255, 255, 255, 0.85);
-				}
-				div.dice {
-					background-color: var(--color-dark-2);
-				}
-			}
-		}
+		@include dice-tray-theme;
 	}
 }
