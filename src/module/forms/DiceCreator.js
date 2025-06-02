@@ -35,6 +35,14 @@ export class DiceCreator extends FormApplication {
 		});
 	}
 
+	_getSubmitData(updateData={}) {
+		if ( !this.form ) throw new Error("The FormApplication subclass has no registered form element");
+		const fd = new foundry.applications.ux.FormDataExtended(this.form, { editors: this.editors, disabled: true });
+		let data = fd.object;
+		if ( updateData ) data = foundry.utils.flattenObject(foundry.utils.mergeObject(data, updateData));
+		return data;
+	}
+
 	async _updateObject(event, formData) {
 		let { dice, row } = foundry.utils.expandObject(formData);
 		row -= 1;
