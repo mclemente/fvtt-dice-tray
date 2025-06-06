@@ -67,82 +67,54 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 	updateChatDice(dataset, direction, html) {
 		const chat = this.textarea;
 		let currFormula = String(chat.value);
-		if (direction === "sub" && currFormula === "") return;
-		let newFormula = null;
-		let rollPrefix = this._getRollMode(html);
-		let qty = 0;
+
+		if (direction === "sub" && currFormula === "") {
+			this.reset();
+			return;
+		}
+
+		const rollPrefix = this._getRollMode(html);
+		let qty = 1;
 		let dice = "";
 
-		let match_dice = dataset.formula;
-		const matchString = new RegExp(`${this.rawFormula("(\\d*)", `(${match_dice})`, html)}(?=[0-9]|$)`);
+		let matchDice = dataset.formula;
+		const matchString = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=[0-9]|$)`);
 
 		if (matchString.test(currFormula)) {
 			const match = currFormula.match(matchString);
 			const parts = {
 				txt: match[0] || "",
-				qty: match[1] || "1",
-				die: match[2] || "",
+				qty: Number(match.groups?.qty ?? (match[1] || 1)),
+				die: match.groups?.dice ?? (match[2] || ""),
 			};
 
 			if (parts.die === "" && match[3]) {
 				parts.die = match[3];
 			}
 
-			qty = direction === "add" ? Number(parts.qty) + (qty || 1) : Number(parts.qty) - (qty || 1);
+			qty = direction === "add" ? parts.qty + (qty || 1) : parts.qty - (qty || 1);
 
-			// Update the dice quantity.
-			qty = qty < 1 ? "" : qty;
-
-			if (qty === "" && direction === "sub") {
-				newFormula = "";
-				let regexxx =`${this.rawFormula("(\\d+)", `(${match_dice})`, html)}(?=[0-9]|$)`;
+			if (!qty && direction === "sub") {
+				let regexxx =`${this.rawFormula("(\\d+)", `(${matchDice})`, html)}(?=[0-9]|$)`;
 				const newMatchString = new RegExp(regexxx);
-				currFormula = currFormula.replace(newMatchString, newFormula);
+				currFormula = currFormula.replace(newMatchString, "");
 				if (!(/(\d+[hsbe+-])/.test(currFormula))) {
-
 					currFormula = "";
 				}
-			} else {
-				newFormula = this.rawFormula(qty, parts.die, html);
-				currFormula = currFormula.replace(matchString, newFormula);
-			}
-			chat.value = currFormula;
+			} else currFormula = currFormula.replace(matchString, this.rawFormula(qty, parts.die, html));
+		} else if (currFormula === "") {
+			currFormula = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
 		} else {
-			if (!qty) {
-				qty = 1;
-			}
-			if (currFormula === "") {
-				chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
-			} else {
-				const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "" : "";
-				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
-				chat.value = currFormula;
-			}
+			const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
+			currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
 		}
-		// TODO consider separate this into another method to make overriding simpler
-		// TODO e.g. cases where a button adds 2+ dice
+		chat.value = currFormula;
 
 		// Add a flag indicator on the dice.
-		qty = Number(qty);
-		const flagButton = html.querySelector(`.dice-tray__flag--${dataset.formula}`);
-		if (!qty) {
-			qty = direction === "add" ? 1 : 0;
-		}
+		const flagNumber = direction === "add" ? qty : 0;
+		this.updateDiceFlags(flagNumber, dataset.formula);
 
-		if (qty > 0) {
-			flagButton.textContent = qty;
-			flagButton.classList.remove("hide");
-		} else if (qty < 0) {
-			flagButton.textContent = qty;
-		} else {
-			flagButton.textContent = "";
-			flagButton.classList.add("hide");
-		}
-
-		currFormula = chat.value;
-		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `)
-			.replace(/\+{2}/g, "+")
-			.replace(/-{2}/g, "-");
+		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-");
 		chat.value = currFormula;
 		this.applyModifier(html);
 	}

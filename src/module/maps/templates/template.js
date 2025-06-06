@@ -392,28 +392,27 @@ export default class TemplateDiceMap {
 			this.reset();
 			return;
 		}
-		let rollPrefix = this._getRollMode(html);
-		let qty = 0;
+		const rollPrefix = this._getRollMode(html);
+		let qty = 1;
 		let dice = "";
 
 		let matchDice = dataset.formula;
-		if (dataset.formula === "d10") {
-			// Filter out d100s
-			matchDice = "d10(?!0)";
-		} else if (/^(\d+)(d.+)/.test(dataset.formula)) {
-			const match = dataset.formula.match(/^(\d+)(d.+)/);
-			qty = Number(match[1]);
-			matchDice = match[2];
+		const diceRegex = /^(\d*)(d.+)/;
+		if (diceRegex.test(dataset.formula)) {
+			const match = dataset.formula.match(diceRegex);
+			qty = Number(match[1]) || 1;
+			// Avoid issues with 0-ended dice (e.g. d100 vs d10, d20 vs d2)
+			matchDice = `${match[2]}(?!0)`;
 			dice = match[2];
 		}
 		// Catch KH/KL
-		matchDice = `${matchDice}[khl]*`;
+		matchDice += "[khl]*";
 
-		const matchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
+		const matchString = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=\\+|\\-|$)`);
 		if (matchString.test(currFormula)) {
 			const match = currFormula.match(matchString);
 			const parts = {
-				qty: match.groups?.qty ?? (match[1] || "1"),
+				qty: Number(match.groups?.qty ?? (match[1] || 1)),
 				die: match.groups?.dice ?? (match[2] || ""),
 			};
 
@@ -421,61 +420,39 @@ export default class TemplateDiceMap {
 				parts.die = match[3];
 			}
 
-			qty = direction === "add" ? Number(parts.qty) + (qty || 1) : Number(parts.qty) - (qty || 1);
+			qty = direction === "add" ? parts.qty + (qty || 1) : parts.qty - (qty || 1);
 
-			// Update the dice quantity.
-			qty = qty < 1 ? "" : qty;
-
-			if (qty === "" && direction === "sub") {
-				const newMatchString = new RegExp(`${this.rawFormula("(\\d*)", `(${matchDice})`, html)}(?=\\+|\\-|$)`);
-				currFormula = currFormula.replace(newMatchString, "");
+			if (!qty && direction === "sub") {
+				currFormula = currFormula.replace(matchString, "");
+				// Clear formula if remaining formula is something like "/r kh"
 				if (new RegExp(`${rollPrefix}\\s+(?!.*d\\d+.*)`).test(currFormula)) {
 					currFormula = "";
 				}
-			} else {
-				const newFormula = this.rawFormula(qty, parts.die, html);
-				currFormula = currFormula.replace(matchString, newFormula);
-			}
-			chat.value = currFormula;
-		} else {
-			if (!qty) {
-				qty = 1;
-			}
-			if (currFormula === "") {
-				chat.value = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
-			} else {
-				const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
-				currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
-				chat.value = currFormula;
-			}
-		}
+			} else currFormula = currFormula.replace(matchString, this.rawFormula(qty, parts.die, html));
 
-		// TODO consider separate this into another method to make overriding simpler
-		// TODO e.g. cases where a button adds 2+ dice
+		} else if (currFormula === "") {
+			currFormula = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
+		} else {
+			const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
+			currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
+		}
+		chat.value = currFormula;
 
 		// Add a flag indicator on the dice.
-		qty = Number(qty);
-		const flagButtons = document.querySelectorAll(`.dice-tray__flag--${dataset.formula}`);
-		if (!qty) {
-			qty = direction === "add" ? 1 : 0;
-		}
+		const flagNumber = direction === "add" ? qty : 0;
+		this.updateDiceFlags(flagNumber, dataset.formula);
 
-		for (const button of flagButtons) {
-			if (qty > 0) {
-				button.textContent = qty;
-				button.classList.remove("hide");
-			} else if (qty < 0) {
-				button.textContent = qty;
-			} else {
-				button.textContent = "";
-				button.classList.add("hide");
-			}
-		}
-
-		currFormula = chat.value;
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
 		chat.value = currFormula;
 		this.applyModifier(html);
+	}
+
+	updateDiceFlags(qty, formula) {
+		const flags = document.querySelectorAll(`.dice-tray__flag--${formula}`);
+		for (const flag of flags) {
+			flag.textContent = qty !== 0 ? qty : "";
+			flag.classList.toggle("hide", qty === 0);
+		}
 	}
 
 	/**
@@ -502,11 +479,11 @@ export default class TemplateDiceMap {
      * Process a formula to apply advantage or disadvantage. Should be used
      * within a regex replacer function's callback.
      *
-     * @param {string} count | String match for the current dice count.
-     * @param {string} dice | String match for the dice type (d20).
-     * @param {string} khl | String match for kh|l (includes kh|l count).
-     * @param {number} countDiff | Integer to adjust the dice count by.
-     * @param {string} newKhl | Formula on the button (kh or kl).
+     * @param {string} count Current dice count in the formula.
+     * @param {string} dice Current dice in the formula.
+     * @param {string} khl Current kh/kl in the formula.
+     * @param {number} countDiff Integer to adjust the dice count by.
+     * @param {string} newKhl Formula of the button (kh or kl).
      * @returns {object} Object with content and count keys.
      */
 	updateDiceKeep(count, dice, khl, countDiff, newKhl) {
@@ -517,26 +494,19 @@ export default class TemplateDiceMap {
 		let newCount = keep + countDiff;
 		let newKeep = newCount - 1;
 
-		// Handling toggling on/off advantage.
 		if (khl) {
-			// If switching from adv to dis or vice versa, adjust the formula to
-			// simply replace the kh and kl while leaving the rest as it was prior
-			// to applying the count diff.
+			// Toggling between kh and kl — reset to base count
 			if (!khl.includes(newKhl)) {
 				newCount = keep;
 				newKeep = newCount - 1;
 				khl = newKhl;
 			}
-			// If the adv/dis buttons were clicked after they were previously
-			// applied, we need to remove them. If it's currently 2d20kh or kl,
-			// change it to 1d20. Otherwise, only strip the kh or kl.
+			// Toggling off adv/dis
 			else {
 				newCount = keep > 2 ? keep : newCount;
 				newKeep = 0;
 			}
-		}
-		// If adv/dis weren't enabled, then that means we need to enable them.
-		else {
+		} else {
 			khl = newKhl;
 		}
 
@@ -550,10 +520,10 @@ export default class TemplateDiceMap {
 		let result = `${newCount > 0 ? newCount : 1}${dice}`;
 		// Append kh or kl if needed.
 		if (newCount > 1 && newKeep > 0) {
-			result = `${result}${newKhl.includes("kh") ? "kh" : "kl"}`;
+			result = `${result}${newKhl}`;
 		}
 
-		// TODO: This allows for keeping multiple dice, but in this case, we only need to keep one.
+		// TODO: This allows for keeping multiple dice (e.g. 3d20kh2), but in this case, we only need to keep one.
 		// if (newCount > 1 && newKeep > 1) result = `${result}${newKeep}`;
 
 		// Return an object with the updated text and the new count.
