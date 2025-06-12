@@ -46,6 +46,10 @@ Hooks.once("i18nInit", () => {
 			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
 			moveDiceTray();
 		});
+		Hooks.on("deactivateChatLog", (chatlog) => {
+			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
+			moveDiceTray();
+		});
 		Hooks.on("collapseSidebar", (sidebar, expanded) => {
 			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
 			moveDiceTray();
