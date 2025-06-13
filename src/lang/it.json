@@ -72,6 +72,10 @@
 				"name": "Abilita Scorciatoia Dadi",
 				"hint": "Abilita la visualizzazione di una scorciatoia per i dadi sotto l'area dei messaggi della chat. Questa è un'impostazione utente per i giocatori che non la desiderano."
 			},
+      "hideAdv": {
+				"name": "Nascondi pulsanti extra",
+				"hint": "Nasconde i pulsanti KH/KL"
+			},
 			"popout": {
 				"name": "Aggiungi pulsante popout Dice Tray",
 				"hint": "Aggiunge un pulsante sulla barra dei controlli per attivare/disattivare il popout di Dice Tray. Puoi anche attivare/disattivare il popout impostando una combinazione di tasti.",
