@@ -20,6 +20,8 @@
 		"MinusOneDieLong": "Diminuir Tipo de Dado",
 		"KeepHighest": "Manter Maior",
 		"KeepLowest": "Manter Menor",
+		"Roll": "Rolar",
+
 		"del": "Apagar",
 		"clear": "Limpar",
 		"Calculator": "Calculadora",
@@ -71,6 +73,10 @@
 			"enableDiceTray": {
 				"name": "Habilitar Bandeja de Dados",
 				"hint": "Exibe uma bandeja de dados abaixo da caixa de texto do chat."
+			},
+			"hideAdv": {
+				"name": "Esconder Botões Adicionais",
+				"hint": "Esconde os botões KH e KL."
 			},
 			"enableDiceCalculator": {
 				"name": "Habilitar Calculadora de Dados",
