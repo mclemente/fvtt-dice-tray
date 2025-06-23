@@ -130,12 +130,13 @@ export default class TemplateDiceMap {
 	}
 
 	applyListeners(html) {
-		const diceButtons = html.querySelectorAll(".dice-tray__button");
-		diceButtons.forEach((button) => {
+		html.querySelectorAll(".dice-tray button").forEach((button) => {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
 			});
+		});
+		html.querySelectorAll(".dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
@@ -174,12 +175,7 @@ export default class TemplateDiceMap {
 		});
 
 		// Handle +/- buttons near the modifier input.
-		const mathButtons = html.querySelectorAll("button.dice-tray__math");
-		mathButtons?.forEach((button) => {
-			// Avoids moving focus to the button
-			button.addEventListener("pointerdown", (event) => {
-				event.preventDefault();
-			});
+		html.querySelectorAll("button.dice-tray__math")?.forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				let modVal = Number(html.querySelector('input[name="dice.tray.modifier"]').value);
@@ -216,8 +212,8 @@ export default class TemplateDiceMap {
 			const inputElement = document.getElementById("chat-message");
 			inputElement.insertAdjacentHTML("afterend", content);
 			CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
-			CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
 			CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
+			CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
 		}
 		this.rendered = true;
 	}
@@ -267,12 +263,7 @@ export default class TemplateDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	_extraButtonsLogic(html) {
-		const buttons = html.querySelectorAll(".dice-tray__ad");
-		for (const button of buttons) {
-			// Avoids moving focus to the button
-			button.addEventListener("pointerdown", (event) => {
-				event.preventDefault();
-			});
+		for (const button of html.querySelectorAll(".dice-tray__ad")) {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
