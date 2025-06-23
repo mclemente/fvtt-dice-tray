@@ -1,6 +1,6 @@
-import GenericDiceMap from "./templates/template.js";
+import TemplateDiceMap from "./templates/template.js";
 
-export default class GrimwildDiceMap extends GenericDiceMap {
+export default class GrimwildDiceMap extends TemplateDiceMap {
 	// Ironically, this is used to *remove* extra buttons like the input.
 	// @todo update the parent class to add something like a render hook
 	// for a more accurate place to modify the final markup.
@@ -34,10 +34,8 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 
 	// Override the chat formula logic.
 	updateChatDice(dataset, direction, html) {
-		// Get the DOM element rather than the jQuery object.
-		html = html[0];
 		// Retrieve the current chat value.
-		const chat = html.querySelector("#chat-form textarea");
+		const chat = this.textarea;
 		let currFormula = String(chat.value);
 		// Exit early if there's nothing in chat and this is a remove operation.
 		if (direction === "sub" && currFormula === "") return;
@@ -180,7 +178,6 @@ export default class GrimwildDiceMap extends GenericDiceMap {
 	 * @param {HTMLElement} html
 	 */
 	_createExtraButtons(html) {
-		html = html[0];
 		html.querySelector(".dice-tray__math--sub").remove();
 		html.querySelector(".dice-tray__math--add").remove();
 		html.querySelector(".dice-tray__input").remove();

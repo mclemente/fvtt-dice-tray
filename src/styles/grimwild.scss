@@ -4,6 +4,10 @@ $gw-orange: #ff6400;
 	.dice-tray {
 		display: flex;
 		width: 100%;
+
+		.dice-tray__math__buttons {
+			margin-top: 0;
+		}
 	}
 
 	.dice-tray__buttons {
