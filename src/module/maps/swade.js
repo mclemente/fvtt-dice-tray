@@ -66,7 +66,7 @@ export default class SWADEDiceMap extends GenericDiceMap {
 
 			dice = dice.replace("(", "").replace(")", "");
 			if (!Number.isNumeric(qty)) {
-				return `{1(?<dice>${dice})${roll_suffix}.*,1d6${roll_suffix}}kh(?<qty>\\d*)`;
+				return `{1(${dice})${roll_suffix}.*,1d6${roll_suffix}}kh(?<qty>\\d*)`;
 			}
 			return `{${`1${dice}${roll_suffix},`.repeat(qty)}1d6${roll_suffix}}kh${qty}`;
 		}
