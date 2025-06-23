@@ -77,7 +77,7 @@
 				"hint": "Hides the KH/KL buttons."
 			},
 			"popout": {
-				"name": "Add button to popout Dice Tray",
+				"name": "Dice Tray Popout Button",
 				"hint": "Adds a button on the Controls bar to toggle the Dice Tray popout. You can also toggle the popout by setting a keybinding.",
 				"options": {
 					"all": "All Controls"
