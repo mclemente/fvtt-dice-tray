@@ -77,7 +77,7 @@
 				"hint": "Nasconde i pulsanti KH/KL"
 			},
 			"popout": {
-				"name": "Aggiungi pulsante popout Dice Tray",
+				"name": "Pulsante popout Dice Tray",
 				"hint": "Aggiunge un pulsante sulla barra dei controlli per attivare/disattivare il popout di Dice Tray. Puoi anche attivare/disattivare il popout impostando una combinazione di tasti.",
 				"options": {
 					"all": "Tutti i controlli"
