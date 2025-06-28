@@ -1,10 +1,12 @@
 {
-	"Localization Provided By": "Brother Sharp, doumoku",
+	"Localization Provided By": "Brother Sharp, doumoku, Ryotai",
 	"DICE_TRAY": {
 		"Adv": "有利",
 		"Advantage": "有利 (kh)",
-		"Disadvantage": "不利 (kl)",
+		"DiceTray": "Dice Tray",
 		"Dis": "不利",
+		"Disadvantage": "不利 (kl)",
+		"FateDice": "Fateダイス",
 		"For": "幸運",
 		"Fortune": "幸運 (kh)",
 		"Misfortune": "不運 (kl)",
@@ -19,12 +21,9 @@
 		"MinusOneDieLong": "ダイス面数を減らす",
 		"KeepHighest": "最大値を保持",
 		"KeepLowest": "最低値を保持",
-		"del": "削除",
-		"clear": "クリア",
+		"Roll": "ロール",
 
 		"Optional": "オプション",
-
-		"Calculator": "電卓",
 
 		"DiceCreator": {
 			"CreateDice": "ダイス作成",
@@ -64,11 +63,8 @@
 		},
 
 		"SETTINGS": {
-			"DiceCalculatorSettings": "ダイス電卓の編集",
-			"DiceCreator": "Diceメーカー",
+			"DiceCreator": "ダイスメーカー",
 			"DiceRowSettings": "ダイスの列編集",
-			"GeneralSettings": "一般設定",
-			"General": "一般",
 			"autoOpenPopout": {
 				"name": "ポップアウトを自動で開く",
 				"hint": "ページのロード時にDice Trayポップアウトを自動で開きます。"
@@ -77,15 +73,23 @@
 				"name": "Dice Tray有効化",
 				"hint": "チャットメッセージの下にダイス･トレイを表示します (再読み込みが必要です)｡"
 			},
-			"enableDiceCalculator": {
-				"name": "ダイス電卓有効化",
-				"hint": "チャットボックスの左上にある20面体アイコンをクリックするとダイス電卓が出現するようになります。（要再読み込み）"
+			"hideAdv": {
+				"name": "追加ボタンを非表示",
+				"hint": "KH/KLボタンを非表示にします。"
 			},
 			"popout": {
 				"name": "Dice Trayをポップアウトするボタンを追加",
 				"hint": "Dice Trayポップアウトを開閉するボタンをコントロールバーに追加します。キーバインドを設定することでもポップアウトを開閉できます。",
 				"options": {
 					"all": "全コントロール"
+				}
+			},
+			"rightClickCommand": {
+				"name": "右クリックコマンド",
+				"hint": "ダイスボタンを右クリックしたときの動作を設定します。",
+				"options": {
+					"decrease": "デフォルト (ダイス減少)",
+					"roll": "1つのダイスをロール"
 				}
 			},
 			"SWADE": {
