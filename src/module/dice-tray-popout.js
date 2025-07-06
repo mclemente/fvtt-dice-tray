@@ -37,12 +37,15 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 		return ui.sidebar.popouts.chat?.element || ui.chat.element;
 	}
 
-	async _onFirstRender(context, options) {
-		await super._onFirstRender(context, options);
-		const position = game.settings.get("dice-calculator", "popoutPosition");
-		const left = position.left ?? ui.nav?.element.getBoundingClientRect().left;
-		const top = position.top ?? ui.controls?.element.getBoundingClientRect().top;
-		options.position = {...options.position, left, top};
+	_configureRenderOptions(options) {
+		super._configureRenderOptions(options);
+		if ( options.isFirstRender && ui.nav ) {
+			const position = game.settings.get("dice-calculator", "popoutPosition");
+			const {right, top} = ui.nav.element.getBoundingClientRect();
+			const uiScale = game.settings.get("core", "uiConfig").uiScale;
+			options.position.left ??= position.left ?? right + (16 * uiScale);
+			options.position.top ??= position.top ?? top;
+		}
 	}
 
 	_onRender(context, options) {
