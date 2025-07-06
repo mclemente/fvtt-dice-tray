@@ -112,7 +112,6 @@
 		&.dice-tray__math--add {
 			&:hover {
 				background: $green;
-				box-shadow: 0 0 6px inset $green;
 				border-color: $green;
 				color: $white;
 			}
@@ -145,13 +144,10 @@
 		display: block;
 		color: $white;
 		text-align: center;
-		&:hover {
-			border-color: $orange;
-		}
 		&:focus {
 			background: var(--color-cool-5);
 			border-color: $orange;
-			box-shadow: 0 0 6px inset $orange;
+			outline: none;
 		}
 	}
 }
