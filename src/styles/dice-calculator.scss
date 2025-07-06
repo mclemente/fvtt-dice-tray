@@ -106,7 +106,7 @@
 		}
 		&.dice-tray__math--sub {
 			&:hover {
-				@include hover-style($orange, true);
+				@include hover-style($orange);
 			}
 		}
 		&.dice-tray__math--add {
@@ -125,7 +125,7 @@
 		}
 		&.dice-tray__advantage {
 			&:hover {
-				@include hover-style($green, true, true);
+				@include hover-style($green, true);
 			}
 			&.active {
 				@include active-style($green);
@@ -133,7 +133,7 @@
 		}
 		&.dice-tray__disadvantage {
 			&:hover {
-				@include hover-style($orange, true, true);
+				@include hover-style($orange, true);
 			}
 			&.active {
 				@include active-style($orange);
