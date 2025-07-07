@@ -27,27 +27,23 @@
 {{/inline}}
 
 <section class="dice-tray">
-	{{#if settings.compactMode}}
+	{{#each dicerows as |dice|}}
 	<div class="dice-tray__buttons flexrow">
-		{{#each dicerows.[0] as |data key|}}
-		{{> button data=data key=key}}
-		{{/each}}
-		{{#unless settings.hideNumberInput}}
-		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
-		{{/unless}}
-		<div id="dice-tray-math" hidden></div>
-		{{#unless settings.hideRollButton}}
-		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
-		{{/unless}}
-	</div>
-	{{else}}
-    {{#each dicerows as |dice|}}
-    <div class="dice-tray__buttons flexrow">
 		{{#each dice as |data key|}}
 		{{> button data=data key=key}}
 		{{/each}}
-    </div>
-    {{/each}}
+		{{#if (and @root.settings.compactMode @last)}}
+		{{#unless @root.settings.hideNumberInput}}
+		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
+		{{/unless}}
+		<div id="dice-tray-math" hidden></div>
+		{{#unless @root.settings.hideRollButton}}
+		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
+		{{/unless}}
+		{{/if}}
+	</div>
+	{{/each}}
+	{{#unless settings.compactMode}}
     <div class="dice-tray__math dice-tray__math__buttons flexrow">
 		<button class="dice-tray__math dice-tray__math--sub" data-formula="-1"><i class="fas fa-minus"></i></button>
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
@@ -57,5 +53,5 @@
 		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
 		{{/unless}}
     </div>
-	{{/if}}
+	{{/unless}}
 </section>

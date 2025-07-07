@@ -100,7 +100,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				const row = this.diceRows.findIndex((r) => r[key]);
 				delete this.diceRows[row][key];
 				if (!Object.keys(this.diceRows[row]).length) {
-					this.diceRows.splice(1, row);
+					this.diceRows.splice(row, 1);
 				}
 				this.render(false);
 			});
@@ -113,9 +113,6 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	static #add() {
-		if (this.element.querySelector("input[name=compactMode]").checked && Object.keys(this.diceRows[0]).length >= 7) {
-			return ui.notifications.notify("You're in Compact Mode and have too many dice. Edit or delete an existing dice before adding any more.");
-		}
 		new DiceCreator({
 			form: this,
 			diceRows: this.diceRows,
