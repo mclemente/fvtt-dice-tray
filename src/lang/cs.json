@@ -1,0 +1,102 @@
+{
+	"DICE_TRAY": {
+		"Adv": "V",
+		"Advantage": "Výhoda",
+		"DiceTray": "Dice Tray",
+		"Dis": "NV",
+		"Disadvantage": "Nevýhoda",
+		"FateDice": "Kostky osudu",
+		"For": "Pro",
+		"Fortune": "Štěstí (kh)",
+		"Misfortune": "Smůla (kl)",
+		"Mis": "Smůla",
+		"Wild": "Divoká",
+		"Ace": "Eso",
+		"WildDie": "Divoká kostka",
+		"ExplodingDie": "Explodující kostka",
+		"PlusOneDie": "+1k",
+		"MinusOneDie": "-1k",
+		"PlusOneDieLong": "Přidat strany kostky",
+		"MinusOneDieLong": "Ubrat strany kostky",
+		"KeepHighest": "Udržet nejvyšší",
+		"KeepLowest": "Udržet nejnižší",
+		"Roll": "Hoď!",
+
+		"Optional": "Volitelné",
+
+		"DiceCreator": {
+			"CreateDice": "Vytvořit kostku",
+			"Formula": {
+				"name": "Vzorec",
+				"hint": "Vzorec, který bude přidán do chatu."
+			},
+			"Row": {
+				"name": "Řádek",
+				"hint": "Řádek, na kterém bude tlačítko umístěno."
+			},
+			"Image": {
+				"name": "Ilustrace"
+			},
+			"Label": {
+				"name": "Štítek",
+				"hint": "štítek zobrazovaný v případech, kdy kostka nemá ilustraci."
+			},
+			"Tooltip": {
+				"name": "Popiska",
+				"hint": "Popiska zobrazená při přejetí myší nad tlačítkem. Výchozí hodnota je ´Vzorec´."
+			},
+			"Color": {
+				"name": "Barva",
+				"hint": "Barva, která vyplňuje ilustraci."
+			}
+		},
+
+		"DiceRows": {
+			"Instruction1": "Pro úpravu klikni na libovolné tlačítko kostky."
+		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Přepínač vyskakovacího okna Dice Tray"
+			}
+		},
+
+		"SETTINGS": {
+			"DiceCreator": "Tvůrce kostek",
+			"DiceRowSettings": "Nastavení řádky kostek",
+			"autoOpenPopout": {
+				"name": "Otevírat s vyskakovacím Dice Tray?",
+				"hint": "Při načtení stránky automaticky otevře vyskakovací okno Dice Tray."
+			},
+			"enableDiceTray": {
+				"name": "Povolit Dice Tray?",
+				"hint": "Povolí zobrazení Dice Tray pod oblastí zpráv v chatu."
+			},
+			"hideAdv": {
+				"name": "Skrývat tlačítka navíc?",
+				"hint": "Skryje tlačítka Štěstí (KH) / Smůla (KL)."
+			},
+			"popout": {
+				"name": "Vyskakovací tlačítko Dice Tray",
+				"hint": "Kam se má přidat tlačítko pro přepínání vyskakovacího okna Dice Tray. Vyskakovací okno můžeš přepínat i nastavenou klávesovou zkratkou.",
+				"options": {
+					"all": "Všechny ovládací prvky"
+				}
+			},
+			"rightClickCommand": {
+				"name": "Příkaz pravým kliknutím",
+				"hint": "Určuje, co bude dělat kliknutí pravým tlačítkem na tlačítko kostky.",
+				"options": {
+					"decrease": "Výchozí (Snížit počet kostek)",
+					"roll": "Hodit jednu kostku"
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Použití fondu kostek pro tlačítko ´Divoká´",
+					"hint": "Kliknutí na stejnou kostku s aktivovaným režimem ´Divoká´ přidá kostku do fondu namísto zvětšení aktuální kostky v seznamu."
+				}
+			}
+		}
+	}
+}
