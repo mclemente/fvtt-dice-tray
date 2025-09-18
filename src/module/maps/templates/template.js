@@ -106,7 +106,8 @@ export default class TemplateDiceMap {
 	}
 
 	roll(formula) {
-		Roll.create(formula).toMessage();
+		const [rollMode] = ui.chat.constructor.parse(formula);
+		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
 	}
 
 	/**
@@ -123,7 +124,7 @@ export default class TemplateDiceMap {
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
-			this.roll(this.textarea.value.replace(/(\/r|\/gmr|\/br|\/sr) /, ""));
+			this.roll(this.textarea.value);
 			this.reset();
 			this.textarea.value = "";
 		});
