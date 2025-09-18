@@ -431,8 +431,7 @@ export default class TemplateDiceMap {
 		chat.value = currFormula;
 
 		// Add a flag indicator on the dice.
-		const flagNumber = direction === "add" ? qty : 0;
-		this.updateDiceFlags(flagNumber, dataset.formula);
+		this.updateDiceFlags(qty, dataset.formula);
 
 		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
 		chat.value = currFormula;
