@@ -32,6 +32,7 @@ Hooks.once("i18nInit", () => {
 		}
 	});
 	if (game.settings.get("dice-calculator", "enableDiceTray")) {
+		let wasAtBottom = true;
 		Hooks.on("dice-calculator.forceRender", () => CONFIG.DICETRAY.render());
 		Hooks.once("renderChatLog", () => CONFIG.DICETRAY.render());
 		Hooks.on("renderChatLog", (chatlog, html, data, opt) => {
@@ -50,9 +51,11 @@ Hooks.once("i18nInit", () => {
 			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
 			moveDiceTray();
 		});
-		Hooks.on("collapseSidebar", (sidebar, expanded) => {
+		Hooks.on("collapseSidebar", (sidebar, wasExpanded) => {
 			if (ui.chat.popout?.rendered && !ui.chat.isPopout) return;
 			moveDiceTray();
+			if (!wasExpanded && wasAtBottom) ui.chat.scrollBottom();
+			wasAtBottom = ui.chat.isAtBottom;
 		});
 	}
 });
