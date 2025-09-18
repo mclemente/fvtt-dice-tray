@@ -316,7 +316,7 @@ export default class TemplateDiceMap {
 			flag.textContent = "";
 			flag.classList.add("hide");
 		}
-		if (this.removeAdvOnRoll) {
+		if (CONFIG.DICETRAY.removeAdvOnRoll ) {
 			html.querySelector(".dice-tray__ad")?.classList?.remove("active");
 		}
 	}
