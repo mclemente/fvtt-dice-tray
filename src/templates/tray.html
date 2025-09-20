@@ -45,9 +45,13 @@
 	{{/each}}
 	{{#unless settings.compactMode}}
     <div class="dice-tray__math dice-tray__math__buttons flexrow">
+		{{#if @root.settings.hideNumberButtons}}
+		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
+		{{else}}
 		<button class="dice-tray__math dice-tray__math--sub" data-formula="-1"><i class="fas fa-minus"></i></button>
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
 		<button class="dice-tray__math dice-tray__math--add" data-formula="+1"><i class="fas fa-plus"></i></button>
+		{{/if}}
 		<div id="dice-tray-math" hidden></div>
 		{{#unless settings.hideRollButton}}
 		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>

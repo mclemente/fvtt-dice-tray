@@ -38,7 +38,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	settings;
 
-	static settingsKeys = ["compactMode", "hideNumberInput", "hideRollButton"];
+	static settingsKeys = ["compactMode", "hideNumberInput", "hideNumberButtons", "hideRollButton"];
 
 	_prepareContext(options) {
 		this.settings ??= DiceRowSettings.settingsKeys.reduce((obj, key) => {

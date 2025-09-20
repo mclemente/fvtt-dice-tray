@@ -152,6 +152,11 @@
 	}
 }
 .dice-tray-row-settings {
+	.form-group {
+		> label {
+			flex: 2;
+		}
+	}
 	.sidebar-preview {
 		display: flex;
 		flex-direction: column;

@@ -1,20 +1,26 @@
 <div>
     <fieldset>
         <div class="form-group">
-            <label for="compactMode">Compact Mode</label>
+            <label for="compactMode">{{localize "DICE_TRAY.DiceRows.compactMode.label"}}</label>
             <div class="form-fields">
                 <input id="compactMode" type="checkbox" name="compactMode" {{checked settings.compactMode}}>
             </div>
-            <p class="hint">Disables any additional dice rows and merges the original two rows together.</p>
+            <p class="hint">{{localize "DICE_TRAY.DiceRows.compactMode.hint"}}</p>
         </div>
         <div class="form-group">
-            <label for="hideNumberInput">Hide Number Input</label>
+            <label for="hideNumberInput">{{localize "DICE_TRAY.DiceRows.hideNumberInput.label"}}</label>
             <div class="form-fields">
                 <input id="hideNumberInput" type="checkbox" name="hideNumberInput" {{checked settings.hideNumberInput}} {{disabled (not settings.compactMode)}}>
             </div>
         </div>
         <div class="form-group">
-            <label for="hideRollButton">Hide Roll Button</label>
+            <label for="hideNumberButtons">{{localize "DICE_TRAY.DiceRows.hideNumberButtons.label"}}</label>
+            <div class="form-fields">
+                <input id="hideNumberButtons" type="checkbox" name="hideNumberButtons" {{checked settings.hideNumberButtons}} {{disabled settings.compactMode}}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hideRollButton">{{localize "DICE_TRAY.DiceRows.hideRollButton.label"}}</label>
             <div class="form-fields">
                 <input id="hideRollButton" type="checkbox" name="hideRollButton" {{checked settings.hideRollButton}}>
             </div>

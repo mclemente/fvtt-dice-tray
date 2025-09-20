@@ -52,6 +52,19 @@
 		},
 
 		"DiceRows": {
+			"compactMode": {
+				"label": "Compact Mode",
+				"hint": "Disables any additional dice rows and merges the original two rows together."
+			},
+			"hideNumberInput": {
+				"label": "Hide Number Input"
+			},
+			"hideNumberButtons": {
+				"label": "Hide +/- Buttons"
+			},
+			"hideRollButton": {
+				"label": "Hide Roll Button"
+			},
 			"Instruction1": "Click any dice button to edit it. Right-Click any dice button to delete it."
 		},
 

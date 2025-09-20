@@ -50,6 +50,12 @@ export function registerSettings() {
 		default: false,
 		type: Boolean,
 	});
+	game.settings.register("dice-calculator", "hideNumberButtons", {
+		scope: "world",
+		config: false,
+		default: true,
+		type: Boolean,
+	});
 	game.settings.register("dice-calculator", "hideRollButton", {
 		scope: "world",
 		config: false,
