@@ -108,7 +108,7 @@
 				"flatCheckLabel": "{dc} {text}",
 				"flatCheck": {
 					"name": "Add Flat Check Buttons",
-					"hint": "Adds buttons for DC 5 Flat Check and DC 11 Flat Check."
+					"hint": "Replaces the Fortune/Misfortune buttons for DC 5/11 Flat Check buttons."
 				}
 			},
 			"SWADE": {
