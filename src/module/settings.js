@@ -23,10 +23,9 @@ export function registerSettings() {
 		name: game.i18n.localize("DICE_TRAY.SETTINGS.hideAdv.name"),
 		hint: game.i18n.localize("DICE_TRAY.SETTINGS.hideAdv.hint"),
 		scope: "world",
-		config: CONFIG.DICETRAY.constructor.name === "TemplateDiceMap",
+		config: false,
 		default: false,
-		type: Boolean,
-		requiresReload: true
+		type: Boolean
 	});
 
 	// Menu Settings
@@ -53,8 +52,8 @@ export function registerSettings() {
 	game.settings.register("dice-calculator", "hideNumberButtons", {
 		scope: "world",
 		config: false,
-		default: true,
-		type: Boolean,
+		default: false,
+		type: Boolean
 	});
 	game.settings.register("dice-calculator", "hideRollButton", {
 		scope: "world",

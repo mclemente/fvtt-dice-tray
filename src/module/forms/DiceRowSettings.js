@@ -38,7 +38,11 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	settings;
 
-	static settingsKeys = ["compactMode", "hideNumberInput", "hideNumberButtons", "hideRollButton"];
+	static get settingsKeys() {
+		const keys = ["compactMode", "hideNumberInput", "hideNumberButtons", "hideRollButton"];
+		if (CONFIG.DICETRAY.showExtraButtons) keys.splice(4, 0, "hideAdv");
+		return keys;
+	}
 
 	_prepareContext(options) {
 		this.settings ??= DiceRowSettings.settingsKeys.reduce((obj, key) => {
@@ -48,6 +52,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 		return {
 			diceRows: this.diceRows,
 			settings: this.settings,
+			showExtraButtons: CONFIG.DICETRAY.showExtraButtons,
 			buttons: [
 				{ type: "button", icon: "fa-solid fa-plus", label: "DICE_TRAY.DiceCreator.CreateDice", action: "add" },
 				{ type: "submit", icon: "fa-solid fa-save", label: "SETTINGS.Save" },
@@ -58,7 +63,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	_onRender(context, options) {
 		super._onRender(context, options);
-		CONFIG.DICETRAY.applyLayout(this.element);
+		CONFIG.DICETRAY.applyLayout(this.element, { hideAdv: context.settings.hideAdv });
 		const diceTrayInput = this.element.querySelector("input.dice-tray__input");
 		for (const input of this.element.querySelectorAll(".form-group input")) {
 			input.addEventListener("click", async (event) => {

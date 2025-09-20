@@ -36,7 +36,9 @@
 		{{#unless @root.settings.hideNumberInput}}
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
 		{{/unless}}
+		{{#unless @root.settings.hideAdv }}
 		<div id="dice-tray-math" hidden></div>
+		{{/unless}}
 		{{#unless @root.settings.hideRollButton}}
 		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
 		{{/unless}}
@@ -52,7 +54,9 @@
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
 		<button class="dice-tray__math dice-tray__math--add" data-formula="+1"><i class="fas fa-plus"></i></button>
 		{{/if}}
+		{{#unless @root.settings.hideAdv }}
 		<div id="dice-tray-math" hidden></div>
+		{{/unless}}
 		{{#unless settings.hideRollButton}}
 		<button class="dice-tray__roll">{{localize "DICE_TRAY.Roll"}}</button>
 		{{/unless}}

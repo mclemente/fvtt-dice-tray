@@ -113,9 +113,10 @@ export default class TemplateDiceMap {
 	/**
 	 * Logic to set display the additiona KH/KL buttons and event listeners.
 	 * @param {HTMLElement} html
+	 * @param {Object} options
 	 */
-	applyLayout(html) {
-		const disableExtras = game.settings.settings.get("dice-calculator.hideAdv").config && game.settings.get("dice-calculator", "hideAdv");
+	applyLayout(html, options = {}) {
+		const disableExtras = options.hideAdv ?? game.settings.get("dice-calculator", "hideAdv");
 		if (this.showExtraButtons && !disableExtras) {
 			this._createExtraButtons(html);
 			this._extraButtonsLogic(html);
