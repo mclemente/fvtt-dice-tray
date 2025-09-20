@@ -136,6 +136,7 @@ export default class TemplateDiceMap {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
+				this.textarea.select();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
@@ -166,14 +167,17 @@ export default class TemplateDiceMap {
 			let modVal = Number(event.target.value);
 			modVal = Number.isNaN(modVal) ? 0 : modVal;
 			event.target.value = modVal;
-			CONFIG.DICETRAY.applyModifier(html);
+			CONFIG.DICETRAY.applyModifier(html, { noFocus: true });
 		});
 		diceTrayInput?.addEventListener("wheel", (event) => {
 			const diff = event.deltaY < 0 ? 1 : -1;
 			let modVal = event.currentTarget.value;
 			modVal = Number.isNaN(modVal) ? 0 : Number(modVal);
 			event.currentTarget.value = modVal + diff;
-			CONFIG.DICETRAY.applyModifier(html);
+			CONFIG.DICETRAY.applyModifier(html, { noFocus: true });
+		});
+		diceTrayInput?.addEventListener("focus", (event) => {
+			diceTrayInput.select();
 		});
 
 		// Handle +/- buttons near the modifier input.
@@ -325,8 +329,9 @@ export default class TemplateDiceMap {
 	/**
 	 * Logic to apply the number on the -/+ selector.
 	 * @param {HTMLElement} html
+	 * @param {Object} options
 	 */
-	applyModifier(html) {
+	applyModifier(html, options = {}) {
 		const modInput = html.querySelector(".dice-tray__input");
 		if (!modInput) return;
 		const modVal = Number(modInput.value);
@@ -355,7 +360,7 @@ export default class TemplateDiceMap {
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
 			chat.value = "";
 		}
-		this.textarea.focus();
+		if (!options.noFocus) this.textarea.focus();
 	}
 
 	/**
