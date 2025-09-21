@@ -1,3 +1,4 @@
+import { DiceTrayPopOut } from "../../dice-tray-popout.js";
 import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
 
 export default class TemplateDiceMap {
@@ -528,5 +529,11 @@ export default class TemplateDiceMap {
 			content: result,
 			count: newCount
 		};
+	}
+
+	async togglePopout() {
+		this.popout ??= new DiceTrayPopOut();
+		if (this.popout.rendered) await this.popout.close({ animate: false });
+		else await this.popout.render(true);
 	}
 }

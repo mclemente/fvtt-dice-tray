@@ -1,6 +1,5 @@
 import * as keymaps from "./maps/_module.js";
 
-import { DiceTrayPopOut } from "./dice-tray-popout.js";
 import { KEYS } from "./maps/_keys.js";
 import { registerSettings } from "./settings.js";
 
@@ -22,7 +21,7 @@ Hooks.once("i18nInit", () => {
 	game.keybindings.register("dice-calculator", "popout", {
 		name: "DICE_TRAY.KEYBINGINDS.popout.name",
 		onDown: async () => {
-			await togglePopout();
+			await CONFIG.DICETRAY.togglePopout();
 			if (game.settings.get("dice-calculator", "popout") === "none") return;
 			const tool = ui.controls.control.tools.diceTray;
 			if (tool) {
@@ -61,7 +60,7 @@ Hooks.once("i18nInit", () => {
 });
 
 Hooks.once("ready", () => {
-	if (game.settings.get("dice-calculator", "autoOpenPopout")) togglePopout();
+	if (game.settings.get("dice-calculator", "autoOpenPopout")) CONFIG.DICETRAY.togglePopout();
 });
 
 function getProviderString(regex) {
@@ -72,12 +71,6 @@ function getProviderString(regex) {
 		return id;
 	}
 	return "";
-}
-
-async function togglePopout() {
-	CONFIG.DICETRAY.popout ??= new DiceTrayPopOut();
-	if (CONFIG.DICETRAY.popout.rendered) await CONFIG.DICETRAY.popout.close({ animate: false });
-	else await CONFIG.DICETRAY.popout.render(true);
 }
 
 function moveDiceTray() {
@@ -94,7 +87,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
 			name: "diceTray",
 			title: "Dice Tray",
 			icon: "fas fa-dice-d20",
-			onChange: () => togglePopout(),
+			onChange: () => CONFIG.DICETRAY.togglePopout(),
 			active: CONFIG.DICETRAY.popout?.rendered || (!game.ready && autoOpenPopout),
 			toggle: true,
 		};
