@@ -63,7 +63,7 @@
 				"label": "Nascondi Pulsanti +/-"
 			},
 			"hideRollButton": {
-				"label": ""Nascondi Pulsante Tiro"
+				"label": "Nascondi Pulsante Tiro"
 			},
 			"Instruction1": "Fare clic su qualsiasi dado per modificarlo. Clic con il pulsante destro su qualsiasi dado per eliminarlo."
 		},
