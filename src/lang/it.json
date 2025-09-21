@@ -1,6 +1,6 @@
 {
 	"DICE_TRAY": {
-		"Adv": "Van",
+		"Adv": "Vant",
 		"Advantage": "Vantaggio",
 		"DiceTray": "Dice Tray",
 		"Dis": "Svan",
@@ -52,7 +52,20 @@
 		},
 
 		"DiceRows": {
-			"Instruction1": "Fare clic su qualsiasi dado per modificarlo. Clic con il pulsante destro del mouse su qualsiasi dado per eliminarlo."
+			"compactMode": {
+				"label": "Modalità Compatta",
+				"hint": "Disattiva tutte le file di dadi aggiuntive e unisce le due file originali."
+			},
+			"hideNumberInput": {
+				"label": "Nascondi inserimento numerico"
+			},
+			"hideNumberButtons": {
+				"label": "Nascondi Pulsanti +/-"
+			},
+			"hideRollButton": {
+				"label": ""Nascondi Pulsante Tiro"
+			},
+			"Instruction1": "Fare clic su qualsiasi dado per modificarlo. Clic con il pulsante destro su qualsiasi dado per eliminarlo."
 		},
 
 		"KEYBINGINDS": {
@@ -89,6 +102,13 @@
 				"options": {
 					"decrease": "Predefinito (Diminuisci Dadi)",
 					"roll": "Tira un solo dado"
+				}
+			},
+      "PF2E": {
+				"flatCheckLabel": "{dc} {text}",
+				"flatCheck": {
+					"name": "Aggiungi Pulsanti Flat Check",
+					"hint": "Sostituisce i pulsanti Fortuna/Sfortuna con i pulsanti Flat Check CD 5/11."
 				}
 			},
 			"SWADE": {
