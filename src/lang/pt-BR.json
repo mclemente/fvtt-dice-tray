@@ -89,6 +89,9 @@
 					"all": "Todos os Controles"
 				}
 			},
+			"PF2E": {
+				"flatCheckLabel": "{text} {dc}"
+			},
 			"SWADE": {
 				"wildDieBehavior": {
 					"name": "Usar \"Dice Pool\" para o botão Selvagem",
