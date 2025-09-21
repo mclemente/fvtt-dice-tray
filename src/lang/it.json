@@ -85,7 +85,7 @@
 				"name": "Abilita Scorciatoia Dadi",
 				"hint": "Abilita la visualizzazione di una scorciatoia per i dadi sotto l'area dei messaggi della chat. Questa è un'impostazione utente per i giocatori che non la desiderano."
 			},
-      "hideAdv": {
+			"hideAdv": {
 				"name": "Nascondi pulsanti extra",
 				"hint": "Nasconde i pulsanti KH/KL"
 			},
@@ -104,8 +104,8 @@
 					"roll": "Tira un solo dado"
 				}
 			},
-      "PF2E": {
-				"flatCheckLabel": "{dc} {text}",
+			"PF2E": {
+				"flatCheckLabel": "{text} {dc}",
 				"flatCheck": {
 					"name": "Aggiungi Pulsanti Flat Check",
 					"hint": "Sostituisce i pulsanti Fortuna/Sfortuna con i pulsanti Flat Check CD 5/11."
