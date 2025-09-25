@@ -52,6 +52,19 @@
 		},
 
 		"DiceRows": {
+			"compactMode": {
+				"label": "Tryb kompaktowy",
+				"hint": "Wyłącza dodatkowe rzędy kości i łączy dwa oryginalne rzędy."
+			},
+			"hideNumberInput": {
+				"label": "Ukryj wprowadzanie liczb"
+			},
+			"hideNumberButtons": {
+				"label": "Ukryj przyciski +/-"
+			},
+			"hideRollButton": {
+				"label": "Ukryj przycisk rzutu"
+			},
 			"Instruction1": "Kliknij dowolny przycisk kości, aby go edytować. Kliknij prawym przyciskiem myszy dowolny przycisk kości, aby go usunąć."
 		},
 
@@ -77,7 +90,7 @@
 				"hint": "Ukrywa przyciski Szczęścia/Nieszczęścia."
 			},
 			"popout": {
-				"name": "Dodaj przycisk do wyskakującego okna Dice Tray",
+				"name": "Przycisk wysuwania Dice Tray",
 				"hint": "Dodaje przycisk na pasku kontrolnym do włączania wyskakującego okienka Dice Tray. Można również przełączać wyskakujące okienko, ustawiając powiązanie klawiszy.",
 				"options": {
 					"all": "Wszystkie elementy sterujące"
@@ -89,6 +102,13 @@
 				"options": {
 					"decrease": "Domyślne (zmniejsz liczbę kości)",
 					"roll": "Rzuć jedną kostką"
+				}
+			},
+			"PF2E": {
+				"flatCheckLabel": "{dc} {text}",
+				"flatCheck": {
+					"name": "Dodaj przyciski płaskiego testu",
+					"hint": "Zastępuje przyciski „Szczęście/Pech” przyciskami „ST 5/11 Płaski Test”."
 				}
 			},
 			"SWADE": {
