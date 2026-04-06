@@ -103,12 +103,20 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		return document.querySelector("textarea.chat-input");
+		const proseMirror = document.getElementById("chat-message");
+		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
+		if (!editorContent) return proseMirror;
+		return {
+			get value() { return editorContent.innerText.replace(/\n$/, ""); },
+			set value(v) { editorContent.innerText = v; },
+			focus() { editorContent.focus(); },
+			select() { editorContent.focus(); }
+		};
 	}
 
 	roll(formula) {
-		const [rollMode] = ui.chat.constructor.parse(formula);
-		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
+		const rollMode = game.settings.get("core", "rollMode");
+		new Roll(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
 	}
 
 	/**
@@ -137,7 +145,7 @@ export default class TemplateDiceMap {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
-				this.textarea.select();
+				this.textarea.focus();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {

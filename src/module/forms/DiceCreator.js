@@ -5,7 +5,7 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		super(options);
 		const { dice, diceRows, form, settings } = object;
 		this.object = { dice, diceRows, settings };
-		this.parent = form;
+		this.parentForm = form;
 		Hooks.once("closeDiceRowSettings", () => this.close());
 	}
 
@@ -57,16 +57,16 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		const actualRow = row - 1;
 		if (this.object.dice && this.object.dice.row !== row) {
 			const key = this.object.dice.originalKey;
-			delete this.parent.diceRows[actualRow][key];
+			delete this.parentForm.diceRows[actualRow][key];
 		}
-		if (row > this.parent.diceRows.length) {
-			this.parent.diceRows.push({});
+		if (row > this.parentForm.diceRows.length) {
+			this.parentForm.diceRows.push({});
 		}
 		const cleanKey = Object.fromEntries(Object.entries(dice).filter(([k, v]) => k !== "key" && v !== ""));
 		if (!cleanKey.img && !cleanKey.label) {
 			cleanKey.label = dice.key;
 		}
-		this.parent.diceRows[actualRow][dice.key] = cleanKey;
-		this.parent.render(true);
+		this.parentForm.diceRows[actualRow][dice.key] = cleanKey;
+		this.parentForm.render(true);
 	}
 }
