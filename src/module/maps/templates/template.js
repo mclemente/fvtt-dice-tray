@@ -104,15 +104,15 @@ export default class TemplateDiceMap {
 
 	get textarea() {
 		// Foundry v13 rendered the chat input as `<textarea class="chat-input" id="chat-message">`.
-		// Foundry v14 restructured chat input and dropped the `chat-input` class on the textarea,
-		// but kept `#chat-message` as the id (the rest of this module's render path already
-		// relies on getElementById("chat-message") to locate the input).
-		// Try the legacy selector first for backward-compat, then fall back to the id lookup.
+		// Foundry v14 (≥14.352) replaced that with an inline `<prose-mirror id="chat-message">`
+		// custom element. Both expose a `value` getter/setter and `focus()`, which is all this
+		// module really needs; `select()` only exists on the textarea path and is guarded below.
 		return document.querySelector("textarea.chat-input")
 			?? document.getElementById("chat-message");
 	}
 
 	roll(formula) {
+		if (typeof formula !== "string" || !formula.trim()) return;
 		const [rollMode] = ui.chat.constructor.parse(formula);
 		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
 	}
@@ -145,7 +145,8 @@ export default class TemplateDiceMap {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
-				this.textarea?.select();
+				// v14's <prose-mirror> chat input has no `select()`; optional call is a no-op there.
+				this.textarea?.select?.();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
