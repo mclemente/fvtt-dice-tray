@@ -104,11 +104,31 @@ export default class TemplateDiceMap {
 
 	get textarea() {
 		// Foundry v13 rendered the chat input as `<textarea class="chat-input" id="chat-message">`.
-		// Foundry v14 (≥14.352) replaced that with an inline `<prose-mirror id="chat-message">`
-		// custom element. Both expose a `value` getter/setter and `focus()`, which is all this
-		// module really needs; `select()` only exists on the textarea path and is guarded below.
-		return document.querySelector("textarea.chat-input")
+		// Foundry v14 (≥14.352) replaced that with `<prose-mirror id="chat-message">`. Setting
+		// `.value` on that custom element doesn't reliably persist the string the tray is building
+		// up (so `.value` reads back as empty and Roll dies silently), so for the prose-mirror case
+		// we return a shadow object that keeps the tray's formula in module-local state and only
+		// best-effort mirrors into the real element for visual feedback.
+		const real = document.querySelector("textarea.chat-input")
 			?? document.getElementById("chat-message");
+		if (real?.tagName === "TEXTAREA") return real;
+
+		if (!this._proseMirrorShadow) {
+			this._proseMirrorShadow = {
+				_value: "",
+				get value() { return this._value; },
+				set value(v) {
+					this._value = String(v ?? "");
+					const el = document.getElementById("chat-message");
+					if (el) {
+						try { el.value = this._value; } catch{ /* prose-mirror may refuse; that's fine */ }
+					}
+				},
+				select() { /* no-op: <prose-mirror> has no select() */ },
+				focus() { document.getElementById("chat-message")?.focus?.(); }
+			};
+		}
+		return this._proseMirrorShadow;
 	}
 
 	roll(formula) {
