@@ -103,7 +103,13 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		return document.querySelector("textarea.chat-input");
+		// Foundry v13 rendered the chat input as `<textarea class="chat-input" id="chat-message">`.
+		// Foundry v14 restructured chat input and dropped the `chat-input` class on the textarea,
+		// but kept `#chat-message` as the id (the rest of this module's render path already
+		// relies on getElementById("chat-message") to locate the input).
+		// Try the legacy selector first for backward-compat, then fall back to the id lookup.
+		return document.querySelector("textarea.chat-input")
+			?? document.getElementById("chat-message");
 	}
 
 	roll(formula) {
@@ -126,9 +132,11 @@ export default class TemplateDiceMap {
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
-			this.roll(this.textarea.value);
+			const chat = this.textarea;
+			if (!chat) return;
+			this.roll(chat.value);
 			this.reset();
-			this.textarea.value = "";
+			chat.value = "";
 		});
 	}
 
@@ -137,7 +145,7 @@ export default class TemplateDiceMap {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
-				this.textarea.select();
+				this.textarea?.select();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
@@ -275,6 +283,7 @@ export default class TemplateDiceMap {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
 				const chat = this.textarea;
+				if (!chat) return;
 				let chatVal = String(chat.value);
 				const matchString = /\d*d\d+[khl]*/;
 
@@ -347,6 +356,7 @@ export default class TemplateDiceMap {
 		}
 
 		const chat = this.textarea;
+		if (!chat) return;
 		const chatVal = String(chat.value);
 
 		const matchString = /(\+|-)(\d+)$/;
@@ -361,7 +371,7 @@ export default class TemplateDiceMap {
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
 			chat.value = "";
 		}
-		if (!options.noFocus) this.textarea.focus();
+		if (!options.noFocus) this.textarea?.focus();
 	}
 
 	/**
@@ -386,6 +396,7 @@ export default class TemplateDiceMap {
 	 */
 	updateChatDice(dataset, direction, html) {
 		const chat = this.textarea;
+		if (!chat) return;
 		let currFormula = String(chat.value);
 		if (direction === "sub" && currFormula === "") {
 			this.reset();
