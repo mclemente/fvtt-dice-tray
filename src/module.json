@@ -16,7 +16,7 @@
 	"version": "This is auto replaced",
 	"compatibility": {
 		"minimum": "13",
-		"verified": "13"
+		"verified": "14"
 	},
 	"esmodules": ["module/dice-calculator.js"],
 	"styles": ["styles/dice-calculator.css"],

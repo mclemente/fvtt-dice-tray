@@ -103,10 +103,120 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		return document.querySelector("textarea.chat-input");
+		return this._createChatInputAdapter(this._resolveChatInput());
+	}
+
+	_resolveChatInput() {
+		const inputs = Array.from(document.querySelectorAll(".chat-input"));
+		return inputs.find((element) => element.matches(":focus-within"))
+			?? inputs.find((element) => element.classList.contains("active"))
+			?? inputs.find((element) => element.offsetParent !== null)
+			?? inputs[0]
+			?? null;
+	}
+
+	_isNativeChatInput(chatInput) {
+		return chatInput instanceof HTMLTextAreaElement || chatInput instanceof HTMLInputElement;
+	}
+
+	_getChatInputEditor(chatInput) {
+		if (!chatInput || this._isNativeChatInput(chatInput)) return chatInput;
+		return chatInput._primaryInput ?? chatInput.querySelector(".editor-content.ProseMirror, [contenteditable='true']");
+	}
+
+	_readChatInputValue(chatInput) {
+		if (!chatInput) return "";
+		if (this._isNativeChatInput(chatInput)) return chatInput.value ?? "";
+
+		const editor = this._getChatInputEditor(chatInput);
+		return editor?.textContent ?? chatInput.value ?? "";
+	}
+
+	_writeChatInputValue(chatInput, value) {
+		if (!chatInput) return;
+		const nextValue = String(value ?? "");
+
+		if (this._isNativeChatInput(chatInput)) {
+			chatInput.value = nextValue;
+			return;
+		}
+
+		if ("value" in chatInput) chatInput.value = nextValue;
+
+		const editor = this._getChatInputEditor(chatInput);
+		if (!editor) return;
+
+		editor.replaceChildren();
+		if (nextValue === "") {
+			const paragraph = document.createElement("p");
+			const trailingBreak = document.createElement("br");
+			trailingBreak.classList.add("ProseMirror-trailingBreak");
+			paragraph.append(trailingBreak);
+			editor.append(paragraph);
+		} else {
+			for (const line of nextValue.split("\n")) {
+				const paragraph = document.createElement("p");
+				paragraph.textContent = line;
+				editor.append(paragraph);
+			}
+		}
+
+		for (const target of [editor, chatInput]) {
+			target.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
+			target.dispatchEvent(new Event("change", { bubbles: true, cancelable: true }));
+		}
+	}
+
+	_focusChatInput(chatInput) {
+		chatInput?.focus?.();
+	}
+
+	_selectChatInput(chatInput) {
+		if (!chatInput) return;
+		if (typeof chatInput.select === "function") {
+			chatInput.select();
+			return;
+		}
+
+		const editor = this._getChatInputEditor(chatInput);
+		if (!editor) {
+			this._focusChatInput(chatInput);
+			return;
+		}
+
+		this._focusChatInput(chatInput);
+		const selection = window.getSelection();
+		if (!selection) return;
+
+		const range = document.createRange();
+		range.selectNodeContents(editor);
+		selection.removeAllRanges();
+		selection.addRange(range);
+	}
+
+	_createChatInputAdapter(chatInput) {
+		const owner = this;
+		return {
+			get value() {
+				return owner._readChatInputValue(chatInput);
+			},
+			set value(value) {
+				owner._writeChatInputValue(chatInput, value);
+			},
+			focus() {
+				owner._focusChatInput(chatInput);
+			},
+			select() {
+				owner._selectChatInput(chatInput);
+			},
+			get element() {
+				return chatInput;
+			}
+		};
 	}
 
 	roll(formula) {
+		if (!formula?.trim()) return;
 		const [rollMode] = ui.chat.constructor.parse(formula);
 		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
 	}
