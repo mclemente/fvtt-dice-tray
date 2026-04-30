@@ -35,24 +35,37 @@
 				"hint": "Řádek, na kterém bude tlačítko umístěno."
 			},
 			"Image": {
-				"name": "Ilustrace"
+				"name": "Ikonka"
 			},
 			"Label": {
 				"name": "Štítek",
-				"hint": "štítek zobrazovaný v případech, kdy kostka nemá ilustraci."
+				"hint": "Štítek zobrazovaný v případech, kdy kostka nemá ikonku."
 			},
 			"Tooltip": {
 				"name": "Popiska",
-				"hint": "Popiska zobrazená při přejetí myší nad tlačítkem. Výchozí hodnota je ´Vzorec´."
+				"hint": "Popiska zobrazená při přejetí myší nad tlačítkem. Výchozí hodnota je 'Vzorec'."
 			},
 			"Color": {
 				"name": "Barva",
-				"hint": "Barva, která vyplňuje ilustraci."
+				"hint": "Barva vyplňující ikonku."
 			}
 		},
 
 		"DiceRows": {
-			"Instruction1": "Pro úpravu klikni na libovolné tlačítko kostky."
+			"compactMode": {
+				"label": "Kompaktní režim?",
+				"hint": "Zaškrtnutí zakáže všechny další řady kostek a sloučí původní dvě řady dohromady."
+			},
+			"hideNumberInput": {
+				"label": "Skrývat zadávání čísel?"
+			},
+			"hideNumberButtons": {
+				"label": "Skrývat tlačítka '+/-'?"
+			},
+			"hideRollButton": {
+				"label": "Skrývat tlačítko 'Hoď!'?"
+			},
+			"Instruction1": "Pro úpravu klikni na libovolné tlačítko kostky. Pro odstranění klikni pravým tlačítkem myši na libovolné tlačítko kostky."
 		},
 
 		"KEYBINGINDS": {
@@ -63,22 +76,22 @@
 
 		"SETTINGS": {
 			"DiceCreator": "Tvůrce kostek",
-			"DiceRowSettings": "Nastavení řádky kostek",
+			"DiceRowSettings": "Nastavit řádku kostek",
 			"autoOpenPopout": {
-				"name": "Otevírat s vyskakovacím Dice Tray?",
+				"name": "Otevírat s vyskakovací řádkou kostek?",
 				"hint": "Při načtení stránky automaticky otevře vyskakovací okno Dice Tray."
 			},
 			"enableDiceTray": {
-				"name": "Povolit Dice Tray?",
-				"hint": "Povolí zobrazení Dice Tray pod oblastí zpráv v chatu."
+				"name": "Povolit řádku kostek?",
+				"hint": "Povolí zobrazení řádky kostek pod oblastí zpráv v chatu."
 			},
 			"hideAdv": {
-				"name": "Skrývat tlačítka navíc?",
-				"hint": "Skryje tlačítka Štěstí (KH) / Smůla (KL)."
+				"name": "Skrývat dodatečná tlačítka?",
+				"hint": "Skryje tlačítka Výhody/Nevýhody (Štěstí/Smůly)."
 			},
 			"popout": {
 				"name": "Vyskakovací tlačítko Dice Tray",
-				"hint": "Kam se má přidat tlačítko pro přepínání vyskakovacího okna Dice Tray. Vyskakovací okno můžeš přepínat i nastavenou klávesovou zkratkou.",
+				"hint": "Kam se má přidat tlačítko přepínače vyskakovacího okna Dice Tray. Vyskakovací okno můžeš přepínat i nastavenou klávesovou zkratkou.",
 				"options": {
 					"all": "Všechny ovládací prvky"
 				}
@@ -91,10 +104,17 @@
 					"roll": "Hodit jednu kostku"
 				}
 			},
+			"PF2E": {
+				"flatCheckLabel": "{dc} {text}",
+				"flatCheck": {
+					"name": "Přidat tlačítko pro pevní ověření",
+					"hint": "Nahradí tlačítka Štěstí/Smůly tlačítky pro pevné ověření SO 5/11."
+				}
+			},
 			"SWADE": {
 				"wildDieBehavior": {
-					"name": "Použití fondu kostek pro tlačítko ´Divoká´",
-					"hint": "Kliknutí na stejnou kostku s aktivovaným režimem ´Divoká´ přidá kostku do fondu namísto zvětšení aktuální kostky v seznamu."
+					"name": "Použití fondu kostek pro tlačítko 'Divoká'",
+					"hint": "Kliknutí na stejnou kostku s aktivovaným režimem 'Divoká' přidá kostku do fondu namísto zvětšení aktuální kostky v seznamu."
 				}
 			}
 		}
