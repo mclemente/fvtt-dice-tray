@@ -43,6 +43,7 @@
 	.dice-tray__buttons {
 		.dice-tray__button {
 			border-radius: 0;
+
 			&:first-child {
 				border-radius: $border-radius 0 0 $border-radius;
 			}
