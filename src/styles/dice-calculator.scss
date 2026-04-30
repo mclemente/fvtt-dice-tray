@@ -6,14 +6,19 @@
 #sidebar-content {
 	.dice-tray {
 		pointer-events: all;
-		margin-top: .5rem;
+	}
+}
+
+#ui-right {
+	.dice-tray {
+		margin-top: 2px;
 	}
 }
 
 #chat-popout,
 #sidebar-content {
 	.dice-tray {
-		margin-top: 0;
+		margin-top: -6px;
 	}
 }
 
@@ -47,7 +52,7 @@
 		}
 	}
 	.dice-tray__math__buttons {
-		margin-top: .2rem;
+		margin-top: 2px;
 	}
 	.dice-tray__input {
 		border-radius: 0;
@@ -94,7 +99,7 @@
 		}
 		.dice-tray__flag {
 			position: absolute;
-			bottom: 100%;
+			bottom: calc(100% - 2px);
 			left: 0;
 			right: 0;
 			font-size: 14px;
