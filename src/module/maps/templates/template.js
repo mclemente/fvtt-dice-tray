@@ -103,7 +103,14 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		return document.querySelector("textarea.chat-input");
+		const proseMirror = document.getElementById("chat-message");
+		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
+		if (!editorContent) return proseMirror;
+		return {
+			get value() { return editorContent.innerText.replace(/\n$/, ""); },
+			set value(v) { editorContent.innerText = v; },
+			focus() { editorContent.focus(); },
+		};
 	}
 
 	roll(formula) {
@@ -137,7 +144,7 @@ export default class TemplateDiceMap {
 			// Avoids moving focus to the button
 			button.addEventListener("pointerdown", (event) => {
 				event.preventDefault();
-				this.textarea.select();
+				this.textarea.focus();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
