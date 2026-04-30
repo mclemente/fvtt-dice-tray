@@ -110,13 +110,12 @@ export default class TemplateDiceMap {
 			get value() { return editorContent.innerText.replace(/\n$/, ""); },
 			set value(v) { editorContent.innerText = v; },
 			focus() { editorContent.focus(); },
-			select() { editorContent.focus(); }
 		};
 	}
 
 	roll(formula) {
-		const rollMode = game.settings.get("core", "rollMode");
-		new Roll(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
+		const [rollMode] = ui.chat.constructor.parse(formula);
+		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
 	}
 
 	/**
