@@ -9,6 +9,12 @@
 	}
 }
 
+#ui-right {
+	.dice-tray {
+		margin-top: 2px;
+	}
+}
+
 #chat-popout,
 #sidebar-content {
 	.dice-tray {
@@ -19,15 +25,41 @@
 .dice-tray {
 	.dice-tray__stacked {
 		height: 30px;
+
 		button {
 			min-height: initial;
+
+			&:first-child {
+				border-radius: $border-radius $border-radius 0 0;
+			}
+			&:last-child {
+				border-radius: 0 0 $border-radius $border-radius;
+			}
 		}
 	}
 	.dice-tray__buttons, .dice-tray__math, .dice-tray__input {
 		height: 30px;
 	}
+	.dice-tray__buttons {
+		.dice-tray__button {
+			border-radius: 0;
+
+			&:first-child {
+				border-radius: $border-radius 0 0 $border-radius;
+			}
+			&:last-child {
+				border-radius: 0 $border-radius $border-radius 0;
+			}
+		}
+	}
 	.dice-tray__math__buttons {
 		margin-top: 2px;
+	}
+	.dice-tray__input {
+		border-radius: 0;
+	}
+	#dice-tray-math {
+		margin: 0 .2rem;
 	}
 	.flexrow {
 		flex-wrap: nowrap;
@@ -79,7 +111,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 4px 4px 0 0;
+			border-radius: $border-radius $border-radius 0 0;
 			max-height: 18px;
 			transition: all ease-in-out 0.15s;
 			&:hover {
@@ -105,11 +137,15 @@
 			}
 		}
 		&.dice-tray__math--sub {
+			border-radius: 6px 0 0 6px;
+
 			&:hover {
 				@include hover-style($orange);
 			}
 		}
 		&.dice-tray__math--add {
+			border-radius: 0 $border-radius $border-radius 0;
+
 			&:hover {
 				background: $green;
 				border-color: $green;

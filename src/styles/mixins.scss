@@ -1,6 +1,7 @@
 $white: #fff;
 $orange: var(--color-warm-2);
 $green: #0a9843;
+$border-radius: 4px;
 
 @mixin dice-tray-theme {
 	.dice-tray {
