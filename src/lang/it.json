@@ -48,6 +48,10 @@
 			"Color": {
 				"name": "Colore",
 				"hint": "Il colore che riempie l'immagine."
+      },
+			"Alternative": {
+				"name": "Visualizzazione Alternativa",
+				"hint": "Seleziona questa opzione se l'immagine non viene caricata."  
 			}
 		},
 
