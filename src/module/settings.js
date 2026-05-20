@@ -34,7 +34,17 @@ export function registerSettings() {
 		scope: "world",
 		config: false,
 		default: CONFIG.DICETRAY.dice,
-		type: Array,
+		type: new foundry.data.fields.ArrayField(
+			new foundry.data.fields.TypedObjectField(
+				new foundry.data.fields.SchemaField({
+					key: new foundry.data.fields.StringField(),
+					img: new foundry.data.fields.FilePathField({categories: ["IMAGE"]}),
+					alternative: new foundry.data.fields.BooleanField(),
+					// Optional Fields
+					label: new foundry.data.fields.StringField(),
+					tooltip: new foundry.data.fields.StringField(),
+					color: new foundry.data.fields.ColorField(),
+				}))),
 	});
 
 	game.settings.register("dice-calculator", "compactMode", {

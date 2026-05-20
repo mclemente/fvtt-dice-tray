@@ -66,6 +66,9 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		if (!cleanKey.img && !cleanKey.label) {
 			cleanKey.label = dice.key;
 		}
+		if (!cleanKey.img && cleanKey.alternative) {
+			cleanKey.alternative = false;
+		}
 		this.diceRowSettings.diceRows[actualRow][dice.key] = cleanKey;
 		this.diceRowSettings.render(true);
 	}
