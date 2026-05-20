@@ -1,5 +1,6 @@
 export { default as Template } from "./templates/template.js";
 
+export { default as alienrpg } from "./alienrpg.js";
 export { default as cosmere } from "./cosmere.js";
 export { default as dcc } from "./dcc.js";
 export { default as demonlord } from "./demonlord.js";
