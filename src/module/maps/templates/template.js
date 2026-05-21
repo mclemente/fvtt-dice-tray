@@ -109,7 +109,6 @@ export default class TemplateDiceMap {
 		return {
 			get value() { return editorContent.innerText.replace(/\n$/, ""); },
 			set value(v) { editorContent.innerText = v; },
-			focus() { editorContent.focus(); },
 		};
 	}
 
@@ -139,13 +138,6 @@ export default class TemplateDiceMap {
 	}
 
 	applyListeners(html) {
-		html.querySelectorAll(".dice-tray button").forEach((button) => {
-			// Avoids moving focus to the button
-			button.addEventListener("pointerdown", (event) => {
-				event.preventDefault();
-				this.textarea.focus();
-			});
-		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
@@ -167,6 +159,48 @@ export default class TemplateDiceMap {
 						CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
 				}
 			});
+
+			if (button.draggable) button.addEventListener("dragstart", (event) => {
+				const dataset = event.target.dataset;
+				const dragData = JSON.parse(JSON.stringify(dataset));
+				if (dragData?.formula) {
+					// Grab the modifier, if any.
+					const parentElement = event.target.closest(".dice-tray");
+					const modInput = parentElement.querySelector(".dice-tray__input");
+					const mod = modInput.value;
+
+					// Grab the count, if any.
+					const qty = button.querySelector(".dice-tray__flag").textContent;
+					if (qty.length > 0) {
+						dragData.formula = `${qty}${dataset.formula}`;
+					}
+
+					// Apply the modifier.
+					if (mod && mod !== "0") {
+						dragData.formula += ` + ${mod}`;
+					}
+					dragData.origin = "dice-calculator";
+					event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+				}
+			});
+		});
+
+		document.documentElement.addEventListener("drop", async (event) => {
+			// This try-catch is needed because it conflicts with other modules
+			try {
+				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+				// If there's a formula, trigger the roll.
+				if (data?.origin === "dice-calculator" && data?.formula) {
+					const rollPrefix = this._getRollMode();
+					await this.roll(`${rollPrefix} ${data.formula}`);
+					this.reset();
+					this.textarea.value = "";
+					event.stopImmediatePropagation();
+				}
+			} catch(err) {
+				// Unable to Parse Data, Return Event
+				return event;
+			}
 		});
 
 		// Handle correcting the modifier math if it's null.
@@ -368,7 +402,6 @@ export default class TemplateDiceMap {
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
 			chat.value = "";
 		}
-		if (!options.noFocus) this.textarea.focus();
 	}
 
 	/**
