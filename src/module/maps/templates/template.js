@@ -113,9 +113,8 @@ export default class TemplateDiceMap {
 		};
 	}
 
-	roll(formula) {
-		const [rollMode] = ui.chat.constructor.parse(formula);
-		Roll.create(formula.replace(/(\/r|\/gmr|\/br|\/sr) /, "")).toMessage({}, { rollMode });
+	async roll(formula) {
+		return await ui.chat.processMessage(formula);
 	}
 
 	/**
@@ -133,7 +132,7 @@ export default class TemplateDiceMap {
 		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
 		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
-			this.roll(this.textarea.value);
+			await this.roll(this.textarea.value);
 			this.reset();
 			this.textarea.value = "";
 		});
@@ -154,12 +153,13 @@ export default class TemplateDiceMap {
 				CONFIG.DICETRAY.updateChatDice(dataset, "add", html);
 			});
 
-			button.addEventListener("contextmenu", (event) => {
+			button.addEventListener("contextmenu", async (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
 				switch (this.rightClickCommand) {
 					case "roll": {
-						this.roll(dataset.formula);
+						const rollPrefix = this._getRollMode();
+						await this.roll(`${rollPrefix} ${dataset.formula}`);
 						break;
 					}
 					case "decrease":
@@ -362,7 +362,7 @@ export default class TemplateDiceMap {
 		} else if (chatVal !== "") {
 			chat.value = chatVal + modString;
 		} else {
-			const rollPrefix = this._getRollMode(html);
+			const rollPrefix = this._getRollMode();
 			chat.value = `${rollPrefix} ${modString}`;
 		}
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
@@ -398,7 +398,7 @@ export default class TemplateDiceMap {
 			this.reset();
 			return;
 		}
-		const rollPrefix = this._getRollMode(html);
+		const rollPrefix = this._getRollMode();
 		let qty = 1;
 		let dice = "";
 
@@ -462,10 +462,9 @@ export default class TemplateDiceMap {
 
 	/**
 	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the rollMode is picked up during Roll#toMessage
-	 * @param {HTMLElement} html
 	 * @returns {String}
 	 */
-	_getRollMode(html) {
+	_getRollMode() {
 		const rollMode = game.settings.get("core", "rollMode");
 		switch (rollMode) {
 			case "gmroll":
