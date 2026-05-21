@@ -103,7 +103,7 @@ export default class TemplateDiceMap {
 	}
 
 	get textarea() {
-		const proseMirror = document.getElementById("chat-message");
+		const proseMirror = document.getElementById("chat-message") ?? ui.chat.popout?.element;
 		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
 		if (!editorContent) return proseMirror;
 		return {
