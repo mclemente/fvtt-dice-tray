@@ -48,6 +48,10 @@
 			"Color": {
 				"name": "Kolor",
 				"hint": "Kolor wypełniający obraz."
+			},
+			"Alternative": {
+				"name": "Alternatywny tryb wyświetlania",
+				"hint": "Wybierz tę opcję, jeśli obraz się nie ładuje."
 			}
 		},
 
