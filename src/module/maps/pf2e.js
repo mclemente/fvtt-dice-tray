@@ -1,5 +1,6 @@
 import GenericDiceMap from "./templates/template.js";
 
+// This is also used by the Starfinder 2e system. See _module.js
 export default class pf2eDiceMap extends GenericDiceMap {
 	get buttonFormulas() {
 		if (game.settings.get("dice-calculator", "flatCheck")) {
