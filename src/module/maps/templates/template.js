@@ -140,21 +140,14 @@ export default class TemplateDiceMap {
 	}
 
 	applyListeners(html) {
+		// Auto-focuses on the chat box but wait for any drag events
 		html.querySelectorAll(".dice-tray button").forEach((button) => {
 			let blur = false;
 			let pointerDownEvent;
-			button.addEventListener("focus", (event) => {
-				event.preventDefault();
-			});
 			button.addEventListener("pointerdown", (event) => {
 				pointerDownEvent = event;
-				// Avoid chat notifications' box constantly "accordioning" when losing and gaining focus
-				if (
-					!ui.sidebar.expanded
-					&& !ui.chat.popout?.rendered
-					&& !ui.chat.isPopout
-					&& CONFIG.DICETRAY.textarea.element !== document.activeElement
-				) {
+				// Avoid chat notifications' box constantly "accordioning" when losing and gaining focus but still remove focus from buttons
+				if (!ui.sidebar.expanded && !ui.chat.popout?.rendered && !ui.chat.isPopout) {
 					blur = true;
 					return;
 				}
