@@ -40,7 +40,7 @@ export default class GrimwildDiceMap extends TemplateDiceMap {
 		// Exit early if there's nothing in chat and this is a remove operation.
 		if (direction === "sub" && currFormula === "") return;
 		// Grab the dice roll mode from chat.
-		let rollPrefix = this._getRollMode(html);
+		let rollPrefix = this._getMessageMode();
 		// Store the current dice and thorn values for later.
 		let dice = "";
 		let thorns = "";
@@ -50,7 +50,7 @@ export default class GrimwildDiceMap extends TemplateDiceMap {
 
 		// Prepare a string of possible roll types for the regex. This should also
 		// catch any manually written roll types, like "/gmroll".
-		const rollModes = [
+		const messageModes = [
 			"/roll", "/r",
 			"/publicroll", "/pr",
 			"/gmroll", "/gmr",
@@ -64,15 +64,15 @@ export default class GrimwildDiceMap extends TemplateDiceMap {
 		/**
 		 * Regex for the dice expression. Examples: /r 4d2t, /gmr 2d, /br 4p
 		 * Parts:
-		 * (${rollModes})+ - Will be the /r, /gmroll, etc.
+		 * (${messageModes})+ - Will be the /r, /gmroll, etc.
 		 * \\s* - Whitespace between roll and formula.
 		 * (\\d+[dp])* - Dice or pool, 4d, 4p, etc.
 		 * (\\d+t)* - Thorns, 4t
 		 * (.)* - Catch all for trailing characters. Used to snip off extras like "/r 4d6" becoming "/r 4d"
 		 */
-		const rollTextRegex = new RegExp(`(${rollModes})+\\s*(\\d+[dp])*(\\d+t)*(.)*`);
+		const rollTextRegex = new RegExp(`(${messageModes})+\\s*(\\d+[dp])*(\\d+t)*(.)*`);
 		// Run the regex with capture groups for targeted replacement.
-		currFormula = currFormula.replace(rollTextRegex, (match, rollMode, diceMatch, thornsMatch, trailMatch) => {
+		currFormula = currFormula.replace(rollTextRegex, (match, messageMode, diceMatch, thornsMatch, trailMatch) => {
 			// If this is a remove operation and no dice were found, exit early.
 			if (direction === "sub" && !diceMatch) {
 				return match;

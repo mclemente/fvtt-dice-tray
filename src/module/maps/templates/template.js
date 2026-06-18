@@ -150,7 +150,7 @@ export default class TemplateDiceMap {
 				const dataset = event.currentTarget.dataset;
 				switch (this.rightClickCommand) {
 					case "roll": {
-						const rollPrefix = this._getRollMode();
+						const rollPrefix = this._getMessageMode();
 						await this.roll(`${rollPrefix} ${dataset.formula}`);
 						break;
 					}
@@ -191,7 +191,7 @@ export default class TemplateDiceMap {
 				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
 				// If there's a formula, trigger the roll.
 				if (data?.origin === "dice-calculator" && data?.formula) {
-					const rollPrefix = this._getRollMode();
+					const rollPrefix = this._getMessageMode();
 					await this.roll(`${rollPrefix} ${data.formula}`);
 					this.reset();
 					this.textarea.value = "";
@@ -396,7 +396,7 @@ export default class TemplateDiceMap {
 		} else if (chatVal !== "") {
 			chat.value = chatVal + modString;
 		} else {
-			const rollPrefix = this._getRollMode();
+			const rollPrefix = this._getMessageMode();
 			chat.value = `${rollPrefix} ${modString}`;
 		}
 		if (/(\/r|\/gmr|\/br|\/sr) $/g.test(chat.value)) {
@@ -431,7 +431,7 @@ export default class TemplateDiceMap {
 			this.reset();
 			return;
 		}
-		const rollPrefix = this._getRollMode();
+		const rollPrefix = this._getMessageMode();
 		let qty = 1;
 		let dice = "";
 
@@ -494,12 +494,12 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the rollMode is picked up during Roll#toMessage
+	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the messageMode is picked up during Roll#toMessage
 	 * @returns {String}
 	 */
-	_getRollMode() {
-		const rollMode = game.settings.get("core", "rollMode");
-		switch (rollMode) {
+	_getMessageMode() {
+		const messageMode = game.settings.get("core", "messageMode");
+		switch (messageMode) {
 			case "gmroll":
 				return "/gmr";
 			case "blindroll":

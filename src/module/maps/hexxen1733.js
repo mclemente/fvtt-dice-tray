@@ -55,7 +55,7 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 		} else if (chatVal !== "") {
 			chat.value = chatVal + modString;
 		} else {
-			const rollPrefix = this._getRollMode(html);
+			const rollPrefix = this._getMessageMode();
 			chat.value = `${rollPrefix} ${modString}`;
 		}
 
@@ -73,7 +73,7 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 			return;
 		}
 
-		const rollPrefix = this._getRollMode(html);
+		const rollPrefix = this._getMessageMode();
 		let qty = 1;
 		let dice = "";
 
