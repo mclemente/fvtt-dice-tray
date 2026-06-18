@@ -107,8 +107,10 @@ export default class TemplateDiceMap {
 		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
 		if (!editorContent) return proseMirror;
 		return {
+			get element() { return editorContent },
 			get value() { return editorContent.innerText.replace(/\n$/, ""); },
 			set value(v) { editorContent.innerText = v; },
+			focus() { editorContent?.focus(); },
 		};
 	}
 
@@ -138,6 +140,44 @@ export default class TemplateDiceMap {
 	}
 
 	applyListeners(html) {
+		html.querySelectorAll(".dice-tray button").forEach((button) => {
+			let blur = false;
+			let pointerDownEvent;
+			button.addEventListener("focus", (event) => {
+				event.preventDefault();
+			});
+			button.addEventListener("pointerdown", (event) => {
+				pointerDownEvent = event;
+				// Avoid chat notifications' box constantly "accordioning" when losing and gaining focus
+				if (
+					!ui.sidebar.expanded
+					&& !ui.chat.popout?.rendered
+					&& !ui.chat.isPopout
+					&& CONFIG.DICETRAY.textarea.element !== document.activeElement
+				) {
+					blur = true;
+					return;
+				}
+				this.textarea.focus();
+			});
+			button.addEventListener("dragend", (event) => {
+				event.preventDefault();
+				if (pointerDownEvent) {
+					if (blur) pointerDownEvent.target.blur();
+					else this.textarea.focus();
+				}
+				blur = false;
+				pointerDownEvent = null;
+			});
+			button.addEventListener("pointerup", (event) => {
+				if (pointerDownEvent) {
+					if (blur) pointerDownEvent.target.blur();
+					else this.textarea.focus();
+				}
+				blur = false;
+				pointerDownEvent = null;
+			});
+		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
