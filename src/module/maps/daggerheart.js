@@ -17,7 +17,7 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 				d10: { img: "icons/dice/d10black.svg" },
 				d12: { img: "icons/dice/d12black.svg" },
 				"/dr": { label: "DR", tooltip: "Duality Roll" },
-				"/df": { label: "FR", tooltip: "Fate Roll" },
+				"/fr": { label: "FR", tooltip: "Fate Roll" },
 			}
 		];
 	}
