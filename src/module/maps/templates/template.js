@@ -495,9 +495,9 @@ export default class TemplateDiceMap {
 			matchDice = `${dice}(?!0)[khl]*`;
 		}
 
-		const matchRegex = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=\\+|\\-|$)`);
+		const matchString = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=\\+|\\-|$)`);
 
-		const match = currFormula ? currFormula.match(matchRegex) : null;
+		const match = currFormula ? currFormula.match(matchString) : null;
 		if (match) {
 			if (emptyFormula) {
 				qty = 0;
@@ -509,14 +509,14 @@ export default class TemplateDiceMap {
 			}
 
 			if (!qty && direction === "sub") {
-				currFormula = currFormula.replace(matchRegex, "");
+				currFormula = currFormula.replace(matchString, "");
 				// Clear formula if remaining formula is something like "/r kh"
 				if (new RegExp(`${rollPrefix}\\s*(?!.*d\\d+.*)`).test(currFormula)) {
 					currFormula = "";
 				}
 			} else if (!emptyFormula) {
 				const currentDie = match.groups?.dice || dice || newFormula;
-				currFormula = currFormula.replace(matchRegex, this.rawFormula(qty, currentDie, html));
+				currFormula = currFormula.replace(matchString, this.rawFormula(qty, currentDie, html));
 			}
 		} else if (currFormula === "") {
 			if (emptyFormula) currFormula = rollPrefix;
