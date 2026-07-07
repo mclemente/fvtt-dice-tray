@@ -44,7 +44,7 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 
 				if (match) {
 					const { term } = match.groups;
-					if (term === dataset.formula) chatVal = chatVal.replace(new RegExp(`(${term}=true)`), "").trim();
+					if (term === dataset.formula) chatVal = chatVal = "";
 					else if (term) chatVal = chatVal.replace(term, dataset.formula);
 					else chatVal = `${chatVal} ${dataset.formula}=true`;
 				} else if (!chatVal) {
@@ -55,7 +55,7 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 				const toggleClass = (selector, condition) => {
 					html.querySelector(selector)?.classList.toggle("active", condition);
 				};
-				toggleClass(".dice-tray__advantage", chatVal.includes("advantage=true"));
+				toggleClass(".dice-tray__advantage", chatVal.includes(" advantage=true"));
 				toggleClass(".dice-tray__disadvantage", chatVal.includes("disadvantage=true"));
 				// Update the value.
 				chat.value = chatVal;
