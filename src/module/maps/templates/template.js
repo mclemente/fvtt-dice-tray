@@ -107,7 +107,7 @@ export default class TemplateDiceMap {
 		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
 		if (!editorContent) return proseMirror;
 		return {
-			get element() { return editorContent },
+			get element() { return editorContent; },
 			get value() { return editorContent.innerText.replace(/\n$/, ""); },
 			set value(v) { editorContent.innerText = v; },
 			focus() { editorContent?.focus(); },
@@ -519,7 +519,8 @@ export default class TemplateDiceMap {
 	}
 
 	updateDiceFlags(qty, formula) {
-		const flags = document.querySelectorAll(`.dice-tray__flag--${formula}`);
+		const selector = CSS.escape(`dice-tray__flag--${formula}`); // There is a chance the formula contains invalid CSS character (e.g. "/")
+		const flags = document.querySelectorAll(`.${selector}`);
 		for (const flag of flags) {
 			flag.textContent = qty !== 0 ? qty : "";
 			flag.classList.toggle("hide", qty === 0);
@@ -527,7 +528,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the messageMode is picked up during Roll#toMessage
+	 * Gets the selected roll mode.
 	 * @returns {String}
 	 */
 	_getMessageMode() {
