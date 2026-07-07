@@ -107,7 +107,7 @@ export default class TemplateDiceMap {
 		const editorContent = proseMirror?.querySelector(".editor-content.ProseMirror");
 		if (!editorContent) return proseMirror;
 		return {
-			get element() { return editorContent },
+			get element() { return editorContent; },
 			get value() { return editorContent.innerText.replace(/\n$/, ""); },
 			set value(v) { editorContent.innerText = v; },
 			focus() { editorContent?.focus(); },
@@ -447,6 +447,7 @@ export default class TemplateDiceMap {
 	 * @returns {String}
 	 */
 	rawFormula(qty, dice, html) {
+		if (Number.isNumeric(dice)) dice = "";
 		return `${qty === "" ? 1 : qty}${dice}`;
 	}
 
@@ -460,66 +461,87 @@ export default class TemplateDiceMap {
 	updateChatDice(dataset, direction, html) {
 		const chat = this.textarea;
 		let currFormula = String(chat.value);
+
 		if (direction === "sub" && currFormula === "") {
 			this.reset();
 			return;
 		}
-		const rollPrefix = this._getMessageMode();
+		let newFormula = dataset.formula;
 		let qty = 1;
 		let dice = "";
+		let matchDice = "\\d*";
+		let rollPrefix = this._getMessageMode();
 
-		let matchDice = dataset.formula;
-		const diceRegex = /^(\d*)(d.+)/;
-		if (diceRegex.test(dataset.formula)) {
-			const match = dataset.formula.match(diceRegex);
-			qty = Number(match[1]) || 1;
-			// Avoid issues with 0-ended dice (e.g. d100 vs d10, d20 vs d2)
-			matchDice = `${match[2]}(?!0)`;
-			dice = match[2];
+		const isCustomCommand = newFormula.startsWith("/");
+		if (isCustomCommand) {
+			const space = currFormula.indexOf(" ");
+
+			if (space === -1) {
+				rollPrefix = newFormula;
+				newFormula = "";
+			} else {
+				rollPrefix = newFormula.slice(0, space);
+				newFormula = newFormula.slice(space + 1).trim();
+			}
 		}
-		// Catch KH/KL
-		matchDice += "[khl]*";
+		const emptyFormula = isCustomCommand && !newFormula;
+
+		const diceMatch = newFormula.match(/^(\d*)(d.+)/);
+		if (diceMatch) {
+			qty = Number(diceMatch[1]) || 1;
+			dice = diceMatch[2];
+			// Prevent matching d10 when looking for d100, etc.
+			matchDice = `${dice}(?!0)[khl]*`;
+		}
 
 		const matchString = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=\\+|\\-|$)`);
-		if (matchString.test(currFormula)) {
-			const match = currFormula.match(matchString);
-			const parts = {
-				qty: Number(match.groups?.qty ?? (match[1] || 1)),
-				die: match.groups?.dice ?? (match[2] || ""),
-			};
+		const match = currFormula ? currFormula.match(matchString) : null;
+		if (match) {
+			if (emptyFormula) {
+				qty = 0;
+			} else {
+				const currentQty = Number(match.groups?.qty || 1);
+				const delta = qty || 1;
 
-			if (parts.die === "" && match[3]) {
-				parts.die = match[3];
+				qty = direction === "add" ? currentQty + delta : currentQty - delta;
 			}
-
-			qty = direction === "add" ? parts.qty + (qty || 1) : parts.qty - (qty || 1);
 
 			if (!qty && direction === "sub") {
 				currFormula = currFormula.replace(matchString, "");
 				// Clear formula if remaining formula is something like "/r kh"
-				if (new RegExp(`${rollPrefix}\\s+(?!.*d\\d+.*)`).test(currFormula)) {
+				if (new RegExp(`${rollPrefix}\\s*(?!.*d\\d+.*)`).test(currFormula)) {
 					currFormula = "";
 				}
-			} else currFormula = currFormula.replace(matchString, this.rawFormula(qty, parts.die, html));
-
+			} else if (!emptyFormula) {
+				const currentDie = match.groups?.dice || dice || newFormula;
+				currFormula = currFormula.replace(matchString, this.rawFormula(qty, currentDie, html));
+			}
 		} else if (currFormula === "") {
-			currFormula = `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}`;
+			if (emptyFormula) currFormula = rollPrefix;
+			else currFormula = `${rollPrefix} ${this.rawFormula(qty, dice || newFormula, html)}`;
 		} else {
 			const signal = (/(\/r|\/gmr|\/br|\/sr) (?!-)/g.test(currFormula)) ? "+" : "";
-			currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || dataset.formula, html)}${signal}`);
+			currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr) /g, `${rollPrefix} ${this.rawFormula(qty, dice || newFormula, html)}${signal}`);
 		}
-		chat.value = currFormula;
+		currFormula = currFormula
+			.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `)
+			.replace(/\+{2}/g, "+")
+			.replace(/-{2}/g, "-")
+			.replace(/\+$/g, "");
 
-		// Add a flag indicator on the dice.
-		this.updateDiceFlags(qty, dataset.formula);
-
-		currFormula = currFormula.replace(/(\/r|\/gmr|\/br|\/sr)(( \+)| )/g, `${rollPrefix} `).replace(/\+{2}/g, "+").replace(/-{2}/g, "-").replace(/\+$/g, "");
 		chat.value = currFormula;
+		this.updateDiceFlags(qty, newFormula);
 		this.applyModifier(html);
 	}
 
+	/**
+	 * Updates the orange indicator above the dice button.
+	 * @param {Number} qty
+	 * @param {String} formula
+	 */
 	updateDiceFlags(qty, formula) {
-		const flags = document.querySelectorAll(`.dice-tray__flag--${formula}`);
+		const selector = CSS.escape(`dice-tray__flag--${formula}`); // There is a chance the formula contains invalid CSS character (e.g. "/")
+		const flags = document.querySelectorAll(`.${selector}`);
 		for (const flag of flags) {
 			flag.textContent = qty !== 0 ? qty : "";
 			flag.classList.toggle("hide", qty === 0);
@@ -527,7 +549,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * Gets the selected roll mode. This is completely cosmetic or for pressing Enter on chat, the messageMode is picked up during Roll#toMessage
+	 * Gets the selected roll mode.
 	 * @returns {String}
 	 */
 	_getMessageMode() {
