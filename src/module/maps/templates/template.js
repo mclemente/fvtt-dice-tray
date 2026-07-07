@@ -461,12 +461,15 @@ export default class TemplateDiceMap {
 	updateChatDice(dataset, direction, html) {
 		const chat = this.textarea;
 		let currFormula = String(chat.value);
-		let newFormula = dataset.formula;
 
 		if (direction === "sub" && currFormula === "") {
 			this.reset();
 			return;
 		}
+		let newFormula = dataset.formula;
+		let qty = 1;
+		let dice = "";
+		let matchDice = "\\d*";
 		let rollPrefix = this._getMessageMode();
 
 		const isCustomCommand = newFormula.startsWith("/");
@@ -483,10 +486,6 @@ export default class TemplateDiceMap {
 		}
 		const emptyFormula = isCustomCommand && !newFormula;
 
-		let qty = 1;
-		let dice = "";
-		let matchDice = "\\d*";
-
 		const diceMatch = newFormula.match(/^(\d*)(d.+)/);
 		if (diceMatch) {
 			qty = Number(diceMatch[1]) || 1;
@@ -496,7 +495,6 @@ export default class TemplateDiceMap {
 		}
 
 		const matchString = new RegExp(`${this.rawFormula("(?<qty>\\d*)", `(?<dice>${matchDice})`, html)}(?=\\+|\\-|$)`);
-
 		const match = currFormula ? currFormula.match(matchString) : null;
 		if (match) {
 			if (emptyFormula) {
