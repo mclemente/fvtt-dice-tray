@@ -9,6 +9,16 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 	}
 
 	get dice() {
+		const initials = (str) => {
+			const rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
+
+			const initials = [...str.matchAll(rgx)] || [];
+
+			return ((initials.shift()?.[1] || "") + (initials.pop()?.[1] || "")
+			).toUpperCase();
+		};
+		const dr = _loc("DAGGERHEART.GENERAL.dualityRoll");
+		const fr = _loc("DAGGERHEART.GENERAL.fateRoll");
 		return [
 			{
 				d4: { img: "icons/dice/d4black.svg" },
@@ -16,8 +26,8 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 				d8: { img: "icons/dice/d8black.svg" },
 				d10: { img: "icons/dice/d10black.svg" },
 				d12: { img: "icons/dice/d12black.svg" },
-				"/dr": { label: "DR", tooltip: "Duality Roll" },
-				"/fr": { label: "FR", tooltip: "Fate Roll" },
+				"/dr": { label: initials(dr), tooltip: dr },
+				"/fr": { label: initials(fr), tooltip: fr },
 			}
 		];
 	}
