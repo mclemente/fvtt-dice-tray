@@ -25,8 +25,15 @@
 	.dice-tray__stacked {
 		height: 30px;
 
+		&.flexcol > * {
+			flex: 1;
+		}
+
 		button {
 			min-height: initial;
+			font-size: 10px;
+			line-height: 1;
+			text-transform: uppercase;
 
 			&:first-child {
 				border-radius: $border-radius $border-radius 0 0;
@@ -35,20 +42,27 @@
 				border-radius: 0 0 $border-radius $border-radius;
 			}
 		}
+
 	}
 	.dice-tray__buttons, .dice-tray__math, .dice-tray__input {
 		height: 30px;
 	}
 	.dice-tray__buttons {
-		.dice-tray__button {
+		.dice-tray__button:first-child {
+			border-radius: $border-radius 0 0 $border-radius;
+		}
+		.dice-tray__button,
+		#dice-tray-math button {
 			border-radius: 0;
-
-			&:first-child {
-				border-radius: $border-radius 0 0 $border-radius;
-			}
-			&:last-child {
-				border-radius: 0 $border-radius $border-radius 0;
-			}
+		}
+		.dice-tray__button:last-child,
+		.dice-tray__roll {
+			border-radius: 0 $border-radius $border-radius 0;
+		}
+	}
+	.dice-tray__math {
+		#dice-tray-math {
+			margin: 0 0 0 .2rem;
 		}
 	}
 	.dice-tray__math__buttons {
@@ -56,9 +70,6 @@
 	}
 	.dice-tray__input {
 		border-radius: 0;
-	}
-	#dice-tray-math {
-		margin: 0 .2rem;
 	}
 	.flexrow {
 		flex-wrap: nowrap;
@@ -150,12 +161,6 @@
 				border-color: $green;
 				color: $white;
 			}
-		}
-		&.dice-tray__ad {
-			font-size: 10px;
-			flex: 1;
-			line-height: 1;
-			text-transform: uppercase;
 		}
 		&.dice-tray__advantage {
 			&:hover {
