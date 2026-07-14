@@ -134,8 +134,8 @@ export default class TemplateDiceMap {
 		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
 			event.preventDefault();
 			await this.roll(this.textarea.value);
-			this.reset();
 			this.textarea.value = "";
+			event.target.blur();
 		});
 	}
 
@@ -236,7 +236,6 @@ export default class TemplateDiceMap {
 					const rollPrefix = this._getMessageMode();
 					await this.roll(`${rollPrefix} ${data.formula}`);
 					this.reset();
-					this.textarea.value = "";
 					event.stopImmediatePropagation();
 				}
 			} catch(err) {
@@ -312,6 +311,7 @@ export default class TemplateDiceMap {
 	 * Clears the dice tray's orange markers
 	 */
 	reset() {
+		this.textarea.value = "";
 		TemplateDiceMap._resetTray(this.element);
 		TemplateDiceMap._resetTray(CONFIG.DICETRAY.popout?.element);
 	}
@@ -401,7 +401,7 @@ export default class TemplateDiceMap {
 	static _resetTray(html) {
 		if (!html) return;
 		if (html.querySelector(".dice-tray__input")) html.querySelector(".dice-tray__input").value = 0;
-		for (const flag of html.querySelectorAll(".dice-tray__flag")) {
+		for (const flag of html.querySelectorAll(".dice-tray__flag:not(.hide)")) {
 			flag.textContent = "";
 			flag.classList.add("hide");
 		}
@@ -468,13 +468,9 @@ export default class TemplateDiceMap {
 	 * @returns
 	 */
 	updateChatDice(dataset, direction, html) {
-		const chat = this.textarea;
-		let currFormula = String(chat.value);
+		let currFormula = String(this.textarea.value);
 
-		if (direction === "sub" && currFormula === "") {
-			this.reset();
-			return;
-		}
+		if (direction === "sub" && currFormula === "") return;
 		let newFormula = dataset.formula;
 		let qty = 1;
 		let dice = "";
@@ -519,7 +515,7 @@ export default class TemplateDiceMap {
 				currFormula = currFormula.replace(matchString, "");
 				// Clear formula if remaining formula is something like "/r kh"
 				if (new RegExp(`${rollPrefix}\\s*(?!.*d\\d+.*)`).test(currFormula)) {
-					currFormula = "";
+					return this.reset();
 				}
 			} else if (!emptyFormula) {
 				const currentDie = match.groups?.dice || dice || newFormula;
@@ -538,7 +534,7 @@ export default class TemplateDiceMap {
 			.replace(/-{2}/g, "-")
 			.replace(/\+$/g, "");
 
-		chat.value = currFormula;
+		this.textarea.value = currFormula;
 		this.updateDiceFlags(qty, newFormula);
 		this.applyModifier(html);
 	}
