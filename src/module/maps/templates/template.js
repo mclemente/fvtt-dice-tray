@@ -141,7 +141,7 @@ export default class TemplateDiceMap {
 
 	applyListeners(html) {
 		// Auto-focuses on the chat box but wait for any drag events
-		html.querySelectorAll(".dice-tray button").forEach((button) => {
+		html.querySelectorAll(".dice-tray button[draggable='true']").forEach((button) => {
 			let blur = false;
 			let pointerDownEvent;
 			button.addEventListener("pointerdown", (event) => {
@@ -169,6 +169,15 @@ export default class TemplateDiceMap {
 				}
 				blur = false;
 				pointerDownEvent = null;
+			});
+		});
+		html.querySelectorAll(".dice-tray #dice-tray-math button").forEach((button) => {
+			button.addEventListener("pointerdown", (event) => {
+				if (!ui.sidebar.expanded && !ui.chat.popout?.rendered && !ui.chat.isPopout) {
+					return;
+				}
+				event.preventDefault();
+				this.textarea.focus();
 			});
 		});
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
