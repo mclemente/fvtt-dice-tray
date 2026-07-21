@@ -1,10 +1,11 @@
 import TemplateDiceMap from "./templates/template.js";
 
 export default class GrimwildDiceMap extends TemplateDiceMap {
-	// Ironically, this is used to *remove* extra buttons like the input.
-	// @todo update the parent class to add something like a render hook
-	// for a more accurate place to modify the final markup.
-	showExtraButtons = true;
+	compactMode = true;
+
+	hideNumberInput = true;
+
+	hideNumberButtons = true;
 
 	// Prepare dice buttons.
 	get dice() {
@@ -171,15 +172,5 @@ export default class GrimwildDiceMap extends TemplateDiceMap {
 			// If there are dice, apply the formula. Otherwise, empty it.
 			chat.value = dice ? currFormula : "";
 		}
-	}
-
-	/**
-	 * Remove buttons unused by Grimwild.
-	 * @param {HTMLElement} html
-	 */
-	_createExtraButtons(html) {
-		html.querySelector(".dice-tray__math--sub").remove();
-		html.querySelector(".dice-tray__math--add").remove();
-		html.querySelector(".dice-tray__input").remove();
 	}
 }

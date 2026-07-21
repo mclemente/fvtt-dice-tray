@@ -4,6 +4,18 @@ import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
 export default class TemplateDiceMap {
 	_rightClickCommand;
 
+	/** Default value of the Compact Mode setting */
+	compactMode = this.dice.length < 2 && Object.keys(this.dice[0]).length < 7;
+
+	/** Default value of the Hide Number Input setting */
+	hideNumberInput = false;
+
+	/** Default value of the Hide Number +/- setting */
+	hideNumberButtons = false;
+
+	/** Default value of the Hide Roll Button setting */
+	hideRollButton = false;
+
 	/** Unmark the KH/KL buttons if a roll is made */
 	removeAdvOnRoll = true;
 
@@ -31,7 +43,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * The dice rows that will be shown on the dice tray.
+	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
 	 * @property {String} color		Optional RGB or Hex value that colors a dice's background image. If none is preset, it will be white.
 	 * @property {String} img		The path to an image that will be shown on the button. If none is present, the label will be used instead.
 	 * @property {String} label		The label meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
@@ -405,7 +417,7 @@ export default class TemplateDiceMap {
 			flag.textContent = "";
 			flag.classList.add("hide");
 		}
-		if (CONFIG.DICETRAY.removeAdvOnRoll ) {
+		if (CONFIG.DICETRAY.removeAdvOnRoll) {
 			html.querySelector(".dice-tray__ad")?.classList?.remove("active");
 		}
 	}
