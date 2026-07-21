@@ -4,6 +4,18 @@ import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
 export default class TemplateDiceMap {
 	_rightClickCommand;
 
+	/** Default value of the Compact Mode setting */
+	compactMode = this.dice.length < 2 && Object.keys(this.dice[0]).length < 7;
+
+	/** Default value of the Hide Number Input setting */
+	hideNumberInput = false;
+
+	/** Default value of the Hide Number +/- setting */
+	hideNumberButtons = false;
+
+	/** Default value of the Hide Roll Button setting */
+	hideRollButton = false;
+
 	/** Unmark the KH/KL buttons if a roll is made */
 	removeAdvOnRoll = true;
 
@@ -405,7 +417,7 @@ export default class TemplateDiceMap {
 			flag.textContent = "";
 			flag.classList.add("hide");
 		}
-		if (CONFIG.DICETRAY.removeAdvOnRoll ) {
+		if (CONFIG.DICETRAY.removeAdvOnRoll) {
 			html.querySelector(".dice-tray__ad")?.classList?.remove("active");
 		}
 	}

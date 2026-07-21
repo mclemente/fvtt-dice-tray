@@ -47,29 +47,29 @@ export function registerSettings() {
 				}))),
 	});
 
-	const useCompactMode = CONFIG.DICETRAY.dice.length < 2 && Object.keys(CONFIG.DICETRAY.dice[0]).length < 7;
+	const { compactMode, hideNumberInput, hideNumberButtons, hideRollButton } = CONFIG.DICETRAY;
 	game.settings.register("dice-calculator", "compactMode", {
 		scope: "world",
 		config: false,
-		default: useCompactMode,
+		default: compactMode,
 		type: Boolean,
 	});
 	game.settings.register("dice-calculator", "hideNumberInput", {
 		scope: "world",
 		config: false,
-		default: false,
+		default: hideNumberInput,
 		type: Boolean,
 	});
 	game.settings.register("dice-calculator", "hideNumberButtons", {
 		scope: "world",
 		config: false,
-		default: false,
+		default: hideNumberButtons,
 		type: Boolean
 	});
 	game.settings.register("dice-calculator", "hideRollButton", {
 		scope: "world",
 		config: false,
-		default: false,
+		default: hideRollButton,
 		type: Boolean,
 	});
 
