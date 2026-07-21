@@ -546,7 +546,7 @@ export default class TemplateDiceMap {
 	 */
 	updateDiceFlags(qty, formula) {
 		const selector = CSS.escape(`dice-tray__flag--${formula}`); // There is a chance the formula contains invalid CSS character (e.g. "/")
-		const flags = document.querySelectorAll(`.${selector}`);
+		const flags = document.querySelectorAll(`.${selector}:not(.sidebar-preview .${selector})`);
 		for (const flag of flags) {
 			flag.textContent = qty !== 0 ? qty : "";
 			flag.classList.toggle("hide", qty === 0);
