@@ -31,7 +31,7 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * The dice rows that will be shown on the dice tray.
+	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
 	 * @property {String} color		Optional RGB or Hex value that colors a dice's background image. If none is preset, it will be white.
 	 * @property {String} img		The path to an image that will be shown on the button. If none is present, the label will be used instead.
 	 * @property {String} label		The label meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.

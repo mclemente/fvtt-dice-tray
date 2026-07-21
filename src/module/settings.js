@@ -47,10 +47,11 @@ export function registerSettings() {
 				}))),
 	});
 
+	const useCompactMode = CONFIG.DICETRAY.dice.length < 2 && Object.keys(CONFIG.DICETRAY.dice[0]).length < 7;
 	game.settings.register("dice-calculator", "compactMode", {
 		scope: "world",
 		config: false,
-		default: false,
+		default: useCompactMode,
 		type: Boolean,
 	});
 	game.settings.register("dice-calculator", "hideNumberInput", {
