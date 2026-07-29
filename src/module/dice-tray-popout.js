@@ -52,6 +52,7 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 		super._onRender(context, options);
 		CONFIG.DICETRAY.applyLayout(this.element);
 		CONFIG.DICETRAY.applyListeners(this.element);
+		CONFIG.DICETRAY.applyDropListener();
 	}
 
 	async _prepareContext(_options) {

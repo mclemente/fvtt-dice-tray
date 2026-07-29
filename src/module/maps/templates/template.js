@@ -24,6 +24,8 @@ export default class TemplateDiceMap {
 
 	template = "modules/dice-calculator/templates/tray.html";
 
+	#appliedDropListener;
+
 	/**
 	 * The formula that will be rendered on the KH/KL buttons
 	 * @returns {{}}
@@ -196,7 +198,7 @@ export default class TemplateDiceMap {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
-				CONFIG.DICETRAY.updateChatDice(dataset, "add", html);
+				this.updateChatDice(dataset, "add", html);
 			});
 
 			button.addEventListener("contextmenu", async (event) => {
@@ -210,7 +212,7 @@ export default class TemplateDiceMap {
 					}
 					case "decrease":
 					default:
-						CONFIG.DICETRAY.updateChatDice(dataset, "sub", html);
+						this.updateChatDice(dataset, "sub", html);
 				}
 			});
 
@@ -239,37 +241,20 @@ export default class TemplateDiceMap {
 			});
 		});
 
-		document.documentElement.addEventListener("drop", async (event) => {
-			// This try-catch is needed because it conflicts with other modules
-			try {
-				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-				// If there's a formula, trigger the roll.
-				if (data?.origin === "dice-calculator" && data?.formula) {
-					const rollPrefix = this._getMessageMode();
-					await this.roll(`${rollPrefix} ${data.formula}`);
-					this.reset();
-					event.stopImmediatePropagation();
-				}
-			} catch(err) {
-				// Unable to Parse Data, Return Event
-				return event;
-			}
-		});
-
 		// Handle correcting the modifier math if it's null.
 		const diceTrayInput = html.querySelector(".dice-tray__input");
 		diceTrayInput?.addEventListener("input", (event) => {
 			let modVal = Number(event.target.value);
 			modVal = Number.isNaN(modVal) ? 0 : modVal;
 			event.target.value = modVal;
-			CONFIG.DICETRAY.applyModifier(html, { noFocus: true });
+			this.applyModifier(html, { noFocus: true });
 		});
 		diceTrayInput?.addEventListener("wheel", (event) => {
 			const diff = event.deltaY < 0 ? 1 : -1;
 			let modVal = event.currentTarget.value;
 			modVal = Number.isNaN(modVal) ? 0 : Number(modVal);
 			event.currentTarget.value = modVal + diff;
-			CONFIG.DICETRAY.applyModifier(html, { noFocus: true });
+			this.applyModifier(html, { noFocus: true });
 		});
 		diceTrayInput?.addEventListener("focus", (event) => {
 			diceTrayInput.select();
@@ -294,9 +279,30 @@ export default class TemplateDiceMap {
 				}
 
 				html.querySelector('input[name="dice.tray.modifier"]').value = modVal;
-				CONFIG.DICETRAY.applyModifier(html);
+				this.applyModifier(html);
 			});
 		});
+	}
+
+	applyDropListener() {
+		if (this.#appliedDropListener) return;
+		document.documentElement.addEventListener("drop", async (event) => {
+			// This try-catch is needed because it conflicts with other modules
+			try {
+				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+				// If there's a formula, trigger the roll.
+				if (data?.origin === "dice-calculator" && data?.formula) {
+					const rollPrefix = this._getMessageMode();
+					await this.roll(`${rollPrefix} ${data.formula}`);
+					this.reset();
+					event.stopImmediatePropagation();
+				}
+			} catch(err) {
+				// Unable to Parse Data, Return Event
+				return event;
+			}
+		});
+		this.#appliedDropListener = true;
 	}
 
 	async render() {
@@ -312,9 +318,10 @@ export default class TemplateDiceMap {
 		if (content.length > 0) {
 			const inputElement = document.getElementById("chat-message");
 			inputElement.insertAdjacentHTML("afterend", content);
-			CONFIG.DICETRAY.element = inputElement.parentElement.querySelector(".dice-tray");
-			CONFIG.DICETRAY.applyLayout(CONFIG.DICETRAY.element);
-			CONFIG.DICETRAY.applyListeners(CONFIG.DICETRAY.element);
+			this.element = inputElement.parentElement.querySelector(".dice-tray");
+			this.applyLayout(this.element);
+			this.applyListeners(this.element);
+			this.applyDropListener();
 		}
 		this.rendered = true;
 	}
@@ -324,8 +331,19 @@ export default class TemplateDiceMap {
 	 */
 	reset() {
 		this.textarea.value = "";
-		TemplateDiceMap._resetTray(this.element);
-		TemplateDiceMap._resetTray(CONFIG.DICETRAY.popout?.element);
+		const resetTray = (html) => {
+			if (!html) return;
+			if (html.querySelector(".dice-tray__input")) html.querySelector(".dice-tray__input").value = 0;
+			for (const flag of html.querySelectorAll(".dice-tray__flag:not(.hide)")) {
+				flag.textContent = "";
+				flag.classList.add("hide");
+			}
+			if (this.removeAdvOnRoll) {
+				html.querySelector(".dice-tray__ad.active")?.classList?.remove("active");
+			}
+		};
+		resetTray(this.element);
+		resetTray(this.popout?.element);
 	}
 
 	/**
@@ -407,18 +425,6 @@ export default class TemplateDiceMap {
 				// Update the value.
 				chat.value = chatVal;
 			});
-		}
-	}
-
-	static _resetTray(html) {
-		if (!html) return;
-		if (html.querySelector(".dice-tray__input")) html.querySelector(".dice-tray__input").value = 0;
-		for (const flag of html.querySelectorAll(".dice-tray__flag:not(.hide)")) {
-			flag.textContent = "";
-			flag.classList.add("hide");
-		}
-		if (CONFIG.DICETRAY.removeAdvOnRoll) {
-			html.querySelector(".dice-tray__ad")?.classList?.remove("active");
 		}
 	}
 
