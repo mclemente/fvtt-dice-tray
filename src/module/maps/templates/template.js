@@ -22,7 +22,7 @@ export default class TemplateDiceMap {
 	/** Shows the KH/KL buttons */
 	showExtraButtons = true;
 
-	template = "modules/dice-calculator/templates/tray.html";
+	template = "modules/dice-calculator/templates/tray.hbs";
 
 	#appliedDropListener;
 

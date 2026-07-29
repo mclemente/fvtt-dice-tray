@@ -5,7 +5,7 @@ import { registerSettings } from "./settings.js";
 
 // Initialize module
 Hooks.once("init", () => {
-	foundry.applications.handlebars.loadTemplates(["modules/dice-calculator/templates/tray.html"]);
+	foundry.applications.handlebars.loadTemplates(["modules/dice-calculator/templates/tray.hbs"]);
 });
 
 Hooks.once("i18nInit", () => {
