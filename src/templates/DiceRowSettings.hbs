@@ -35,7 +35,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>{{localize "Preview"}}</legend>
+        <legend>{{localize "DICE_TRAY.DiceRows.Preview"}}</legend>
         <div>
             <p class="hint">{{localize "DICE_TRAY.DiceRows.Instruction1"}}</p>
         </div>
@@ -43,4 +43,10 @@
             {{>"modules/dice-calculator/templates/tray.hbs" dicerows=diceRows settings=settings }}
         </section>
     </fieldset>
+	<fieldset>
+		<legend>{{localize "DICE_TRAY.DiceRows.Pool"}}</legend>
+		<section class="sidebar-preview flexcol">
+            {{>"modules/dice-calculator/templates/tray.hbs" dicerows=pool unused=true }}
+        </section>
+	</fieldset>
 </div>

@@ -56,6 +56,8 @@
 		},
 
 		"DiceRows": {
+			"Preview": "Preview",
+			"Pool": "Dice Pool",
 			"compactMode": {
 				"label": "Compact Mode",
 				"hint": "Disables any additional dice rows and merges the original two rows together."

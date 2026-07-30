@@ -45,55 +45,68 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
-	 * @property {String} color		Optional RGB or Hex value that colors a dice's background image. If none is preset, it will be white.
-	 * @property {String} img		The path to an image that will be shown on the button. If none is present, the label will be used instead.
-	 * @property {String} label		The label meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
-	 * @property {String} tooltip	Optional tooltip that will be shown instead of the key. Useful for special dice like Genesys system's.
-	 * @returns {[Object]}
+	 * Configuration for a dice tray button.
 	 *
-	 * @example
-	 * ```js Dice buttons with mixed image/label
-	 * return [{
-	 * 	d6: { img: "icons/dice/d6black.svg" },
-	 *  "4df": { label: "Fate Dice" }
-	 * }];
+	 * @typedef {Object} DiceButton
+	 * @property {boolean} [alternative] Changes how the dice is rendered. Used for some edge cases (e.g. AlienRPG).
+	 * @property {string} [color] Optional RGB or hex color applied to the die's background image. Defaults to white.
+	 * @property {string} [img] Path to the image shown on the button. If omitted, `label` is used instead.
+	 * @property {string} [label] Text displayed when no image is provided.
+	 * @property {string} [tooltip] Optional tooltip shown instead of the die key.
+	 *
+	 * @example Dice buttons with mixed image/label
+	 * ```js
+	 * d6: { img: "icons/dice/d6black.svg" },
+	 * "4df": { label: "Fate Dice" }
 	 * ```
 	 *
 	 * @example Dice buttons with just labels
 	 * ```js
-	 * return [{
-	 * 	d6: { label: "1d6" },
-	 *  "2d6": { label: "2d6" }
-	 *  "3d6": { label: "3d6" }
-	 * }];
+	 * d6: { label: "1d6" },
+	 * "2d6": { label: "2d6" }
+	 * "3d6": { label: "3d6" }
 	 * ```
 	 *
+	 * @example Dice buttons with just labels
+	 * ```js
+	 * return {
+	 * d6: { label: "1d6" },
+	 * "2d6": { label: "2d6" }
+	 * "3d6": { label: "3d6" }
+	 * };
+	 * ```
 	 * @example Dice buttons with tooltips
 	 * ```js
-	 * return [{
-	 * 	da: { tooltip: "Proficiency" },
-	 *  ds: { tooltip: "Setback" }
-	 *  df: { tooltip: "Force" }
-	 * }];
+	 * da: { tooltip: "Proficiency" },
+	 * ds: { tooltip: "Setback" }
+	 * df: { tooltip: "Force" }
 	 * ```
+	*/
+
+	/**
+	 * The dice that will be shown on the dice tray.
+	 * @returns {Object<string, DiceButton>}
 	 */
 	get dice() {
-		return [
-			{
-				d4: { img: "icons/dice/d4black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d8: { img: "icons/dice/d8black.svg" },
-				d10: {
-					img: "icons/dice/d10black.svg",
-					drawer: {
-						d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
-					}
-				},
-				d12: { img: "icons/dice/d12black.svg" },
-				d20: { img: "icons/dice/d20black.svg" },
-			}
-		];
+		return {
+			d4: { img: "icons/dice/d4black.svg" },
+			d6: { img: "icons/dice/d6black.svg" },
+			d8: { img: "icons/dice/d8black.svg" },
+			d10: { img: "icons/dice/d10black.svg" },
+			d12: { img: "icons/dice/d12black.svg" },
+			d20: { img: "icons/dice/d20black.svg" },
+			d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
+		};
+	}
+
+	/**
+	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
+	 * @returns {Object<string, DiceButton>[]}
+	 */
+	get rows() {
+		const { d4, d6, d8, d10, d12, d20, d100 } = this.dice;
+		d10.drawer = { d100 };
+		return [{ d4, d6, d8, d10, d12, d20 }];
 	}
 
 	/**
@@ -419,6 +432,7 @@ export default class TemplateDiceMap {
 	_createExtraButtons(html) {
 		const { kh, kl } = this.buttonFormulas;
 		const math = html.querySelector("#dice-tray-math");
+		if (!math) return;
 		math.removeAttribute("hidden");
 		const div = document.createElement("div");
 		div.classList.add("dice-tray__stacked", "flexcol");

@@ -227,6 +227,15 @@
 			outline: none;
 		}
 	}
+
+	&.preview {
+		.dice-tray__drawer {
+			button + button {
+				pointer-events: all;
+				opacity: 1;
+			}
+		}
+	}
 }
 .dice-tray-row-settings {
 	.form-group {
