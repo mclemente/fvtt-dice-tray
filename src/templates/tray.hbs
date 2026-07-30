@@ -1,54 +1,8 @@
-{{#*inline "button"}}
-{{#if data.drawer}}<div class="dice-tray__drawer flexcol">{{/if}}
-<button class="dice-tray__button"
-	data-formula="{{key}}"
-	data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
-	data-tooltip-direction="{{~#if data.direction~}}
-		{{~data.direction~}}
-		{{~else~}}
-			{{~#if insideDrawer~}}
-				LEFT
-			{{~else~}}
-				UP
-			{{~/if~}}
-		{{~/if~}}"
-	draggable="true"
-	>
-	<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
-	{{!-- Image (and label, optionally) --}}
-	{{#if data.img}}
-	<div class="dice" style="
-		{{#if data.alternative}}
-		background: url({{data.img}}) center 1px/contain no-repeat;
-		{{else}}
-		mask: url({{data.img}}) center 2px/contain no-repeat;
-		-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
-		{{/if}}
-		{{#if data.color}}background-color: {{data.color}};{{/if}}
-	"></div>
-	{{#if data.label}}
-	<span class="dice-label" style="{{#if data.color}}color: {{data.color}};{{/if}}">
-		{{{data.label}}}
-	</span>
-	{{/if}}
-	{{!-- Label only, if no image --}}
-	{{else}}
-	<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
-		{{{data.label}}}
-	</span>
-	{{/if}}
-</button>
-{{#each data.drawer as |drawer dk|}}
-{{> button data=drawer key=dk insideDrawer=true}}
-{{/each}}
-{{#if data.drawer}}</div>{{/if}}
-{{/inline}}
-
 <section class="dice-tray {{#if preview}}preview{{/if}} {{#if unused}}unused{{/if}}">
 	{{#each dicerows as |dice|}}
 	<div class="dice-tray__buttons flexrow">
 		{{#each dice as |data key|}}
-		{{> button data=data key=key}}
+		{{> "dice-tray.button" data=data key=key}}
 		{{/each}}
 		{{#if (and (not @root.unused) @root.settings.compactMode @last)}}
 			{{#unless @root.settings.hideNumberInput}}

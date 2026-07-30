@@ -1,0 +1,47 @@
+<button class="dice-tray__button"
+	data-formula="{{key}}"
+	data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
+	data-tooltip-direction="{{~#if data.direction~}}
+		{{~data.direction~}}
+		{{~else~}}
+			{{~#if insideDrawer~}}
+				LEFT
+			{{~else~}}
+				UP
+			{{~/if~}}
+		{{~/if~}}"
+	{{#if data.drawer}}data-drawer="{{key}}"{{/if}}
+	draggable="true"
+	>
+	<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
+	{{!-- Image (and label, optionally) --}}
+	{{#if data.img}}
+	<div class="dice" style="
+		{{#if data.alternative}}
+		background: url({{data.img}}) center 1px/contain no-repeat;
+		{{else}}
+		mask: url({{data.img}}) center 2px/contain no-repeat;
+		-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
+		{{/if}}
+		{{#if data.color}}background-color: {{data.color}};{{/if}}
+	"></div>
+	{{#if data.label}}
+	<span class="dice-label" style="{{#if data.color}}color: {{data.color}};{{/if}}">
+		{{{data.label}}}
+	</span>
+	{{/if}}
+	{{!-- Label only, if no image --}}
+	{{else}}
+	<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
+		{{{data.label}}}
+	</span>
+	{{/if}}
+</button>
+
+{{#if data.drawer}}
+<div class="dice-tray__drawer flexcol" data-drawer="{{key}}" hidden>
+	{{#each data.drawer as |drawer dk|}}
+	{{> "dice-tray.button" data=drawer key=dk insideDrawer=true}}
+	{{/each}}
+</div>
+{{/if}}
