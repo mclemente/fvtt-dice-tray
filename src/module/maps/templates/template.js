@@ -155,6 +155,10 @@ export default class TemplateDiceMap {
 			this.textarea.value = "";
 			event.target.blur();
 		});
+		html.querySelectorAll(".dice-tray__drawer").forEach((drawer) => {
+			const height = drawer.getBoundingClientRect().height;
+			drawer.style.transform = `translateY(-${(height - 30)/2}px)`;
+		});
 	}
 
 	applyListeners(html) {
@@ -302,11 +306,6 @@ export default class TemplateDiceMap {
 			clearTimeout(timer);
 			timer = null;
 		}
-		function resetButton(button) {
-			if (tooltipDirection) {
-				button.dataset.tooltipDirection = tooltipDirection;
-			}
-		}
 		drawers.forEach((drawer) => {
 			drawer.addEventListener("pointerdown", (event) => {
 				holdTimer = setTimeout(() => {
@@ -337,9 +336,11 @@ export default class TemplateDiceMap {
 				if (event.target.classList.contains("expanded")) {
 					leaveTimer = setTimeout(() => {
 						cancelTimer(leaveTimer);
-						resetButton(drawer.firstElementChild);
+						const first = drawer.firstElementChild;
+						first.dataset.tooltipDirection = tooltipDirection;
+						first.blur();
 						drawer.classList.remove("expanded");
-					}, 1000);
+					}, 500);
 				}
 			});
 			drawer.addEventListener("pointerenter", (event) => {
