@@ -2,6 +2,10 @@ import { DiceTrayPopOut } from "../../dice-tray-popout.js";
 import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
 
 export default class TemplateDiceMap {
+	constructor() {
+		DiceTrayPopOut.PARTS.list.template = this.template;
+	}
+
 	_rightClickCommand;
 
 	/** Default value of the Compact Mode setting */

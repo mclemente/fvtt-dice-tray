@@ -18,7 +18,7 @@ export class DiceTrayPopOut extends HandlebarsApplicationMixin(ApplicationV2) {
 	static PARTS = {
 		list: {
 			id: "list",
-			template: "modules/dice-calculator/templates/tray.hbs",
+			template: "", // Set when the Dice Tray is initialized
 		}
 	};
 
