@@ -231,25 +231,24 @@ export default class TemplateDiceMap {
 			if (button.draggable) button.addEventListener("dragstart", (event) => {
 				const dataset = event.target.dataset;
 				const dragData = JSON.parse(JSON.stringify(dataset));
-				if (dragData?.formula) {
-					// Grab the modifier, if any.
-					const parentElement = event.target.closest(".dice-tray");
-					const modInput = parentElement.querySelector(".dice-tray__input");
-					const mod = modInput.value;
+				if (!dragData?.formula) return;
+				// Grab the modifier, if any.
+				const parentElement = event.target.closest(".dice-tray");
+				const modInput = parentElement.querySelector(".dice-tray__input");
+				const mod = modInput.value;
 
-					// Grab the count, if any.
-					const qty = button.querySelector(".dice-tray__flag").textContent;
-					if (qty.length > 0) {
-						dragData.formula = `${qty}${dataset.formula}`;
-					}
-
-					// Apply the modifier.
-					if (mod && mod !== "0") {
-						dragData.formula += ` + ${mod}`;
-					}
-					dragData.origin = "dice-calculator";
-					event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+				// Grab the count, if any.
+				const qty = button.querySelector(".dice-tray__flag").textContent;
+				if (qty.length > 0) {
+					dragData.formula = `${qty}${dataset.formula}`;
 				}
+
+				// Apply the modifier.
+				if (mod && mod !== "0") {
+					dragData.formula += ` + ${mod}`;
+				}
+				dragData.origin = "dice-calculator";
+				event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
 			});
 		});
 
