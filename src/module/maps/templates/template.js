@@ -84,10 +84,14 @@ export default class TemplateDiceMap {
 				d4: { img: "icons/dice/d4black.svg" },
 				d6: { img: "icons/dice/d6black.svg" },
 				d8: { img: "icons/dice/d8black.svg" },
-				d10: { img: "icons/dice/d10black.svg" },
+				d10: {
+					img: "icons/dice/d10black.svg",
+					drawer: {
+						d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
+					}
+				},
 				d12: { img: "icons/dice/d12black.svg" },
 				d20: { img: "icons/dice/d20black.svg" },
-				d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
 			}
 		];
 	}
@@ -154,10 +158,10 @@ export default class TemplateDiceMap {
 	}
 
 	applyListeners(html) {
+		let blur = false;
+		let pointerDownEvent;
 		// Auto-focuses on the chat box but wait for any drag events
 		html.querySelectorAll(".dice-tray button[draggable='true']").forEach((button) => {
-			let blur = false;
-			let pointerDownEvent;
 			button.addEventListener("pointerdown", (event) => {
 				pointerDownEvent = event;
 				// Avoid chat notifications' box constantly "accordioning" when losing and gaining focus but still remove focus from buttons
@@ -199,6 +203,10 @@ export default class TemplateDiceMap {
 				event.preventDefault();
 				const dataset = event.currentTarget.dataset;
 				this.updateChatDice(dataset, "add", html);
+				const parent = button.parentElement;
+				if (parent?.classList.contains("dice-tray__drawer") && parent.firstElementChild === button) {
+					parent.classList.remove("expanded");
+				}
 			});
 
 			button.addEventListener("contextmenu", async (event) => {
@@ -280,6 +288,64 @@ export default class TemplateDiceMap {
 
 				html.querySelector('input[name="dice.tray.modifier"]').value = modVal;
 				this.applyModifier(html);
+			});
+		});
+
+		// Drawers
+		let longPress = false;
+		let holdTimer;
+		let leaveTimer;
+		let tooltipDirection;
+		const drawers = html.querySelectorAll(".dice-tray__drawer");
+		function cancelTimer(timer) {
+			if (!timer) return;
+			clearTimeout(timer);
+			timer = null;
+		}
+		function resetButton(button) {
+			if (tooltipDirection) {
+				button.dataset.tooltipDirection = tooltipDirection;
+			}
+		}
+		drawers.forEach((drawer) => {
+			drawer.addEventListener("pointerdown", (event) => {
+				holdTimer = setTimeout(() => {
+					longPress = true;
+					holdTimer = null;
+					blur = false;
+					pointerDownEvent = null;
+					const first = drawer.firstElementChild;
+					tooltipDirection = first.dataset?.tooltipDirection;
+					first.dataset.tooltipDirection = "LEFT";
+					if (game.tooltip.element) game.tooltip._setAnchor("LEFT");
+					drawer.classList.add("expanded");
+				}, 250);
+			});
+			drawer.addEventListener("click", (event) => {
+				if (!longPress) return;
+				event.preventDefault();
+				event.stopPropagation();
+				event.stopImmediatePropagation();
+				cancelTimer(holdTimer);
+				longPress = false;
+			}, { capture: true });
+
+			drawer.addEventListener("pointerup", (event) => cancelTimer(holdTimer));
+			drawer.addEventListener("pointercancel", (event) => cancelTimer(holdTimer));
+			drawer.addEventListener("pointerleave", (event) => {
+				cancelTimer(holdTimer);
+				if (event.target.classList.contains("expanded")) {
+					leaveTimer = setTimeout(() => {
+						cancelTimer(leaveTimer);
+						resetButton(drawer.firstElementChild);
+						drawer.classList.remove("expanded");
+					}, 1000);
+				}
+			});
+			drawer.addEventListener("pointerenter", (event) => {
+				if (event.target.classList.contains("expanded")) {
+					cancelTimer(leaveTimer);
+				}
 			});
 		});
 	}

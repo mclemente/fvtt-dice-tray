@@ -48,7 +48,7 @@
 		height: 30px;
 	}
 	.dice-tray__buttons {
-		.dice-tray__button:first-child {
+		> .dice-tray__button:first-child {
 			border-radius: $border-radius 0 0 $border-radius;
 		}
 		.dice-tray__button,
@@ -73,6 +73,40 @@
 	}
 	.flexrow {
 		flex-wrap: nowrap;
+	}
+	.dice-tray__drawer {
+		position: relative;
+		height: inherit;
+
+		button {
+			width: -webkit-fill-available;
+		}
+		button + button {
+			position: absolute;
+  			bottom: calc(100% - 2px);
+			margin-bottom: 4px;
+		}
+		&:not(.expanded) button + button {
+			transition: all ease-in-out 0.15s;
+			pointer-events: none;
+			opacity: 0;
+		}
+		&.expanded {
+			button {
+				.dice-tray__flag {
+					bottom: 0;
+					left: 100%;
+					height: inherit;
+					max-height: unset;
+					width: 18px;
+					z-index: 1;
+
+					&.hide {
+						max-width: 0;
+					}
+				}
+			}
+		}
 	}
 	button {
 		@extend %dice-tray-style;

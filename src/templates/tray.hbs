@@ -1,8 +1,17 @@
 {{#*inline "button"}}
+{{#if data.drawer}}<div class="dice-tray__drawer">{{/if}}
 <button class="dice-tray__button"
 	data-formula="{{key}}"
 	data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
-	data-tooltip-direction="{{#if data.direction}}{{data.direction}}{{else}}UP{{/if}}"
+	data-tooltip-direction="{{~#if data.direction~}}
+		{{~data.direction~}}
+		{{~else~}}
+			{{~#if insideDrawer~}}
+				LEFT
+			{{~else~}}
+				UP
+			{{~/if~}}
+		{{~/if~}}"
 	draggable="true"
 	>
 	<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
@@ -29,6 +38,10 @@
 	</span>
 	{{/if}}
 </button>
+{{#each data.drawer as |drawer dk|}}
+{{> button data=drawer key=dk insideDrawer=true}}
+{{/each}}
+{{#if data.drawer}}</div>{{/if}}
 {{/inline}}
 
 <section class="dice-tray">
