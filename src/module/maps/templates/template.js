@@ -293,7 +293,7 @@ export default class TemplateDiceMap {
 				// Grab the modifier, if any.
 				const parentElement = event.target.closest(".dice-tray");
 				const modInput = parentElement.querySelector(".dice-tray__input");
-				const mod = modInput.value;
+				const mod = modInput?.value;
 
 				// Grab the count, if any.
 				const qty = button.querySelector(".dice-tray__flag").textContent;
@@ -362,10 +362,10 @@ export default class TemplateDiceMap {
 
 	applyDropListener() {
 		if (this.#appliedDropListener) return;
-		document.documentElement.addEventListener("drop", async (event) => {
+		document.querySelector("canvas#board").addEventListener("drop", async (event) => {
 			// This try-catch is needed because it conflicts with other modules
 			try {
-				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
 				// If there's a formula, trigger the roll.
 				if (data?.origin === "dice-calculator" && data?.formula) {
 					const rollPrefix = this._getMessageMode();
