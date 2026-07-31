@@ -82,6 +82,7 @@
 		// The anchor-position is set in JS when listeners are applied
 		bottom: anchor(top);
 		left: anchor(left);
+		width: anchor-size(width);
 		max-height: unset;
 
 		&.flexcol {
@@ -224,15 +225,6 @@
 			outline: none;
 		}
 	}
-
-	&.preview {
-		.dice-tray__drawer {
-			button + button {
-				pointer-events: all;
-				opacity: 1;
-			}
-		}
-	}
 }
 .dice-tray-row-settings {
 	.form-group {
@@ -247,6 +239,14 @@
 		justify-content: flex-start;
 		width: var(--sidebar-width);
 		margin: auto;
+
+		.dice-tray {
+			&.dice-tray__pool {
+				button {
+					max-width: 60px;
+				}
+			}
+		}
 	}
 }
 

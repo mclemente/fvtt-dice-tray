@@ -1,10 +1,10 @@
-<section class="dice-tray {{#if preview}}preview{{/if}} {{#if unused}}unused{{/if}}">
+<section class="dice-tray">
 	{{#each dicerows as |dice|}}
 	<div class="dice-tray__buttons flexrow">
 		{{#each dice as |data key|}}
 		{{> "dice-tray.button" data=data key=key}}
 		{{/each}}
-		{{#if (and (not @root.unused) @root.settings.compactMode @last)}}
+		{{#if (and @root.settings.compactMode @last)}}
 			{{#unless @root.settings.hideNumberInput}}
 				<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
 			{{/unless}}
@@ -21,7 +21,7 @@
 		{{/if}}
 	</div>
 	{{/each}}
-	{{#unless (or unused settings.compactMode)}}
+	{{#unless settings.compactMode}}
     <div class="dice-tray__math dice-tray__math__buttons flexrow">
 		{{#if @root.settings.hideNumberButtons}}
 		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>

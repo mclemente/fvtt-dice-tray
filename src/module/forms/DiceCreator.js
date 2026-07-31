@@ -28,7 +28,7 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 	};
 
 	static PARTS = {
-		diceRows: {
+		diceCreator: {
 			template: "./modules/dice-calculator/templates/DiceCreator.hbs"
 		},
 		footer: { template: "templates/generic/form-footer.hbs" }
@@ -36,14 +36,18 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	_prepareContext(options) {
 		const { dice, diceRows, settings } = this.object;
-		const nextRow = diceRows.findIndex((row) => Object.keys(row).length < 7);
-		const rowIndex = (nextRow !== -1 ? nextRow : diceRows.length) + 1;
 		const label = dice?.key ? "SETTINGS.Save" : "DICE_TRAY.DiceCreator.CreateDice";
+		let nextRow;
+		let rowIndex;
+		if (diceRows) {
+			nextRow = diceRows.findIndex((row) => Object.keys(row).length < 7);
+			rowIndex = (nextRow !== -1 ? nextRow : diceRows.length) + 1;
+		}
 		return {
 			dice,
 			diceRows: this.object.diceRows, // this.diceRows,
-			value: dice?.row ?? rowIndex,
-			maxRows: rowIndex,
+			row: dice?.row ?? rowIndex ?? null,
+			maxRows: rowIndex ?? null,
 			settings,
 			buttons: [
 				{ type: "submit", icon: "fa-solid fa-save", label },

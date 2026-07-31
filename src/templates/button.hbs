@@ -39,7 +39,7 @@
 </button>
 
 {{#if data.drawer}}
-<div class="dice-tray__drawer flexcol" data-drawer="{{key}}" hidden>
+<div class="dice-tray__drawer flexcol" data-drawer="{{key}}" {{#unless @root.preview}}hidden{{/unless}}>
 	{{#each data.drawer as |drawer dk|}}
 	{{> "dice-tray.button" data=drawer key=dk insideDrawer=true}}
 	{{/each}}

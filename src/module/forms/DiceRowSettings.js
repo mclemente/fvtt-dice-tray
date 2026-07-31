@@ -63,7 +63,6 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			settings: this.settings,
 			preview: true,
 			pool: [this.dice],
-			unused: true,
 			showExtraButtons: CONFIG.DICETRAY.showExtraButtons,
 			buttons: [
 				{ type: "button", icon: "fa-solid fa-plus", label: "DICE_TRAY.DiceCreator.CreateDice", action: "add" },
@@ -75,79 +74,110 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	_onRender(context, options) {
 		super._onRender(context, options);
-		CONFIG.DICETRAY.applyLayout(this.element, { hideAdv: context.settings.hideAdv });
+		if (context.showExtraButtons && !context.settings.hideAdv) {
+			CONFIG.DICETRAY._createExtraButtons(this.element);
+		}
 		this.element.querySelectorAll("input.dice-tray__input").forEach((el) => el.disabled = true);
 		for (const input of this.element.querySelectorAll(".form-group input")) {
-			input.addEventListener("click", async (event) => {
+			input.addEventListener("click", (event) => {
 				const { checked, name } = event.currentTarget;
 				this.settings[name] = checked;
 				this.render(true);
 			});
 		}
-		for (const button of this.element.querySelectorAll(".dice-tray button.dice-tray__button")) {
-			button.addEventListener("click", async (event) => {
+		this.element.querySelectorAll(".dice-tray:not(.dice-tray__pool) button.dice-tray__button").forEach((button) => {
+			button.addEventListener("click", (event) => {
 				event.preventDefault();
-				let row;
-				let diceData;
-				const parent = event.target.parentElement;
-				const { formula: key, tooltip } = Object.keys(parent.dataset).length
-					? parent.dataset
-					: event.target.dataset;
-				if (parent.classList.contains("dice-tray__drawer")) {
-					const first = parent.firstElementChild.dataset.formula;
-					row = this.diceRows.findIndex((r) => r[first]);
-					diceData = this.diceRows[row][first].drawer[key];
-				} else {
-					row = this.diceRows.findIndex((r) => r[key]);
-					diceData = this.diceRows[row][key];
-				}
-				const { color, img, label } = diceData;
-				new DiceCreator({
-					form: this,
-					diceRows: this.diceRows,
-					dice: {
-						key,
-						originalKey: key, // In case the key is changed later.
-						color,
-						img,
-						label,
-						tooltip: tooltip !== key ? tooltip : "",
-						row: row + 1,
-					},
-					settings: this.settings
-				}).render(true);
+				this.#editDice(event, this.diceRows);
 			});
-			button.addEventListener("contextmenu", async (event) => {
+			button.addEventListener("contextmenu", (event) => {
 				event.preventDefault();
-				let row;
-				const { formula: key } = Object.keys(event.target.parentElement.dataset).length
-					? event.target.parentElement.dataset
-					: event.target.dataset;
+				const { formula: key, drawer } = event.target.dataset;
 				const parent = event.target.parentElement;
-				if (parent.classList.contains("dice-tray__drawer")) {
-					// TODO remove all elements if target is first child
-					const firstKey = parent.firstElementChild.dataset.formula;
+				const isDrawerButton = parent.classList.contains("dice-tray__drawer");
+
+				let row = this.diceRows.findIndex((r) => r[key]);
+				let first = this.diceRows[row]?.[key];
+
+				const emptyDrawer = (k) => {
+					this.dice[k] = first.drawer[k];
+					delete first.drawer[k];
+				};
+
+				if (drawer) {
+					this.element.querySelectorAll(`.dice-tray__drawer[data-drawer="${key}"] button`)
+						.forEach((d) => emptyDrawer(d.dataset.formula));
+					first.drawer = null;
+				}
+
+				if (isDrawerButton) {
+					const firstKey = parent.dataset.drawer;
 					row = this.diceRows.findIndex((r) => r[firstKey]);
-					const first = this.diceRows[row][firstKey];
-					this.dice[key] = first.drawer[key];
-					delete first.drawer[key];
+					first = this.diceRows[row][firstKey];
+					emptyDrawer(key);
 					if (!Object.keys(first.drawer).length) first.drawer = null;
 				} else {
-					row = this.diceRows.findIndex((r) => r[key]);
-					this.dice[key] = this.diceRows[row][key];
+					this.dice[key] = first;
 					delete this.diceRows[row][key];
 				}
+
 				if (!Object.keys(this.diceRows[row]).length) {
 					this.diceRows.splice(row, 1);
 				}
 				this.render(false);
 			});
-		}
-		for (const button of this.element.querySelectorAll(".dice-tray .dice-tray__math button")) {
-			button.addEventListener("click", async (event) => {
+		});
+		this.element.querySelectorAll(".dice-tray.dice-tray__pool button.dice-tray__button").forEach((button) => {
+			button.addEventListener("click", (event) => {
 				event.preventDefault();
+				this.#editDice(event, this.dice);
 			});
+			button.addEventListener("contextmenu", (event) => {
+				event.preventDefault();
+				const { formula: key } = event.target.dataset;
+				delete this.dice[key];
+				this.render(false);
+			});
+		});
+		this.element.querySelectorAll(".dice-tray__drawer[data-drawer]").forEach((drawer) => {
+			const key = drawer.dataset.drawer;
+			const button = this.element.querySelector(`.dice-tray button.dice-tray__button[data-drawer="${key}"`);
+			button.style.anchorName = `--${CSS.escape(key)}`;
+			drawer.style.positionAnchor = button.style.anchorName;
+		});
+	}
+
+	#editDice(event, source) {
+		let row;
+		let diceData;
+		const parent = event.target.parentElement;
+		const { formula: key, tooltip } = event.target.dataset;
+
+		if (!Array.isArray(source)) {
+			diceData = source[key];
+		} else if (parent.classList.contains("dice-tray__drawer")) {
+			const firstKey = parent.dataset.drawer;
+			if (!row) row = source.findIndex((r) => r[firstKey]);
+			diceData = source[row][firstKey].drawer[key];
+		} else {
+			if (!row) row = source.findIndex((r) => r[key]);
+			diceData = source[row][key];
 		}
+		const { color, img, label } = diceData;
+		new DiceCreator({
+			form: this,
+			diceRows: null,
+			dice: {
+				key,
+				originalKey: key, // In case the key is changed later.
+				color,
+				img,
+				label,
+				tooltip: tooltip !== key ? tooltip : "",
+				row: row + 1,
+			},
+			settings: this.settings
+		}).render(true);
 	}
 
 	static #add() {

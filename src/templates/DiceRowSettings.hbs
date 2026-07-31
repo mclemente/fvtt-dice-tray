@@ -46,7 +46,15 @@
 	<fieldset>
 		<legend>{{localize "DICE_TRAY.DiceRows.Pool"}}</legend>
 		<section class="sidebar-preview flexcol">
-            {{>"modules/dice-calculator/templates/tray.hbs" dicerows=pool unused=true }}
+			<section class="dice-tray dice-tray__pool">
+				{{#each pool as |dice|}}
+				<div class="dice-tray__buttons flexrow">
+					{{#each dice as |data key|}}
+					{{> "dice-tray.button" data=data key=key}}
+					{{/each}}
+				</div>
+				{{/each}}
+			</section>
         </section>
 	</fieldset>
 </div>

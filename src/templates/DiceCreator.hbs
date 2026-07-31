@@ -7,22 +7,24 @@
 			</div>
 			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Formula.hint"}}</p>
 		</div>
+		{{#if row includeZero=true}}
 		<div class="form-group">
 			<label>{{localize "DICE_TRAY.DiceCreator.Row.name"}}</label>
 			<div class="form-fields">
 				<input
 					type="number"
 					name="row"
-					value="{{value}}"
-					min="{{value}}"
+					value="{{row}}"
+					min="{{row}}"
 					max="{{maxRows}}"
 					steps="1"
 					required
-					{{ifThen (eq value maxRows) "readonly" ""}}
+					{{ifThen (eq row maxRows) "readonly" ""}}
 				/>
 			</div>
 			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
 		</div>
+		{{/if}}
 	</fieldset>
 	<fieldset>
 		<legend>{{localize "DICE_TRAY.Optional"}}</legend>

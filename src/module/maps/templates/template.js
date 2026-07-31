@@ -164,14 +164,6 @@ export default class TemplateDiceMap {
 			this._createExtraButtons(html);
 			this._extraButtonsLogic(html);
 		}
-
-		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
-		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
-			event.preventDefault();
-			await this.roll(this.textarea.value);
-			this.textarea.value = "";
-			event.target.blur();
-		});
 	}
 
 	applyListeners(html) {
@@ -257,7 +249,6 @@ export default class TemplateDiceMap {
 			if (drawer && !insideDrawer) {
 				button.style.anchorName = `--${CSS.escape(button.dataset.formula)}`;
 				drawer.style.positionAnchor = button.style.anchorName;
-				drawer.style.width = button.getBoundingClientRect().width;
 			}
 		});
 		html.querySelectorAll(".dice-tray #dice-tray-math button").forEach((button) => {
@@ -359,6 +350,13 @@ export default class TemplateDiceMap {
 				html.querySelector('input[name="dice.tray.modifier"]').value = modVal;
 				this.applyModifier(html);
 			});
+		});
+		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
+		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
+			event.preventDefault();
+			await this.roll(this.textarea.value);
+			this.textarea.value = "";
+			event.target.blur();
 		});
 	}
 
