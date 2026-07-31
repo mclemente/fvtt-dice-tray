@@ -78,35 +78,27 @@
 		flex-wrap: nowrap;
 	}
 	.dice-tray__drawer {
+		position: fixed;
+		// The anchor-position is set in JS when listeners are applied
+		bottom: anchor(top);
+		left: anchor(left);
 		max-height: unset;
 
 		&.flexcol {
 			flex-direction: column-reverse;
 		}
-		&:not(.expanded) button + button {
-			transition: all ease-in-out 0.15s;
-			pointer-events: none;
-			opacity: 0;
-		}
-		&.expanded {
-			button {
-				.dice-tray__flag {
-					bottom: 0;
-					left: 100%;
-					height: inherit;
-					max-height: unset;
-					width: 18px;
-					z-index: 1;
-
-					&.hide {
-						max-width: 0;
-					}
-				}
-				&:last-child {
-					border-radius: $border-radius $border-radius 0 0;
-				}
-				&:not(:hover) {
-					border: 1px solid #888;
+		button {
+			.dice-tray__flag {
+				@extend %drawer-flag-style
+			}
+			&:last-child {
+				border-radius: $border-radius $border-radius 0 0;
+			}
+			&:not(:hover) {
+				border: 1px solid #888;
+				border-bottom: none;
+				&:not(:last-child) {
+					border-top: none;
 				}
 			}
 		}
@@ -176,6 +168,11 @@
 		&.dice-tray__button {
 			div.dice + span.dice-label {
 				padding-right: 0.25rem;
+			}
+			&:has(+ .dice-tray__drawer:not([hidden])) {
+				.dice-tray__flag {
+					@extend %drawer-flag-style
+				}
 			}
 		}
 		&.dice-tray__roll {
