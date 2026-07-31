@@ -1,6 +1,6 @@
 <section class="dice-tray">
 	{{#each dicerows as |dice|}}
-	<div class="dice-tray__buttons flexrow">
+	<div class="dice-tray__buttons flexrow" data-row="{{@key}}">
 		{{#each dice as |data key|}}
 		{{> "dice-tray.button" data=data key=key}}
 		{{/each}}

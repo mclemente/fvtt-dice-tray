@@ -61,7 +61,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 		return {
 			diceRows: this.diceRows,
 			settings: this.settings,
-			preview: true,
+			isPreview: true,
 			pool: [this.dice],
 			showExtraButtons: CONFIG.DICETRAY.showExtraButtons,
 			buttons: [
@@ -74,9 +74,63 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 
 	_onRender(context, options) {
 		super._onRender(context, options);
+		let dragged;
 		if (context.showExtraButtons && !context.settings.hideAdv) {
 			CONFIG.DICETRAY._createExtraButtons(this.element);
 		}
+		this.element.querySelectorAll(".dice-rows .dice-tray__buttons").forEach((row) => {
+			row.addEventListener("drop", (event) => {
+				const { drawer, key, origin } = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
+
+				const buttons = [...row.children].filter((el) => el.matches(".dice-tray__button"));
+				let button;
+				let nearestDistance = Infinity;
+				for (const b of buttons) {
+					const rect = b.getBoundingClientRect();
+					const centerX = rect.left + (rect.width / 2);
+					const distance = Math.abs(event.clientX - centerX);
+
+					if (distance < nearestDistance) {
+						button = b;
+						nearestDistance = distance;
+					}
+				}
+				if (button === dragged) return;
+
+				if (origin === "dice-calculator-preview") {
+					const dice = CONFIG.DICETRAY.dice;
+					const rowElement = button.closest("[data-row]");
+					const row = rowElement.dataset.row;
+					// Moved out of a Drawer
+					if (drawer) {
+						const drawerDoor = this.diceRows[row][drawer];
+						delete drawerDoor.drawer[key];
+						if (!Object.keys(drawerDoor.drawer).length) {
+							const drawerElement = this.element.querySelector(`.dice-tray__drawer[data-drawer=${drawer}]`);
+							drawerElement.remove();
+							drawerDoor.drawer = null;
+						}
+					}
+					// Moved into a Drawer
+					if (dragged.parentElement.dataset.drawer) {
+						const dr = dragged.parentElement.dataset.drawer;
+						const drawerDoor = this.diceRows[row][dr];
+						if (!drawerDoor.drawer) drawerDoor.drawer = {};
+						drawerDoor.drawer[key] = dice[key];
+					}
+					this.diceRows[row] = Object.fromEntries(
+						[...rowElement.children]
+							.filter((el) => el.matches(".dice-tray__button"))
+							.map((el) => {
+								const key = el.dataset.formula;
+								return [key, this.diceRows[row][key] ?? dice[key]];
+							})
+					);
+					delete this.dice[key];
+				}
+				dragged = null;
+			});
+		});
 		this.element.querySelectorAll("input.dice-tray__input").forEach((el) => el.disabled = true);
 		for (const input of this.element.querySelectorAll(".form-group input")) {
 			input.addEventListener("click", (event) => {
@@ -85,6 +139,21 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				this.render(true);
 			});
 		}
+		this.element.querySelectorAll(".dice-tray button.dice-tray__button[draggable=true]").forEach((button) => {
+			button.addEventListener("dragstart", (event) => {
+				dragged = event.target;
+				const key = button.dataset.formula;
+				const drawer = button.closest(".dice-tray__drawer")?.dataset?.drawer;
+				event.dataTransfer.setData("text/plain", JSON.stringify({ origin: "dice-calculator-preview", key, drawer }));
+			});
+			button.addEventListener("dragend", (event) => {
+				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
+				if (data?.origin === "dice-calculator-preview") {
+					this.render(false);
+				}
+				dragged = null;
+			});
+		});
 		this.element.querySelectorAll(".dice-tray:not(.dice-tray__pool) button.dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
@@ -126,6 +195,43 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				}
 				this.render(false);
 			});
+			button.addEventListener("dragover", async (event) => {
+				if (button === dragged) return;
+				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
+				if (data?.origin === "dice-calculator-preview") {
+					const rect = button.getBoundingClientRect();
+					const topPosition = event.clientY - rect.top;
+					const before = event.clientX < rect.left + (rect.width / 2);
+					const next = before ? event.target : event.target.nextSibling;
+					if (next === dragged) return;
+					if (topPosition < rect.height * 0.25) {
+						const dragParent = dragged.parentElement;
+						const key = button.dataset.formula;
+						// Drag over current drawer
+						if (dragParent.dataset?.drawer === key) return;
+
+						// Drag over pre-existing drawer
+						if (button.parentElement.dataset.drawer) {
+							button.after(dragged);
+							return;
+						}
+						// Drag over top of button, create new drawer
+						const div = document.createElement("div");
+						div.classList.add("dice-tray__drawer", "flexcol");
+						div.dataset.drawer = key;
+						div.style.positionAnchor = `--${CSS.escape(key)}`;
+						div.append(dragged);
+
+						button.style.anchorName = `--${CSS.escape(key)}`;
+						button.dataset.drawer = key;
+						button.after(div);
+						return;
+					}
+					if (dragged.nextSibling === next || next.parentElement.dataset.drawer) return;
+					dragged.remove();
+					button.parentNode.insertBefore(dragged, next);
+				}
+			});
 		});
 		this.element.querySelectorAll(".dice-tray.dice-tray__pool button.dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
@@ -145,6 +251,11 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			button.style.anchorName = `--${CSS.escape(key)}`;
 			drawer.style.positionAnchor = button.style.anchorName;
 		});
+		for (const button of this.element.querySelectorAll(".dice-tray .dice-tray__math button")) {
+			button.addEventListener("click", async (event) => {
+				event.preventDefault();
+			});
+		}
 	}
 
 	#editDice(event, source) {
@@ -189,7 +300,15 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	static #reset() {
-		this.diceRows = game.settings.settings.get("dice-calculator.diceRows").default;
+		this.diceRows = CONFIG.DICETRAY.rows;
+		this.dice = Object.fromEntries(
+			Object.entries(CONFIG.DICETRAY.dice)
+				.filter(([key]) =>
+					!this.diceRows.some(
+						(r) => r[key] || Object.values(r).some((d) => d.drawer?.[key])
+					)
+				)
+		);
 		this.render(false);
 	}
 
