@@ -74,7 +74,9 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			row.addEventListener("drop", (event) => {
 				const { drawer, key, origin } = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
 
-				const buttons = [...row.children].filter((el) => el.matches(".dice-tray__button"));
+				const buttons = [...row.children].filter((el) =>
+					el.dataset.formula !== key && el.matches(".dice-tray__button")
+				);
 				let button;
 				let nearestDistance = Infinity;
 				for (const b of buttons) {
