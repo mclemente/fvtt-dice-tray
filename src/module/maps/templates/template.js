@@ -374,8 +374,7 @@ export default class TemplateDiceMap {
 
 	applyDropListener() {
 		if (this.#appliedDropListener) return;
-		const cboard = document.querySelector("canvas#board") ?? document.documentElement;
-		cboard.addEventListener("drop", async (event) => {
+		document.documentElement.addEventListener("drop", async (event) => {
 			// This try-catch is needed because it conflicts with other modules
 			try {
 				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
