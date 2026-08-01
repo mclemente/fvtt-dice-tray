@@ -76,7 +76,7 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		if (row !== undefined) {
 			// Account for row being 1-index for better UX
 			row--;
-			this.#submitRow(dice, row, );
+			this.#submitRow(dice, row );
 		} else {
 			this.parent.dice[dice.key] = this.#cleanDiceData(dice);
 		}
