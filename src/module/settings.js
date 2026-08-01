@@ -32,10 +32,16 @@ export function registerSettings() {
 	});
 
 	// Menu Settings
+	const diceRows = CONFIG.DICETRAY.rows;
 	game.settings.register("dice-calculator", "dice", {
 		scope: "world",
 		config: false,
-		default: CONFIG.DICETRAY.dice,
+		default: !diceRows.length ? CONFIG.DICETRAY.dice : Object.fromEntries(
+			Object.entries(CONFIG.DICETRAY.dice)
+				.filter(([key]) =>
+					!diceRows.some((r) => r[key] && Object.values(r).some((d) => d.drawer?.[key]))
+				)
+		),
 		type: new TypedObjectField(new BaseDiceField()),
 	});
 	game.settings.register("dice-calculator", "diceRows", {

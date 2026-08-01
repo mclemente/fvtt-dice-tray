@@ -50,14 +50,6 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			obj[key] = game.settings.get("dice-calculator", key);
 			return obj;
 		}, {});
-		// Filter used dice from the pool, checking any drawers
-		this.dice = Object.fromEntries(
-			Object.entries(this.dice).filter(([key, value]) => {
-				return this.diceRows.some((dr) => {
-					return !dr[key] && !Object.values(dr).some((dv) => dv.drawer?.[key]);
-				});
-			})
-		);
 		return {
 			diceRows: this.diceRows,
 			settings: this.settings,
