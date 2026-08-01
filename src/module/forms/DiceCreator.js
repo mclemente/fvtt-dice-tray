@@ -55,13 +55,10 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		};
 	}
 
-	static async #onSubmit(event, form, formData) {
-		let { dice, row } = foundry.utils.expandObject(formData.object);
-		// Account for ROW being 1-index for better UX
-		const actualRow = row - 1;
+	#submitRow(dice, row) {
 		if (this.object.dice && this.object.dice.row !== row) {
 			const key = this.object.dice.originalKey;
-			delete this.diceRowSettings.diceRows[actualRow][key];
+			delete this.diceRowSettings.diceRows[row][key];
 		}
 		if (row > this.diceRowSettings.diceRows.length) {
 			this.diceRowSettings.diceRows.push({});
@@ -73,7 +70,26 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		if (!cleanKey.img && cleanKey.alternative) {
 			cleanKey.alternative = false;
 		}
-		this.diceRowSettings.diceRows[actualRow][dice.key] = cleanKey;
+		this.diceRowSettings.diceRows[row][dice.key] = cleanKey;
+	}
+
+	#submitPool(dice) {
+		const cleanKey = Object.fromEntries(Object.entries(dice).filter(([k, v]) => k !== "key" && v !== ""));
+		if (!cleanKey.img && !cleanKey.label) {
+			cleanKey.label = dice.key;
+		}
+		if (!cleanKey.img && cleanKey.alternative) {
+			cleanKey.alternative = false;
+		}
+		this.diceRowSettings.dice[dice.key] = cleanKey;
+	}
+
+	static #onSubmit(event, form, formData) {
+		let { dice, row } = foundry.utils.expandObject(formData.object);
+		if (row !== undefined) {
+			// Account for row being 1-index for better UX
+			this.#submitRow(dice, row - 1);
+		} else this.#submitPool(dice);
 		this.diceRowSettings.render(true);
 	}
 }
