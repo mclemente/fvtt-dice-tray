@@ -104,8 +104,13 @@ export default class TemplateDiceMap {
 	}
 
 	/**
+	 * Base Data of a Dice Row
+	 * @typedef {DiceButton & { drawer?: Object<string, DiceButton>}} DiceRow
+	 */
+
+	/**
 	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
-	 * @returns {Object<string, DiceButton>[]}
+	 * @returns {Object<string, DiceRow>[]}
 	 */
 	get rows() {
 		const { d4, d6, d8, d10, d12, d20, d100 } = this.dice;
@@ -361,7 +366,7 @@ export default class TemplateDiceMap {
 	}
 
 	applyDropListener() {
-		if (this.#appliedDropListener) return;
+		if (!canvas || this.#appliedDropListener) return;
 		document.querySelector("canvas#board").addEventListener("drop", async (event) => {
 			// This try-catch is needed because it conflicts with other modules
 			try {
