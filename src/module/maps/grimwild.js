@@ -7,30 +7,30 @@ export default class GrimwildDiceMap extends TemplateDiceMap {
 
 	hideNumberButtons = true;
 
-	// Prepare dice buttons.
 	get dice() {
-		return [
-			{
-				d: {
-					// img: "icons/dice/d6black.svg",
-					tooltip: "Dice",
-					label: "<i class=\"fas fa-dice-d6\"></i> d",
-					direction: "LEFT"
-				},
-				t: {
-					// img: "icons/dice/d8black.svg",
-					tooltip: "Thorns",
-					label: "<i class=\"fas fa-dice-d8\"></i> t",
-					direction: "LEFT"
-				},
-				p: {
-					// img: "icons/dice/d6black.svg",
-					tooltip: "Pool",
-					label: "<i class=\"fas fa-dice-d6\"></i> Pool",
-					direction: "LEFT"
-				},
-			}
-		];
+		return {
+			d: {
+				tooltip: "Dice",
+				label: "<i class=\"fas fa-dice-d6\"></i> d",
+				direction: "LEFT"
+			},
+			t: {
+				tooltip: "Thorns",
+				label: "<i class=\"fas fa-dice-d8\"></i> t",
+				direction: "LEFT"
+			},
+			p: {
+				tooltip: "Pool",
+				label: "<i class=\"fas fa-dice-d6\"></i> Pool",
+				direction: "LEFT"
+			},
+			...super.dice
+		};
+	}
+
+	get rows() {
+		const { d, t, p } = this.dice;
+		return [{ d, t, p }];
 	}
 
 	// Override the chat formula logic.

@@ -19,15 +19,25 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 		};
 		const dr = _loc("DAGGERHEART.GENERAL.dualityRoll");
 		const fr = _loc("DAGGERHEART.GENERAL.fateRoll");
+		return {
+			"/dr": { label: initials(dr), tooltip: dr },
+			"/fr": { label: initials(fr), tooltip: fr },
+			...super.dice,
+		};
+	}
+
+	get rows() {
+		const dice = this.dice;
+		const { d4, d6, d8, d10, d12 } = dice;
 		return [
 			{
-				d4: { img: "icons/dice/d4black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d8: { img: "icons/dice/d8black.svg" },
-				d10: { img: "icons/dice/d10black.svg" },
-				d12: { img: "icons/dice/d12black.svg" },
-				"/dr": { label: initials(dr), tooltip: dr },
-				"/fr": { label: initials(fr), tooltip: fr },
+				d4,
+				d6,
+				d8,
+				d10,
+				d12,
+				"/dr": dice["/dr"],
+				"/fr": dice["/dr"],
 			}
 		];
 	}

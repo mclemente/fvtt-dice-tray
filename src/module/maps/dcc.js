@@ -11,7 +11,7 @@ export default class dccDiceMap extends GenericDiceMap {
 		};
 	}
 
-	get dice() {
+	get rows() {
 		return [
 			{
 				d3: { img: "modules/dice-calculator/assets/icons/d3black.svg" },
