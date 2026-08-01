@@ -1,5 +1,8 @@
 import { DiceRowSettings } from "./forms/DiceRowSettings";
 
+const {
+	ArrayField, BooleanField, ColorField, FilePathField, SchemaField, StringField, TypedObjectField
+} = foundry.data.fields;
 export function registerSettings() {
 	game.settings.registerMenu("dice-calculator", "DiceRowSettings", {
 		name: "DICE_TRAY.SETTINGS.DiceRowSettings",
@@ -29,22 +32,24 @@ export function registerSettings() {
 	});
 
 	// Menu Settings
-
+	const diceRows = CONFIG.DICETRAY.rows;
+	game.settings.register("dice-calculator", "dice", {
+		scope: "world",
+		config: false,
+		default: !diceRows.length ? CONFIG.DICETRAY.dice : Object.fromEntries(
+			Object.entries(CONFIG.DICETRAY.dice)
+				.filter(([key]) =>
+					!diceRows.some((r) => r[key] && Object.values(r).some((d) => d.drawer?.[key]))
+				)
+		),
+		type: new TypedObjectField(new BaseDiceField()),
+	});
 	game.settings.register("dice-calculator", "diceRows", {
 		scope: "world",
 		config: false,
-		default: CONFIG.DICETRAY.dice,
-		type: new foundry.data.fields.ArrayField(
-			new foundry.data.fields.TypedObjectField(
-				new foundry.data.fields.SchemaField({
-					key: new foundry.data.fields.StringField(),
-					img: new foundry.data.fields.FilePathField({categories: ["IMAGE"]}),
-					alternative: new foundry.data.fields.BooleanField(),
-					// Optional Fields
-					label: new foundry.data.fields.StringField(),
-					tooltip: new foundry.data.fields.StringField(),
-					color: new foundry.data.fields.ColorField(),
-				}))),
+		default: CONFIG.DICETRAY.rows,
+		type: new ArrayField(
+			new TypedObjectField(new DiceField())),
 	});
 
 	const { compactMode, hideNumberInput, hideNumberButtons, hideRollButton } = CONFIG.DICETRAY;
@@ -129,5 +134,26 @@ export function registerSettings() {
 			},
 			data
 		));
+	}
+}
+
+class BaseDiceField extends SchemaField {
+	constructor(options={}, context={}) {
+		super({
+			key: new StringField(),
+			img: new FilePathField({categories: ["IMAGE"]}),
+			alternative: new BooleanField(),
+			// Optional Fields
+			label: new StringField(),
+			tooltip: new StringField(),
+			color: new ColorField(),
+		}, options, context);
+	}
+}
+
+class DiceField extends BaseDiceField {
+	constructor(options={}, context={}) {
+		super(options, context);
+		this.fields.drawer = new TypedObjectField(new BaseDiceField(), { nullable: true });
 	}
 }

@@ -1,16 +1,9 @@
 import GenericDiceMap from "./templates/template.js";
 
 export default class demonlordDiceMap extends GenericDiceMap {
-
-	get dice() {
-		const dice = [
-			{
-				d3: { img: "modules/dice-calculator/assets/icons/d3black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d20: { img: "icons/dice/d20black.svg" }
-			}
-		];
-		return dice;
+	get rows() {
+		const { d3, d6, d20 } = this.dice;
+		return [{ d3, d6, d20 }];
 	}
 
 	get buttonFormulas() {

@@ -57,3 +57,16 @@ $border-radius: 4px;
 		border-color: $orange;
 	}
 }
+
+%drawer-flag-style {
+	bottom: 0;
+	left: 100%;
+	height: inherit;
+	max-height: unset;
+	width: 18px;
+	z-index: 1;
+
+	&.hide {
+		max-width: 0;
+	}
+}

@@ -1,52 +1,23 @@
-{{#*inline "button"}}
-<button class="dice-tray__button"
-	data-formula="{{key}}"
-	data-tooltip="{{#if data.tooltip}}{{data.tooltip}}{{else}}{{key}}{{/if}}"
-	data-tooltip-direction="{{#if data.direction}}{{data.direction}}{{else}}UP{{/if}}"
-	draggable="true"
-	>
-	<span class="dice-tray__flag dice-tray__flag--{{key}} hide"></span>
-	{{!-- Image (and label, optionally) --}}
-	{{#if data.img}}
-	<div class="dice" style="
-		{{#if data.alternative}}
-		background: url({{data.img}}) center 1px/contain no-repeat;
-		{{else}}
-		mask: url({{data.img}}) center 2px/contain no-repeat;
-		-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
-		{{/if}}
-		{{#if data.color}}background-color: {{data.color}};{{/if}}
-	"></div>
-	{{#if data.label}}
-	<span class="dice-label" style="{{#if data.color}}color: {{data.color}};{{/if}}">
-		{{{data.label}}}
-	</span>
-	{{/if}}
-	{{!-- Label only, if no image --}}
-	{{else}}
-	<span style="{{#if data.color}}color: {{data.color}};{{/if}}">
-		{{{data.label}}}
-	</span>
-	{{/if}}
-</button>
-{{/inline}}
-
 <section class="dice-tray">
 	{{#each dicerows as |dice|}}
-	<div class="dice-tray__buttons flexrow">
+	<div class="dice-tray__buttons flexrow" data-row="{{@key}}">
 		{{#each dice as |data key|}}
-		{{> button data=data key=key}}
+		{{> "dice-tray.button" data=data key=key}}
 		{{/each}}
 		{{#if (and @root.settings.compactMode @last)}}
-		{{#unless @root.settings.hideNumberInput}}
-		<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
-		{{/unless}}
-		{{#unless @root.settings.hideAdv }}
-		<div id="dice-tray-math" hidden></div>
-		{{/unless}}
-		{{#unless @root.settings.hideRollButton}}
-		<button class="dice-tray__roll" data-tooltip="DICE_TRAY.Roll" data-tooltip-direction="UP"><i class="fas fa-dice"></i></button>
-		{{/unless}}
+			{{#unless @root.settings.hideNumberInput}}
+				<input class="dice-tray__input" name="dice.tray.modifier" type="text" value="0"/>
+			{{/unless}}
+
+			{{#unless @root.settings.hideAdv}}
+			<div id="dice-tray-math" hidden></div>
+			{{/unless}}
+
+			{{#unless @root.settings.hideRollButton}}
+			<button class="dice-tray__roll" data-tooltip="DICE_TRAY.Roll" data-tooltip-direction="UP">
+				<i class="fas fa-dice"></i>
+			</button>
+			{{/unless}}
 		{{/if}}
 	</div>
 	{{/each}}

@@ -4,30 +4,34 @@ export default class HeXXen1733DiceMap extends GenericDiceMap {
 	showExtraButtons = false;
 
 	get dice() {
-		return [
-			{
-				h: {
-					tooltip: "HeXXenwürfel",
-					img: "systems/hexxen-1733/img/dice/svg/erfolgswuerfel_einfach.svg",
-					color: "#00a806"
-				},
-				s: {
-					tooltip: "Segnungswürfel",
-					img: "systems/hexxen-1733/img/dice/svg/erfolgswuerfel_doppel.svg",
-					color: "#d1c5a8"
-				},
-				b: {
-					tooltip: "Blutwürfel",
-					img: "systems/hexxen-1733/img/dice/svg/blutwuerfel_3.svg",
-					color: "#a74937"
-				},
-				e: {
-					tooltip: "Elixierwürfel",
-					img: "systems/hexxen-1733/img/dice/svg/elixirwuerfel_5.svg",
-					color: "#4c7ba0"
-				}
-			}
-		];
+		return {
+			h: {
+				tooltip: "HeXXenwürfel",
+				img: "systems/hexxen-1733/img/dice/svg/erfolgswuerfel_einfach.svg",
+				color: "#00a806"
+			},
+			s: {
+				tooltip: "Segnungswürfel",
+				img: "systems/hexxen-1733/img/dice/svg/erfolgswuerfel_doppel.svg",
+				color: "#d1c5a8"
+			},
+			b: {
+				tooltip: "Blutwürfel",
+				img: "systems/hexxen-1733/img/dice/svg/blutwuerfel_3.svg",
+				color: "#a74937"
+			},
+			e: {
+				tooltip: "Elixierwürfel",
+				img: "systems/hexxen-1733/img/dice/svg/elixirwuerfel_5.svg",
+				color: "#4c7ba0"
+			},
+			...super.dice
+		};
+	}
+
+	get rows() {
+		const { h, s, b, e } = this.dice;
+		return [{ h, s, b, e }];
 	}
 
 	applyModifier(html) {

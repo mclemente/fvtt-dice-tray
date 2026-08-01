@@ -44,18 +44,21 @@
 		}
 
 	}
-	.dice-tray__buttons, .dice-tray__math, .dice-tray__input {
+	.dice-tray__drawer button,
+	.dice-tray__buttons,
+	.dice-tray__math,
+	.dice-tray__input {
 		height: 30px;
 	}
 	.dice-tray__buttons {
-		.dice-tray__button:first-child {
+		> .dice-tray__button:first-child {
 			border-radius: $border-radius 0 0 $border-radius;
 		}
 		.dice-tray__button,
 		#dice-tray-math button {
 			border-radius: 0;
 		}
-		.dice-tray__button:last-child,
+		> .dice-tray__button:last-child,
 		.dice-tray__roll {
 			border-radius: 0 $border-radius $border-radius 0;
 		}
@@ -73,6 +76,33 @@
 	}
 	.flexrow {
 		flex-wrap: nowrap;
+	}
+	.dice-tray__drawer {
+		position: fixed;
+		// The anchor-position is set in JS when listeners are applied
+		bottom: anchor(top);
+		left: anchor(left);
+		width: anchor-size(width);
+		max-height: unset;
+
+		&.flexcol {
+			flex-direction: column-reverse;
+		}
+		button {
+			.dice-tray__flag {
+				@extend %drawer-flag-style
+			}
+			&:last-child {
+				border-radius: $border-radius $border-radius 0 0;
+			}
+			&:not(:hover) {
+				border: 1px solid #888;
+				border-bottom: none;
+				&:not(:last-child) {
+					border-top: none;
+				}
+			}
+		}
 	}
 	button {
 		@extend %dice-tray-style;
@@ -140,6 +170,11 @@
 			div.dice + span.dice-label {
 				padding-right: 0.25rem;
 			}
+			&:has(+ .dice-tray__drawer:not([hidden])) {
+				.dice-tray__flag {
+					@extend %drawer-flag-style
+				}
+			}
 		}
 		&.dice-tray__roll {
 			&:hover {
@@ -198,12 +233,29 @@
 		}
 	}
 	.sidebar-preview {
-		display: flex;
-		flex-direction: column;
-		flex-wrap: nowrap;
-		justify-content: flex-start;
 		width: var(--sidebar-width);
 		margin: auto;
+
+		&.dice-rows {
+			justify-content: flex-end;
+			height: 75px;
+		}
+
+		.dice-tray {
+			&.dice-tray__pool {
+				.dice-tray__buttons {
+					height: unset;
+					min-height: 30px;
+					button {
+						height: 30px;
+						flex: 0 0 calc(100% / 7);
+					}
+					&.flexrow {
+						flex-wrap: wrap;
+					}
+				}
+			}
+		}
 	}
 }
 

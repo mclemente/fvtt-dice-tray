@@ -3,17 +3,9 @@ import GenericDiceMap from "./templates/template.js";
 export default class SWADEDiceMap extends GenericDiceMap {
 	removeAdvOnRoll = false;
 
-	get dice() {
-		const dice = [
-			{
-				d4: { img: "icons/dice/d4black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d8: { img: "icons/dice/d8black.svg" },
-				d10: { img: "icons/dice/d10black.svg" },
-				d12: { img: "icons/dice/d12black.svg" }
-			}
-		];
-		return dice;
+	get rows() {
+		const { d4, d6, d8, d10, d12 } = this.dice;
+		return [{ d4, d6, d8, d10, d12 }];
 	}
 
 	get labels() {

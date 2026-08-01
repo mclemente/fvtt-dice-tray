@@ -2,6 +2,10 @@ import { DiceTrayPopOut } from "../../dice-tray-popout.js";
 import { DiceRowSettings } from "../../forms/DiceRowSettings.js";
 
 export default class TemplateDiceMap {
+	constructor() {
+		DiceTrayPopOut.PARTS.list.template = this.template;
+	}
+
 	_rightClickCommand;
 
 	/** Default value of the Compact Mode setting */
@@ -45,51 +49,80 @@ export default class TemplateDiceMap {
 	}
 
 	/**
-	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
-	 * @property {String} color		Optional RGB or Hex value that colors a dice's background image. If none is preset, it will be white.
-	 * @property {String} img		The path to an image that will be shown on the button. If none is present, the label will be used instead.
-	 * @property {String} label		The label meant to be used when the button doesn't have a proper image, like Fate Dice or multiple dice.
-	 * @property {String} tooltip	Optional tooltip that will be shown instead of the key. Useful for special dice like Genesys system's.
-	 * @returns {[Object]}
+	 * Configuration for a dice tray button.
 	 *
-	 * @example
-	 * ```js Dice buttons with mixed image/label
-	 * return [{
-	 * 	d6: { img: "icons/dice/d6black.svg" },
-	 *  "4df": { label: "Fate Dice" }
-	 * }];
+	 * @typedef {Object} DiceButton
+	 * @property {boolean} [alternative] Changes how the dice is rendered. Used for some edge cases (e.g. AlienRPG).
+	 * @property {string} [color] Optional RGB or hex color applied to the die's background image. Defaults to white.
+	 * @property {string} [img] Path to the image shown on the button. If omitted, `label` is used instead.
+	 * @property {string} [label] Text displayed when no image is provided.
+	 * @property {string} [tooltip] Optional tooltip shown instead of the die key.
+	 *
+	 * @example Dice buttons with mixed image/label
+	 * ```js
+	 * d6: { img: "icons/dice/d6black.svg" },
+	 * "4df": { label: "Fate Dice" }
 	 * ```
 	 *
 	 * @example Dice buttons with just labels
 	 * ```js
-	 * return [{
-	 * 	d6: { label: "1d6" },
-	 *  "2d6": { label: "2d6" }
-	 *  "3d6": { label: "3d6" }
-	 * }];
+	 * d6: { label: "1d6" },
+	 * "2d6": { label: "2d6" }
+	 * "3d6": { label: "3d6" }
 	 * ```
 	 *
+	 * @example Dice buttons with just labels
+	 * ```js
+	 * return {
+	 * d6: { label: "1d6" },
+	 * "2d6": { label: "2d6" }
+	 * "3d6": { label: "3d6" }
+	 * };
+	 * ```
 	 * @example Dice buttons with tooltips
 	 * ```js
-	 * return [{
-	 * 	da: { tooltip: "Proficiency" },
-	 *  ds: { tooltip: "Setback" }
-	 *  df: { tooltip: "Force" }
-	 * }];
+	 * da: { tooltip: "Proficiency" },
+	 * ds: { tooltip: "Setback" }
+	 * df: { tooltip: "Force" }
 	 * ```
+	*/
+
+	/**
+	 * The dice that will be shown on the dice tray.
+	 * @returns {Object<string, DiceButton>}
 	 */
 	get dice() {
-		return [
-			{
-				d4: { img: "icons/dice/d4black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d8: { img: "icons/dice/d8black.svg" },
-				d10: { img: "icons/dice/d10black.svg" },
-				d12: { img: "icons/dice/d12black.svg" },
-				d20: { img: "icons/dice/d20black.svg" },
-				d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
-			}
-		];
+		return {
+			d3: { img: "modules/dice-calculator/assets/icons/d3black.svg" },
+			d4: { img: "icons/dice/d4black.svg" },
+			d5: { img: "modules/dice-calculator/assets/icons/d5black.svg" },
+			d6: { img: "icons/dice/d6black.svg" },
+			d7: { img: "modules/dice-calculator/assets/icons/d7black.svg" },
+			d8: { img: "icons/dice/d8black.svg" },
+			d10: { img: "icons/dice/d10black.svg" },
+			d12: { img: "icons/dice/d12black.svg" },
+			d14: { img: "modules/dice-calculator/assets/icons/d14black.svg" },
+			d16: { img: "modules/dice-calculator/assets/icons/d16black.svg" },
+			d20: { img: "icons/dice/d20black.svg" },
+			d24: { img: "modules/dice-calculator/assets/icons/d24black.svg" },
+			d30: { img: "modules/dice-calculator/assets/icons/d30black.svg" },
+			d100: { img: "modules/dice-calculator/assets/icons/d100black.svg" },
+		};
+	}
+
+	/**
+	 * Base Data of a Dice Row
+	 * @typedef {DiceButton & { drawer?: Object<string, DiceButton>}} DiceRow
+	 */
+
+	/**
+	 * The dice rows that will be shown on the dice tray. Limit of 7 dice per row due to size constraints.
+	 * @returns {Object<string, DiceRow>[]}
+	 */
+	get rows() {
+		const { d4, d6, d8, d10, d12, d20, d100 } = this.dice;
+		d10.drawer = { d100 };
+		return [{ d4, d6, d8, d10, d12, d20 }];
 	}
 
 	/**
@@ -143,23 +176,48 @@ export default class TemplateDiceMap {
 			this._createExtraButtons(html);
 			this._extraButtonsLogic(html);
 		}
-
-		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
-		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
-			event.preventDefault();
-			await this.roll(this.textarea.value);
-			this.textarea.value = "";
-			event.target.blur();
-		});
 	}
 
 	applyListeners(html) {
+		let blur = false;
+		let longPress = false;
+		let pointerDownEvent;
+		let holdTimer;
+		let leaveTimer;
+		let tooltipDirection;
+
+		function cancelTimer(timer) {
+			if (!timer) return;
+			clearTimeout(timer);
+			timer = null;
+		}
+		const drawers = html.querySelectorAll(".dice-tray__drawer");
+		const drawerDoors = html.querySelectorAll(".dice-tray button[data-drawer]");
 		// Auto-focuses on the chat box but wait for any drag events
 		html.querySelectorAll(".dice-tray button[draggable='true']").forEach((button) => {
-			let blur = false;
-			let pointerDownEvent;
+			const insideDrawer = button.parentElement.classList.contains("dice-tray__drawer");
+			const drawer = insideDrawer
+				? button.parentElement
+				: [...drawers].find((e) => e.dataset.drawer === button.dataset.drawer);
+			const drawerDoor = insideDrawer
+				? [...drawerDoors].find((e) => e.dataset.drawer === drawer.dataset.drawer)
+				: button;
 			button.addEventListener("pointerdown", (event) => {
 				pointerDownEvent = event;
+				// Open Drawer
+				if (drawer?.hidden && !insideDrawer) {
+					holdTimer = setTimeout(() => {
+						longPress = true;
+						holdTimer = null;
+						blur = false;
+						event.target.blur();
+						pointerDownEvent = null;
+						tooltipDirection = button.dataset?.tooltipDirection;
+						button.dataset.tooltipDirection = "LEFT";
+						if (game.tooltip.element) game.tooltip._setAnchor("LEFT");
+						drawer.hidden = false;
+					}, 250);
+				}
 				// Avoid chat notifications' box constantly "accordioning" when losing and gaining focus but still remove focus from buttons
 				if (!ui.sidebar.expanded && !ui.chat.popout?.rendered && !ui.chat.isPopout) {
 					blur = true;
@@ -183,7 +241,27 @@ export default class TemplateDiceMap {
 				}
 				blur = false;
 				pointerDownEvent = null;
+				cancelTimer(holdTimer);
 			});
+			button.addEventListener("pointerleave", (event) => {
+				cancelTimer(holdTimer);
+				if (drawer && !drawer.hidden) {
+					leaveTimer = setTimeout(() => {
+						cancelTimer(leaveTimer);
+						drawerDoor.dataset.tooltipDirection = tooltipDirection;
+						drawer.hidden = true;
+					}, 500);
+				}
+			});
+			button.addEventListener("pointerenter", (event) => {
+				if (drawer && !drawer.hidden) {
+					cancelTimer(leaveTimer);
+				}
+			});
+			if (drawer && !insideDrawer) {
+				button.style.anchorName = `--${CSS.escape(button.dataset.formula)}`;
+				drawer.style.positionAnchor = button.style.anchorName;
+			}
 		});
 		html.querySelectorAll(".dice-tray #dice-tray-math button").forEach((button) => {
 			button.addEventListener("pointerdown", (event) => {
@@ -197,6 +275,10 @@ export default class TemplateDiceMap {
 		html.querySelectorAll(".dice-tray__button").forEach((button) => {
 			button.addEventListener("click", (event) => {
 				event.preventDefault();
+				if (longPress) {
+					longPress = false;
+					return;
+				}
 				const dataset = event.currentTarget.dataset;
 				this.updateChatDice(dataset, "add", html);
 			});
@@ -219,25 +301,24 @@ export default class TemplateDiceMap {
 			if (button.draggable) button.addEventListener("dragstart", (event) => {
 				const dataset = event.target.dataset;
 				const dragData = JSON.parse(JSON.stringify(dataset));
-				if (dragData?.formula) {
-					// Grab the modifier, if any.
-					const parentElement = event.target.closest(".dice-tray");
-					const modInput = parentElement.querySelector(".dice-tray__input");
-					const mod = modInput.value;
+				if (!dragData?.formula) return;
+				// Grab the modifier, if any.
+				const parentElement = event.target.closest(".dice-tray");
+				const modInput = parentElement.querySelector(".dice-tray__input");
+				const mod = modInput?.value;
 
-					// Grab the count, if any.
-					const qty = button.querySelector(".dice-tray__flag").textContent;
-					if (qty.length > 0) {
-						dragData.formula = `${qty}${dataset.formula}`;
-					}
-
-					// Apply the modifier.
-					if (mod && mod !== "0") {
-						dragData.formula += ` + ${mod}`;
-					}
-					dragData.origin = "dice-calculator";
-					event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+				// Grab the count, if any.
+				const qty = button.querySelector(".dice-tray__flag").textContent;
+				if (qty.length > 0) {
+					dragData.formula = `${qty}${dataset.formula}`;
 				}
+
+				// Apply the modifier.
+				if (mod && mod !== "0") {
+					dragData.formula += ` + ${mod}`;
+				}
+				dragData.origin = "dice-calculator";
+				event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
 			});
 		});
 
@@ -282,6 +363,13 @@ export default class TemplateDiceMap {
 				this.applyModifier(html);
 			});
 		});
+		/** Clicking the Roll button clears and hides all orange number flags, and unmark the KH/KL keys */
+		html.querySelector(".dice-tray__roll")?.addEventListener("click", async (event) => {
+			event.preventDefault();
+			await this.roll(this.textarea.value);
+			this.textarea.value = "";
+			event.target.blur();
+		});
 	}
 
 	applyDropListener() {
@@ -289,7 +377,7 @@ export default class TemplateDiceMap {
 		document.documentElement.addEventListener("drop", async (event) => {
 			// This try-catch is needed because it conflicts with other modules
 			try {
-				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
 				// If there's a formula, trigger the roll.
 				if (data?.origin === "dice-calculator" && data?.formula) {
 					const rollPrefix = this._getMessageMode();
@@ -353,6 +441,7 @@ export default class TemplateDiceMap {
 	_createExtraButtons(html) {
 		const { kh, kl } = this.buttonFormulas;
 		const math = html.querySelector("#dice-tray-math");
+		if (!math) return;
 		math.removeAttribute("hidden");
 		const div = document.createElement("div");
 		div.classList.add("dice-tray__stacked", "flexcol");

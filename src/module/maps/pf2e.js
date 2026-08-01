@@ -12,19 +12,6 @@ export default class pf2eDiceMap extends GenericDiceMap {
 		return super.buttonFormulas;
 	}
 
-	get dice() {
-		return [
-			{
-				d4: { img: "icons/dice/d4black.svg" },
-				d6: { img: "icons/dice/d6black.svg" },
-				d8: { img: "icons/dice/d8black.svg" },
-				d10: { img: "icons/dice/d10black.svg" },
-				d12: { img: "icons/dice/d12black.svg" },
-				d20: { img: "icons/dice/d20black.svg" }
-			}
-		];
-	}
-
 	flatCheckLabel(dc) {
 		return game.i18n.format("DICE_TRAY.SETTINGS.PF2E.flatCheckLabel", {
 			dc: game.i18n.format("PF2E.InlineAction.Check.DC", { dc }),
