@@ -187,6 +187,10 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				if (!Object.keys(this.diceRows[row]).length) {
 					this.diceRows.splice(row, 1);
 				}
+				this.dice = this.dice = Object.fromEntries(
+					Object.entries(this.dice)
+						.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+				);
 				this.render(false);
 			});
 			button.addEventListener("dragover", async (event) => {
