@@ -2,8 +2,8 @@ import { DiceCreator } from "./DiceCreator";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
-	constructor(object, options = {}) {
-		super(object, options);
+	constructor(options = {}) {
+		super(options);
 		this.diceRows = foundry.utils.deepClone(game.settings.get("dice-calculator", "diceRows"));
 		this.dice = foundry.utils.deepClone(game.settings.get("dice-calculator", "dice"));
 	}
@@ -257,47 +257,47 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	#editDice(event, source) {
-		let drawer;
+		let insideDrawer;
 		let row;
 		let diceData;
 		const parent = event.target.parentElement;
-		const { formula: key, tooltip } = event.target.dataset;
+		const { formula: key } = event.target.dataset;
 
 		if (!Array.isArray(source)) {
 			diceData = source[key];
 		} else if (parent.classList.contains("dice-tray__drawer")) {
 			const firstKey = parent.dataset.drawer;
 			if (!row) row = source.findIndex((r) => r[firstKey]);
-			drawer = firstKey;
+			insideDrawer = firstKey;
 			diceData = source[row][firstKey].drawer[key];
 		} else {
 			if (!row) row = source.findIndex((r) => r[key]);
 			diceData = source[row][key];
 		}
-		const { color, img, label } = diceData;
-		new DiceCreator({
-			form: this,
-			diceRows: null,
+		const dc = new DiceCreator({
 			dice: {
+				...diceData,
 				key,
-				originalKey: key, // In case the key is changed later.
-				color,
-				img,
-				label,
-				tooltip: tooltip !== key ? tooltip : "",
-				row: row + 1,
-				drawer
+				drawer: diceData.drawer ? key : false,
 			},
+			originalKey: key,
+			row,
+			insideDrawer,
 			settings: this.settings
-		}).render(true);
+		});
+		this.renderChild(dc);
 	}
 
 	static #add() {
-		new DiceCreator({
-			form: this,
-			diceRows: this.diceRows,
+		let nextRow;
+		let maxRows;
+		nextRow = this.diceRows.findIndex((row) => Object.keys(row).length < 7);
+		maxRows = (nextRow !== -1 ? nextRow : this.diceRows.length) + 1;
+		const dc = new DiceCreator({
+			maxRows,
 			settings: this.settings
-		}).render(true);
+		});
+		this.renderChild(dc);
 	}
 
 	static #reset() {
@@ -335,5 +335,10 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			})
 		);
 		if (forceRender) Hooks.callAll("dice-calculator.forceRender");
+	}
+
+	async close(options={}) {
+		this.children.forEach((c) => c.close());
+		await super.close(options);
 	}
 }

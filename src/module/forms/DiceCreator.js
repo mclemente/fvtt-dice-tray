@@ -3,10 +3,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 	constructor(object, options = {}) {
 		super(options);
-		const { dice, diceRows, form, settings } = object;
-		this.object = { dice, diceRows, settings };
-		this.diceRowSettings = form;
-		Hooks.once("closeDiceRowSettings", () => this.close());
+		this.object = object;
 	}
 
 	static DEFAULT_OPTIONS = {
@@ -35,19 +32,13 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 	};
 
 	_prepareContext(options) {
-		const { dice, diceRows, settings } = this.object;
+		const { dice, insideDrawer, maxRows, row, settings } = this.object;
 		const label = dice?.key ? "SETTINGS.Save" : "DICE_TRAY.DiceCreator.CreateDice";
-		let nextRow;
-		let rowIndex;
-		if (diceRows) {
-			nextRow = diceRows.findIndex((row) => Object.keys(row).length < 7);
-			rowIndex = (nextRow !== -1 ? nextRow : diceRows.length) + 1;
-		}
 		return {
 			dice,
-			diceRows: this.object.diceRows, // this.diceRows,
-			row: dice?.row ?? rowIndex ?? null,
-			maxRows: rowIndex ?? null,
+			insideDrawer,
+			row: row !== undefined ? row + 1 : maxRows ?? null,
+			maxRows,
 			settings,
 			buttons: [
 				{ type: "submit", icon: "fa-solid fa-save", label },
@@ -55,42 +46,44 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		};
 	}
 
-	#submitRow(dice, row, drawer) {
-		if (this.object.dice && this.object.dice.row !== row) {
-			const key = this.object.dice.originalKey;
-			delete this.diceRowSettings.diceRows[row][key];
+	#cleanDiceData(dice) {
+		const clean = Object.fromEntries(
+			Object.entries(dice).filter(([k, v]) => k !== "key" && v !== "")
+		);
+		if (!clean.img) {
+			clean.label ??= dice.key;
+			if (clean.alternative) clean.alternative = false;
 		}
-		if (row > this.diceRowSettings.diceRows.length) {
-			this.diceRowSettings.diceRows.push({});
-		}
-		const cleanKey = Object.fromEntries(Object.entries(dice).filter(([k, v]) => k !== "key" && v !== ""));
-		if (!cleanKey.img && !cleanKey.label) {
-			cleanKey.label = dice.key;
-		}
-		if (!cleanKey.img && cleanKey.alternative) {
-			cleanKey.alternative = false;
-		}
-		if (drawer) this.diceRowSettings.diceRows[row][drawer].drawer[dice.key] = cleanKey;
-		else this.diceRowSettings.diceRows[row][dice.key] = cleanKey;
+		return clean;
 	}
 
-	#submitPool(dice) {
-		const cleanKey = Object.fromEntries(Object.entries(dice).filter(([k, v]) => k !== "key" && v !== ""));
-		if (!cleanKey.img && !cleanKey.label) {
-			cleanKey.label = dice.key;
-		}
-		if (!cleanKey.img && cleanKey.alternative) {
-			cleanKey.alternative = false;
-		}
-		this.diceRowSettings.dice[dice.key] = cleanKey;
+	#submitRow(dice, row, insideDrawer) {
+		const { originalKey: origKey, row: origRow } = this.object;
+		const cleanKey = this.#cleanDiceData(dice);
+		if (row > this.parent.diceRows.length - 1) this.parent.diceRows.push({});
+		let target = this.parent.diceRows[row];
+
+		if (dice.drawer) cleanKey.drawer = target[origKey].drawer;
+
+		if (insideDrawer) target[insideDrawer].drawer[dice.key] = cleanKey;
+		else target[dice.key] = cleanKey;
+
+		if (origRow !== row) delete this.parent.diceRows[origRow][origKey];
 	}
 
 	static #onSubmit(event, form, formData) {
-		let { dice, drawer, row } = foundry.utils.expandObject(formData.object);
+		let { dice, insideDrawer, row } = foundry.utils.expandObject(formData.object);
 		if (row !== undefined) {
 			// Account for row being 1-index for better UX
-			this.#submitRow(dice, row - 1, drawer);
-		} else this.#submitPool(dice);
-		this.diceRowSettings.render(true);
+			row--;
+			this.#submitRow(dice, row, insideDrawer);
+		} else {
+			this.parent.dice[dice.key] = this.#cleanDiceData(dice);
+		}
+	}
+
+	async close(options={}) {
+		if (options.submitted) this.parent.render({ force: true });
+		await super.close(options);
 	}
 }
