@@ -89,6 +89,7 @@
 			flex-direction: column-reverse;
 		}
 		button {
+			transition: none;
 			.dice-tray__flag {
 				@extend %drawer-flag-style
 			}
@@ -98,8 +99,10 @@
 			&:not(:hover) {
 				border: 1px solid #888;
 				border-bottom: none;
+				padding-bottom: 1px;
 				&:not(:last-child) {
 					border-top: none;
+					padding-top: 1px;
 				}
 			}
 		}
