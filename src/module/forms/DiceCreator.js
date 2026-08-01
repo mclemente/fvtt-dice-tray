@@ -57,8 +57,8 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		return clean;
 	}
 
-	#submitRow(dice, row, insideDrawer) {
-		const { originalKey: origKey, row: origRow } = this.object;
+	#submitRow(dice, row) {
+		const { insideDrawer, originalKey: origKey, row: origRow } = this.object;
 		const cleanKey = this.#cleanDiceData(dice);
 		if (row > this.parent.diceRows.length - 1) this.parent.diceRows.push({});
 		let target = this.parent.diceRows[row];
@@ -72,11 +72,11 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	static #onSubmit(event, form, formData) {
-		let { dice, insideDrawer, row } = foundry.utils.expandObject(formData.object);
+		let { dice, row } = foundry.utils.expandObject(formData.object);
 		if (row !== undefined) {
 			// Account for row being 1-index for better UX
 			row--;
-			this.#submitRow(dice, row, insideDrawer);
+			this.#submitRow(dice, row, );
 		} else {
 			this.parent.dice[dice.key] = this.#cleanDiceData(dice);
 		}
