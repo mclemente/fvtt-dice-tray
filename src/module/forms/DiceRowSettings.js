@@ -110,7 +110,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 						const dr = dragged.parentElement.dataset.drawer;
 						const drawerDoor = this.diceRows[row][dr];
 						if (!drawerDoor.drawer) drawerDoor.drawer = {};
-						drawerDoor.drawer[key] = dice[key];
+						drawerDoor.drawer[key] = this.diceRows[row][key] ?? dice[key];
 					}
 					this.diceRows[row] = Object.fromEntries(
 						[...rowElement.children]
@@ -257,6 +257,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	#editDice(event, source) {
+		let drawer;
 		let row;
 		let diceData;
 		const parent = event.target.parentElement;
@@ -267,6 +268,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 		} else if (parent.classList.contains("dice-tray__drawer")) {
 			const firstKey = parent.dataset.drawer;
 			if (!row) row = source.findIndex((r) => r[firstKey]);
+			drawer = firstKey;
 			diceData = source[row][firstKey].drawer[key];
 		} else {
 			if (!row) row = source.findIndex((r) => r[key]);
@@ -284,6 +286,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				label,
 				tooltip: tooltip !== key ? tooltip : "",
 				row: row + 1,
+				drawer
 			},
 			settings: this.settings
 		}).render(true);

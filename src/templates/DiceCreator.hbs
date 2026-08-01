@@ -25,6 +25,9 @@
 			<p class="hint">{{localize "DICE_TRAY.DiceCreator.Row.hint"}}</p>
 		</div>
 		{{/if}}
+		{{#if dice.drawer}}
+		<input type="text" name="drawer" value="{{dice.drawer}}" hidden />
+		{{/if}}
 	</fieldset>
 	<fieldset>
 		<legend>{{localize "DICE_TRAY.Optional"}}</legend>

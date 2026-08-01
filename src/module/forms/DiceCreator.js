@@ -55,7 +55,7 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		};
 	}
 
-	#submitRow(dice, row) {
+	#submitRow(dice, row, drawer) {
 		if (this.object.dice && this.object.dice.row !== row) {
 			const key = this.object.dice.originalKey;
 			delete this.diceRowSettings.diceRows[row][key];
@@ -70,7 +70,8 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		if (!cleanKey.img && cleanKey.alternative) {
 			cleanKey.alternative = false;
 		}
-		this.diceRowSettings.diceRows[row][dice.key] = cleanKey;
+		if (drawer) this.diceRowSettings.diceRows[row][drawer].drawer[dice.key] = cleanKey;
+		else this.diceRowSettings.diceRows[row][dice.key] = cleanKey;
 	}
 
 	#submitPool(dice) {
@@ -85,10 +86,10 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 	}
 
 	static #onSubmit(event, form, formData) {
-		let { dice, row } = foundry.utils.expandObject(formData.object);
+		let { dice, drawer, row } = foundry.utils.expandObject(formData.object);
 		if (row !== undefined) {
 			// Account for row being 1-index for better UX
-			this.#submitRow(dice, row - 1);
+			this.#submitRow(dice, row - 1, drawer);
 		} else this.#submitPool(dice);
 		this.diceRowSettings.render(true);
 	}
