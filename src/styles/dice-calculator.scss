@@ -262,11 +262,30 @@
 	}
 }
 
-body:has(#interface.theme-light) {
-	.application {
-		@include dice-tray-theme;
+body {
+	&.theme-dark {
+		&:not(:has(#interface.theme-light)) {
+			.dice-tray-row-settings {
+				.sidebar-preview {
+					.dice-tray {
+						button,
+						input {
+							&:not(:hover) {
+								border-color: #888;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	&:has(#interface.theme-light) {
+		.application {
+			@include dice-tray-theme;
+		}
 	}
 }
+
 #interface {
 	&.theme-light {
 		@include dice-tray-theme;
