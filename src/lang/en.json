@@ -70,8 +70,7 @@
 			},
 			"hideRollButton": {
 				"label": "Hide Roll Button"
-			},
-			"Instruction1": "Click any dice button to edit it. Right-Click any dice button to delete it."
+			}
 		},
 
 		"KEYBINGINDS": {

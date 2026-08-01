@@ -233,17 +233,26 @@
 		}
 	}
 	.sidebar-preview {
-		display: flex;
-		flex-direction: column;
-		flex-wrap: nowrap;
-		justify-content: flex-start;
 		width: var(--sidebar-width);
 		margin: auto;
 
+		&.dice-rows {
+			justify-content: flex-end;
+			height: 75px;
+		}
+
 		.dice-tray {
 			&.dice-tray__pool {
-				button {
-					max-width: 60px;
+				.dice-tray__buttons {
+					height: unset;
+					min-height: 30px;
+					button {
+						height: 30px;
+						flex: 0 0 calc(100% / 7);
+					}
+					&.flexrow {
+						flex-wrap: wrap;
+					}
 				}
 			}
 		}
