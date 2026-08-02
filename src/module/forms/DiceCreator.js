@@ -68,7 +68,7 @@ export class DiceCreator extends HandlebarsApplicationMixin(ApplicationV2) {
 		if (insideDrawer) target[insideDrawer].drawer[dice.key] = cleanKey;
 		else target[dice.key] = cleanKey;
 
-		if (origRow !== row) delete this.parent.diceRows[origRow][origKey];
+		if (origRow !== row) delete this.parent.diceRows[origRow]?.[origKey];
 	}
 
 	static #onSubmit(event, form, formData) {
