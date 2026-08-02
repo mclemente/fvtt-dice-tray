@@ -67,12 +67,13 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 	_onRender(context, options) {
 		super._onRender(context, options);
 		let dragged;
+		let dragData;
 		if (context.showExtraButtons && !context.settings.hideAdv) {
 			CONFIG.DICETRAY._createExtraButtons(this.element);
 		}
 		this.element.querySelectorAll(".dice-rows .dice-tray__buttons").forEach((row) => {
 			row.addEventListener("drop", (event) => {
-				const { drawer, key, origin } = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
+				const { drawer, key, origin } = dragData;
 
 				const buttons = [...row.children].filter((el) =>
 					el.dataset.formula !== key && el.matches(".dice-tray__button")
@@ -121,8 +122,10 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 							})
 					);
 					delete this.dice[key];
+					event.stopImmediatePropagation();
 				}
 				dragged = null;
+				dragData = null;
 			});
 		});
 		this.element.querySelectorAll("input.dice-tray__input").forEach((el) => el.disabled = true);
@@ -138,14 +141,12 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 				dragged = event.target;
 				const key = button.dataset.formula;
 				const drawer = button.closest(".dice-tray__drawer")?.dataset?.drawer;
-				event.dataTransfer.setData("text/plain", JSON.stringify({ origin: "dice-calculator-preview", key, drawer }));
+				dragData = { origin: "dice-calculator-preview", key, drawer };
 			});
 			button.addEventListener("dragend", (event) => {
-				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
-				if (data?.origin === "dice-calculator-preview") {
-					this.render(false);
-				}
+				if (dragData?.origin === "dice-calculator-preview") this.render(false);
 				dragged = null;
+				dragData = null;
 			});
 		});
 		this.element.querySelectorAll(".dice-tray:not(.dice-tray__pool) button.dice-tray__button").forEach((button) => {
@@ -195,8 +196,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			});
 			button.addEventListener("dragover", async (event) => {
 				if (button === dragged) return;
-				const data = JSON.parse(event.dataTransfer.getData("text/plain") || "{}");
-				if (data?.origin === "dice-calculator-preview") {
+				if (dragData?.origin === "dice-calculator-preview") {
 					const rect = button.getBoundingClientRect();
 					const topPosition = event.clientY - rect.top;
 					const before = event.clientX < rect.left + (rect.width / 2);
