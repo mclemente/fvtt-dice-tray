@@ -62,10 +62,10 @@
 				"label": "Compact Mode"
 			},
 			"hideNumberInput": {
-				"label": "Hide Number Input"
+				"label": "Hide Modifier Input"
 			},
 			"hideNumberButtons": {
-				"label": "Hide +/- Buttons"
+				"label": "Hide Modifier Buttons"
 			},
 			"hideRollButton": {
 				"label": "Hide Roll Button"
