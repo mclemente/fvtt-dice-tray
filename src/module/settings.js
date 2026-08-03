@@ -143,7 +143,6 @@ class BaseDiceField extends SchemaField {
 			key: new StringField(),
 			img: new FilePathField({categories: ["IMAGE"]}),
 			alternative: new BooleanField(),
-			// Optional Fields
 			label: new StringField(),
 			tooltip: new StringField(),
 			color: new ColorField(),

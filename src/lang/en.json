@@ -7,8 +7,8 @@
 		"Disadvantage": "Disadvantage",
 		"FateDice": "Fate Dice",
 		"For": "For",
-		"Fortune": "Fortune (kh)",
-		"Misfortune": "Misfortune (kl)",
+		"Fortune": "Fortune",
+		"Misfortune": "Misfortune",
 		"Mis": "Mis",
 		"Wild": "Wild",
 		"Ace": "Ace",
@@ -59,8 +59,7 @@
 			"Preview": "Preview",
 			"Pool": "Dice Pool",
 			"compactMode": {
-				"label": "Compact Mode",
-				"hint": "Disables any additional dice rows and merges the original two rows together."
+				"label": "Compact Mode"
 			},
 			"hideNumberInput": {
 				"label": "Hide Number Input"

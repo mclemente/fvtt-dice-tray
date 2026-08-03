@@ -96,16 +96,6 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 					const dice = CONFIG.DICETRAY.dice;
 					const rowElement = button.closest("[data-row]");
 					const row = rowElement.dataset.row;
-					// Moved out of a Drawer
-					if (drawer) {
-						const drawerDoor = this.diceRows[row][drawer];
-						delete drawerDoor.drawer[key];
-						if (!Object.keys(drawerDoor.drawer).length) {
-							const drawerElement = this.element.querySelector(`.dice-tray__drawer[data-drawer=${drawer}]`);
-							drawerElement.remove();
-							drawerDoor.drawer = null;
-						}
-					}
 					// Moved into a Drawer
 					if (dragged.parentElement.dataset.drawer) {
 						const dr = dragged.parentElement.dataset.drawer;
@@ -118,9 +108,22 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 							.filter((el) => el.matches(".dice-tray__button"))
 							.map((el) => {
 								const key = el.dataset.formula;
-								return [key, this.diceRows[row][key] ?? dice[key]];
+								const path =
+									this.diceRows[row][key]
+									?? this.diceRows[row][drawer]?.drawer[key]
+									?? dice[key];
+								return [key, path];
 							})
 					);
+					// Moved out of a Drawer
+					if (drawer) {
+						const drawerDoor = this.diceRows[row][drawer];
+						delete drawerDoor.drawer[key];
+						if (!Object.keys(drawerDoor.drawer).length) {
+							this.element.querySelector(`.dice-tray__drawer[data-drawer=${drawer}]`).remove();
+							drawerDoor.drawer = null;
+						}
+					}
 					delete this.dice[key];
 					event.stopImmediatePropagation();
 				}
