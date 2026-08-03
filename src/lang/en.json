@@ -79,7 +79,7 @@
 		},
 
 		"SETTINGS": {
-			"DiceCreator": "Dice Creator",
+			"DiceCreator": "Die Editor",
 			"DiceRowSettings": "Dice Rows Configuration",
 			"autoOpenPopout": {
 				"name": "Auto Open Popout",
