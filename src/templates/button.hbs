@@ -19,10 +19,9 @@
 	<div class="dice" style="
 		{{#if data.alternative}}
 		background: url({{data.img}}) center 1px/contain no-repeat;
-		{{else}}
+		{{/if}}
 		mask: url({{data.img}}) center 2px/contain no-repeat;
 		-webkit-mask: url({{data.img}}) center 2px/contain no-repeat;
-		{{/if}}
 		{{#if data.color}}background-color: {{data.color}};{{/if}}
 	"></div>
 	{{#if data.label}}

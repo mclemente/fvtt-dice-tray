@@ -9,19 +9,10 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 	}
 
 	get dice() {
-		const initials = (str) => {
-			const rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
-
-			const initials = [...str.matchAll(rgx)] || [];
-
-			return ((initials.shift()?.[1] || "") + (initials.pop()?.[1] || "")
-			).toUpperCase();
-		};
-		const dr = _loc("DAGGERHEART.GENERAL.dualityRoll");
-		const fr = _loc("DAGGERHEART.GENERAL.fateRoll");
 		return {
-			"/dr": { label: initials(dr), tooltip: dr },
-			"/fr": { label: initials(fr), tooltip: fr },
+			"/dr": { img: "systems/daggerheart/assets/icons/dice/duality/DualityBW.svg", tooltip: _loc("DAGGERHEART.GENERAL.dualityRoll") },
+			"/fr": { img: "systems/daggerheart/assets/icons/dice/hope/d12.svg", alternative: true, tooltip: _loc("DAGGERHEART.GENERAL.fateRoll") },
+			"/fr type=fear": { img: "systems/daggerheart/assets/icons/dice/fear/d12.svg", alternative: true, tooltip: _loc("DAGGERHEART.GENERAL.fateRoll") },
 			...super.dice,
 		};
 	}
@@ -37,7 +28,12 @@ export default class daggerheartDiceMap extends GenericDiceMap {
 				d10,
 				d12,
 				"/dr": dice["/dr"],
-				"/fr": dice["/dr"],
+				"/fr": {
+					...dice["/fr"],
+					drawer: {
+						"/fr type=fear": dice["/fr type=fear"]
+					}
+				}
 			}
 		];
 	}

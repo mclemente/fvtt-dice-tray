@@ -120,7 +120,7 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 						const drawerDoor = this.diceRows[row][drawer];
 						delete drawerDoor.drawer[key];
 						if (!Object.keys(drawerDoor.drawer).length) {
-							this.element.querySelector(`.dice-tray__drawer[data-drawer=${drawer}]`).remove();
+							this.element.querySelector(`.dice-tray__drawer[data-drawer="${drawer}"]`).remove();
 							drawerDoor.drawer = null;
 						}
 					}
@@ -252,11 +252,11 @@ export class DiceRowSettings extends HandlebarsApplicationMixin(ApplicationV2) {
 			button.style.anchorName = `--${CSS.escape(key)}`;
 			drawer.style.positionAnchor = button.style.anchorName;
 		});
-		for (const button of this.element.querySelectorAll(".dice-tray .dice-tray__math button")) {
-			button.addEventListener("click", async (event) => {
-				event.preventDefault();
-			});
-		}
+		this.element
+			.querySelectorAll(".dice-tray__math button, .dice-tray__stacked button, .dice-tray__roll")
+			.forEach((button) =>
+				button.addEventListener("click", (event) => event.preventDefault())
+			);
 	}
 
 	#editDice(event, source) {
