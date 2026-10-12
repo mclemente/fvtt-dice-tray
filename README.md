@@ -2,6 +2,8 @@
 
 This module adds a dice tray below chat and turns the d20 icon near the chat prompt into a clickable button that opens up a dice calculator, which includes buttons for dice, numbers, and simple math.
 
+<img width="299" height="166" alt="image" src="https://raw.githubusercontent.com/mclemente/fvtt-dice-tray/refs/heads/master/doc/DiceTrayPreview.png" />
+
 ## Installation
 
 1. Go to the setup page and choose **Add-on Modules**.
@@ -11,7 +13,6 @@ This module adds a dice tray below chat and turns the d20 icon near the chat pro
 
 	 b) Paste the following on the **Manifest Link**: https://github.com/mclemente/fvtt-dice-tray/releases/latest/download/module.json
 5. In your world, enable the module on the module settings.
-
 
 ## Development & Community Contribution
 
