@@ -9,7 +9,7 @@ export default class TemplateDiceMap {
 	_rightClickCommand;
 
 	/** Default value of the Compact Mode setting */
-	compactMode = this.dice.length < 2 && Object.keys(this.dice[0]).length < 7;
+	compactMode = this.rows.length < 2 && Object.keys(this.rows[0]).length < 7;
 
 	/** Default value of the Hide Number Input setting */
 	hideNumberInput = false;
