@@ -1,69 +1,125 @@
 {
 	"DICE_TRAY": {
-		"Adv": "Ava",
+		"Adv": "Avt",
 		"Advantage": "Avantage",
-		"Dis": "Dés",
+		"DiceTray": "Plateau de dés",
+		"Dis": "Dsv",
 		"Disadvantage": "Désavantage",
-		"FateDice": "Dés du destin",
+		"FateDice": "Dés Fate",
 		"For": "For",
-		"Fortune": "Fortune (kh)",
-		"Misfortune": "Malheur (kl)",
-		"Mis": "Mal",
-		"Wild": "Sauvage",
+		"Fortune": "Fortune",
+		"Misfortune": "Infortune",
+		"Mis": "Inf",
+		"Wild": "Joker",
 		"Ace": "As",
-		"WildDie": "Dé sauvage",
-		"ExplodingDie": "Dé Explosif",
+		"WildDie": "Dé Joker",
+		"ExplodingDie": "Dé explosif",
 		"PlusOneDie": "+1d",
 		"MinusOneDie": "-1d",
-		"PlusOneDieLong": "Augmenter la taille des dés",
-		"MinusOneDieLong": "Diminuer la taille des dés",
+		"PlusOneDieLong": "Augmenter la taille du dé",
+		"MinusOneDieLong": "Diminuer la taille du dé",
 		"KeepHighest": "Garder le plus haut",
 		"KeepLowest": "Garder le plus bas",
-		"del": "del",
-		"clear": "effacer",
-		"Calculator": "Calculatrice",
+		"Roll": "Lancer",
+
 		"Optional": "Facultatif",
+
 		"DiceCreator": {
-			"CreateDice": "Créer des dés",
+			"CreateDice": "Créer un dé",
 			"Formula": {
 				"name": "Formule",
 				"hint": "La formule qui sera ajoutée au chat."
 			},
 			"Row": {
 				"name": "Rangée",
-				"hint": "La ligne sur laquelle le bouton sera placé."
+				"hint": "La rangée sur laquelle le bouton sera placé."
 			},
 			"Image": {
 				"name": "Image"
 			},
 			"Label": {
-				"name": "Étiquette",
-				"hint": "Le nom affichée au cas où le dé n'aurait pas d'image."
+				"name": "Libellé",
+				"hint": "Le libellé affiché si le dé n’a pas d’image."
 			},
 			"Tooltip": {
-				"name": "Info-bulle",
-				"hint": "L'info-bulle affichée lorsque vous survolez le bouton. La valeur par défaut est la formule."
+				"name": "Infobulle",
+				"hint": "L’infobulle affichée au survol du bouton. Par défaut, la formule."
 			},
 			"Color": {
 				"name": "Couleur",
-				"hint": "La couleur qui remplit l'image."
+				"hint": "La couleur qui remplit l’image."
+			},
+			"Alternative": {
+				"name": "Affichage alternatif",
+				"hint": "Cochez cette option si l’image ne se charge pas."
 			}
 		},
+
 		"DiceRows": {
-			"Instruction1": "Cliquez sur n’importe quel bouton de dé pour le modifier. Cliquez avec le bouton droit sur n’importe quel bouton de dé pour le supprimer."
+			"Preview": "Aperçu",
+			"Pool": "Réserve de dés",
+			"compactMode": {
+				"label": "Mode compact"
+			},
+			"hideNumberInput": {
+				"label": "Masquer le champ de modificateur"
+			},
+			"hideNumberButtons": {
+				"label": "Masquer les boutons de modificateur"
+			},
+			"hideRollButton": {
+				"label": "Masquer le bouton Lancer"
+			}
 		},
+
+		"KEYBINGINDS": {
+			"popout": {
+				"name": "Afficher/masquer la fenêtre du plateau de dés"
+			}
+		},
+
 		"SETTINGS": {
-			"DiceCreator": "Créateur de dés",
-			"DiceRowSettings": "Réglage des rangées de dés",
-			"GeneralSettings": "réglages généraux",
-			"General": "Général",
+			"DiceCreator": "Éditeur de dé",
+			"DiceRowSettings": "Configuration des rangées de dés",
+			"autoOpenPopout": {
+				"name": "Ouvrir la fenêtre automatiquement",
+				"hint": "Ouvre automatiquement la fenêtre du plateau de dés au chargement de la page."
+			},
 			"enableDiceTray": {
 				"name": "Activer le plateau de dés",
-				"hint": "Activer l'affichage d'un plateau de dés sous la zone de message de discussion (nécessite un rechargement)."
+				"hint": "Affiche un plateau de dés sous la zone de saisie du chat. Réglage propre à chaque utilisateur, pour les joueurs qui n’en veulent pas."
 			},
-			"enableDiceCalculator": {
-				"name": "Activer le calculateur de dés",
-				"hint": "Activer l'affichage d'une boîte de dialogue de calcul de dés lorsque vous cliquez sur l'icône d20 près de la boîte de discussion (nécessite un rechargement)."
+			"hideAdv": {
+				"name": "Masquer les boutons supplémentaires",
+				"hint": "Masque les boutons KH/KL."
+			},
+			"popout": {
+				"name": "Bouton de la fenêtre du plateau de dés",
+				"hint": "Ajoute un bouton dans la barre des contrôles pour afficher/masquer la fenêtre du plateau de dés. Vous pouvez aussi le faire avec un raccourci clavier.",
+				"options": {
+					"all": "Tous les contrôles"
+				}
+			},
+			"rightClickCommand": {
+				"name": "Action du clic droit",
+				"hint": "Définit l’effet d’un clic droit sur un bouton de dé.",
+				"options": {
+					"decrease": "Par défaut (retirer un dé)",
+					"roll": "Lancer un seul dé"
+				}
+			},
+			"PF2E": {
+				"flatCheckLabel": "{dc} {text}",
+				"flatCheck": {
+					"name": "Ajouter des boutons de test nu",
+					"hint": "Remplace les boutons Fortune/Infortune par des boutons de test nu DD 5/11."
+				}
+			},
+			"SWADE": {
+				"wildDieBehavior": {
+					"name": "Utiliser la réserve de dés pour le bouton Joker",
+					"hint": "Quand Joker est actif, cliquer à nouveau sur le même dé ajoute des dés à la réserve au lieu d’augmenter le dé déjà présent dans la liste."
+				}
 			}
 		}
 	}
